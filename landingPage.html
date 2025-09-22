@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedsWell Distributor - Your Trusted Pharmaceutical Partner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+      }
+      .hero-bg {
+        background-image: linear-gradient(rgba(0, 50, 120, 0.75), rgba(0, 20, 60, 0.75)), url("https://placehold.co/1920x1080/e0e0e0/ffffff?text=Pharmaceutical+Warehouse");
+        background-size: cover;
+        background-position: center;
+      }
+      .service-card {
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+      .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+      }
+      .partner-logo {
+        filter: grayscale(100%);
+        transition: filter 0.3s;
+      }
+      .partner-logo:hover {
+        filter: grayscale(0%);
+      }
+      .carousel-item-custom {
+        flex: 0 0 calc(100% / 3); /* Set width to show 3 items */
+        padding: 0 15px; /* Creates spacing between items */
+        box-sizing: border-box;
+      }
+      .carousel-items-container {
+        transition: transform 0.5s ease;
+      }
+    </style>
+  </head>
+  <body class="bg-light text-dark">
+    <header class="bg-white shadow-sm sticky-top">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+          <a class="navbar-brand d-flex align-items-center" href="#">
+            <img src="https://placehold.co/40x40/0D6EFD/FFFFFF?text=M" alt="MedsWell Distributor Logo" class="me-2" style="height: 40px; width: 40px" />
+            <span class="fw-bold text-primary fs-4">MedsWell Distributor</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="main-nav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"><a class="nav-link" href="#catalogue">Catalogue</a></li>
+              <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+              <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+              <li class="nav-item"><a class="nav-link" href="#why-us">Why Choose Us</a></li>
+              <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-bg text-white">
+        <div class="container text-center py-5">
+          <div class="row justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+              <h1 class="display-3 fw-bolder mb-3">Delivering Health, Reliably.</h1>
+              <p class="lead mb-4">MedsWell is your dedicated partner in pharmaceutical distribution, ensuring safe, timely, and efficient delivery of medical supplies across the nation.</p>
+              <a href="#contact" class="btn btn-light btn-lg rounded-pill fw-bold text-primary px-4 py-2">Become a Partner</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" class="py-5 bg-white">
+        <div class="container">
+          <div class="row align-items-center g-5">
+            <div class="col-md-6">
+              <img src="https://placehold.co/600x400/0D6EFD/FFFFFF?text=MedsWell+Team" alt="MedsWell Team" class="img-fluid rounded-3 shadow-lg w-100" />
+            </div>
+            <div class="col-md-6">
+              <h2 class="h1 fw-bold mb-3">Your Link in the Chain of Care</h2>
+              <p class="text-muted mb-3">At MedsWell Distributor, we understand our critical role in the healthcare ecosystem. For over a decade, we have been committed to bridging the gap between pharmaceutical manufacturers and healthcare providers with unwavering precision and integrity.</p>
+              <p class="text-muted">Our mission is to ensure that essential medicines and healthcare products are always available where they are needed most, upholding the highest standards of quality and safety in the process.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Catalogue Section -->
+      <!-- Catalogue Section -->
+      <section id="catalogue" class="py-5 bg-light">
+        <div class="container">
+          <div class="text-center">
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <h2 class="h1 fw-bold">Our Product Catalogue</h2>
+                <p class="text-muted mb-5">Explore our extensive range of high-quality pharmaceutical products available for distribution.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Custom Sliding Carousel -->
+          <div id="custom-carousel" class="custom-carousel-wrapper position-relative d-none d-lg-block">
+            <!-- This is the viewport -->
+            <div class="carousel-track-container overflow-hidden">
+              <!-- This container holds all items and slides -->
+              <div class="d-flex carousel-items-container">
+                <!-- Item 1 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/one.jpeg" class="card-img-top" alt="Pain Management Products" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Pain Management</h3>
+                      <p class="card-text text-muted">A wide variety of analgesics and pain relief medications.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 2 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/two.jpeg" class="card-img-top" alt="Cardiovascular Health Products" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Cardiovascular Health</h3>
+                      <p class="card-text text-muted">Medications for treating heart conditions and blood pressure.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 3 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/three.jpeg" class="card-img-top" alt="Antibiotics and Antivirals" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Antibiotics & Antivirals</h3>
+                      <p class="card-text text-muted">A comprehensive selection of treatments for infections.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 4 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/one.jpeg" class="card-img-top" alt="Diabetes Care Products" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Diabetes Care</h3>
+                      <p class="card-text text-muted">Insulin, oral medications, and supplies for diabetes management.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 5 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/two.jpeg" class="card-img-top" alt="Vitamins and Supplements" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Vitamins & Supplements</h3>
+                      <p class="card-text text-muted">Nutritional products to support overall health and wellness.</p>
+                    </div>
+                  </div>
+                </div>
+                <!-- Item 6 -->
+                <div class="carousel-item-custom">
+                  <div class="card h-100 shadow-sm">
+                    <img src="./assets/three.jpeg" class="card-img-top" alt="Medical Supplies" />
+                    <div class="card-body p-4 text-start">
+                      <h3 class="card-title h5 fw-bold mb-2">Medical Supplies</h3>
+                      <p class="card-text text-muted">Essential supplies including syringes, gloves, and diagnostic tools.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Controls -->
+            <button class="carousel-control-prev" type="button" id="custom-prev-btn">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" id="custom-next-btn">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+
+          <!-- Mobile Carousel (Fallback) -->
+          <div id="productCarouselMobile" class="carousel slide d-lg-none" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/one.jpeg" class="card-img-top" alt="Pain Management Products" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Pain Management</h3>
+                    <p class="card-text text-muted">A wide variety of analgesics and pain relief medications.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/three.jpeg" class="card-img-top" alt="Cardiovascular Health Products" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Cardiovascular Health</h3>
+                    <p class="card-text text-muted">Medications for treating heart conditions and managing blood pressure.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/two.jpeg" class="card-img-top" alt="Antibiotics and Antivirals" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Antibiotics & Antivirals</h3>
+                    <p class="card-text text-muted">A comprehensive selection of treatments for infections.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/one.jpeg" class="card-img-top" alt="Diabetes Care Products" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Diabetes Care</h3>
+                    <p class="card-text text-muted">Insulin, oral medications, and supplies for diabetes management.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/three.jpeg" class="card-img-top" alt="Vitamins and Supplements" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Vitamins & Supplements</h3>
+                    <p class="card-text text-muted">Nutritional products to support overall health and wellness.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="card h-100 shadow-sm mx-4">
+                  <img src="./assets/two.jpeg" class="card-img-top" alt="Medical Supplies" />
+                  <div class="card-body p-4 text-start">
+                    <h3 class="card-title h5 fw-bold mb-2">Medical Supplies</h3>
+                    <p class="card-text text-muted">Essential supplies including syringes, gloves, and diagnostic tools.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarouselMobile" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarouselMobile" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>
+          </div>
+
+          <div class="text-center">
+            <a href="./catlogueMessage.html" class="btn btn-primary btn-lg rounded-pill mt-5 px-5 py-2">Request Full Catalogue</a>
+          </div>
+        </div>
+      </section>
+
+      <section id="services" class="py-5 bg-white">
+        <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <h2 class="h1 fw-bold">Our Comprehensive Services</h2>
+              <p class="text-muted mb-5">We provide a full suite of services to meet the complex demands of the pharmaceutical supply chain.</p>
+            </div>
+          </div>
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="card h-100 border-0 shadow-sm text-start p-3 service-card">
+                <div class="card-body">
+                  <div class="bg-primary-subtle text-primary rounded-circle p-3 d-inline-block mb-3"><i data-feather="truck"></i></div>
+                  <h3 class="h5 fw-semibold mb-2">Nationwide Distribution</h3>
+                  <p class="text-muted">Our extensive logistics network ensures prompt and secure delivery to pharmacies, hospitals, and clinics anywhere.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card h-100 border-0 shadow-sm text-start p-3 service-card">
+                <div class="card-body">
+                  <div class="bg-success-subtle text-success rounded-circle p-3 d-inline-block mb-3"><i data-feather="archive"></i></div>
+                  <h3 class="h5 fw-semibold mb-2">Secure Warehousing</h3>
+                  <p class="text-muted">State-of-the-art, temperature-controlled facilities that meet all regulatory standards for pharmaceutical storage.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card h-100 border-0 shadow-sm text-start p-3 service-card">
+                <div class="card-body">
+                  <div class="bg-warning-subtle text-warning rounded-circle p-3 d-inline-block mb-3">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2.828 2.828 0 0 1 2 2v0a2.828 2.828 0 0 1-2 2v0a2.828 2.828 0 0 1-2-2v0a2.828 2.828 0 0 1 2-2zM8 12a4 4 0 0 1 8 0v0a4 4 0 0 1-8 0zM12 18a2.828 2.828 0 0 1 2-2v0a2.828 2.828 0 0 1-2-2v0a2.828 2.828 0 0 1-2 2v0a2.828 2.828 0 0 1 2 2z" /></svg>
+                  </div>
+                  <h3 class="h5 fw-semibold mb-2">Cold Chain Logistics</h3>
+                  <p class="text-muted">Specialized handling for temperature-sensitive products, guaranteeing product integrity from start to finish.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="card h-100 border-0 shadow-sm text-start p-3 service-card">
+                <div class="card-body">
+                  <div class="bg-info-subtle text-info rounded-circle p-3 d-inline-block mb-3"><i data-feather="check-square"></i></div>
+                  <h3 class="h5 fw-semibold mb-2">Regulatory Compliance</h3>
+                  <p class="text-muted">Expert guidance and management of all regulatory documentation and compliance requirements to ensure smooth operations.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="why-us" class="py-5 bg-light">
+        <div class="container">
+          <div class="text-center mb-5">
+            <h2 class="h1 fw-bold">The MedsWell Advantage</h2>
+            <p class="text-muted mx-auto" style="max-width: 40rem">Partnering with us means choosing reliability and excellence.</p>
+          </div>
+          <div class="row g-4 text-center">
+            <div class="col-md-4">
+              <i data-feather="shield" class="mb-3 text-primary" style="width: 48px; height: 48px"></i>
+              <h3 class="h5 fw-semibold mb-2">Unmatched Reliability</h3>
+              <p class="text-muted">99.9% on-time delivery record. We are committed to getting your products where they need to be, when they need to be there.</p>
+            </div>
+            <div class="col-md-4">
+              <i data-feather="award" class="mb-3 text-primary" style="width: 48px; height: 48px"></i>
+              <h3 class="h5 fw-semibold mb-2">Quality Assurance</h3>
+              <p class="text-muted">Rigorous quality control at every step. We adhere to the strictest industry standards to protect product integrity and patient safety.</p>
+            </div>
+            <div class="col-md-4">
+              <i data-feather="cpu" class="mb-3 text-primary" style="width: 48px; height: 48px"></i>
+              <h3 class="h5 fw-semibold mb-2">Advanced Technology</h3>
+              <p class="text-muted">Leveraging cutting-edge inventory management and tracking systems for full transparency and efficiency in our operations.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 bg-white">
+        <div class="container text-center">
+          <h3 class="h4 text-muted mb-5">Trusted by Leading Pharmaceutical Brands</h3>
+          <div class="d-flex flex-wrap justify-content-center align-items-center gap-5">
+            <img src="https://placehold.co/150x50/cccccc/999999?text=Brand+Logo" alt="Partner Logo" class="partner-logo" style="height: 2.5rem" />
+            <img src="https://placehold.co/150x50/cccccc/999999?text=Brand+Logo" alt="Partner Logo" class="partner-logo" style="height: 2.5rem" />
+            <img src="https://placehold.co/150x50/cccccc/999999?text=Brand+Logo" alt="Partner Logo" class="partner-logo" style="height: 2.5rem" />
+            <img src="https://placehold.co/150x50/cccccc/999999?text=Brand+Logo" alt="Partner Logo" class="partner-logo" style="height: 2.5rem" />
+            <img src="https://placehold.co/150x50/cccccc/999999?text=Brand+Logo" alt="Partner Logo" class="partner-logo" style="height: 2.5rem" />
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="py-5 bg-light">
+        <div class="container">
+          <div class="row g-5">
+            <div class="col-lg-6">
+              <h2 class="h1 fw-bold mb-3">Get in Touch</h2>
+              <p class="text-muted mb-4">Have a question or want to discuss a partnership? We're here to help. Fill out the form or contact us directly.</p>
+              <div class="d-flex align-items-center mb-3"><i data-feather="map-pin" class="text-primary me-3"></i><span class="text-muted">123 Health Ave, Pharma City, ST 12345</span></div>
+              <div class="d-flex align-items-center mb-3"><i data-feather="phone" class="text-primary me-3"></i><span class="text-muted">(123) 456-7890</span></div>
+              <div class="d-flex align-items-center"><i data-feather="mail" class="text-primary me-3"></i><span class="text-muted">partners@medswell.com</span></div>
+            </div>
+            <div class="col-lg-6">
+              <div class="bg-white p-4 p-md-5 rounded-3 shadow-sm">
+                <form id="contact-form">
+                  <div class="mb-3"><label for="name" class="form-label">Full Name</label><input type="text" id="name" name="name" class="form-control" placeholder="John Doe" required /></div>
+                  <div class="mb-3"><label for="email" class="form-label">Email Address</label><input type="email" id="email" name="email" class="form-control" placeholder="your.email@company.com" required /></div>
+                  <div class="mb-4"><label for="message" class="form-label">Message</label><textarea id="message" name="message" rows="4" class="form-control" placeholder="How can we help you?" required></textarea></div>
+                  <button type="submit" class="btn btn-primary w-100 btn-lg">Send Message</button>
+                </form>
+                <div id="form-feedback" class="mt-4 text-center"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-dark text-white">
+      <div class="container py-5">
+        <div class="row g-4">
+          <div class="col-md-4">
+            <h3 class="fs-4 fw-bold mb-2">MedsWell</h3>
+            <p class="text-white-50">Delivering health across the nation with reliability and care.</p>
+          </div>
+          <div class="col-md-4">
+            <h4 class="fw-semibold mb-2">Quick Links</h4>
+            <ul class="list-unstyled">
+              <li><a href="#about" class="text-white-50 text-decoration-none hover-link">About Us</a></li>
+              <li><a href="#catalogue" class="text-white-50 text-decoration-none hover-link">Catalogue</a></li>
+              <li><a href="#services" class="text-white-50 text-decoration-none hover-link">Services</a></li>
+              <li><a href="#contact" class="text-white-50 text-decoration-none hover-link">Contact</a></li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <h4 class="fw-semibold mb-2">Connect With Us</h4>
+            <div class="d-flex gap-3">
+              <a href="#" class="text-white-50"><i data-feather="twitter"></i></a>
+              <a href="#" class="text-white-50"><i data-feather="facebook"></i></a>
+              <a href="#" class="text-white-50"><i data-feather="linkedin"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="border-top mt-4 pt-4 text-center text-white-50">
+          <p>&copy; <span id="year"></span> MedsWell Distributor. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+      // Feather Icons
+      feather.replace();
+
+      // Set current year in footer
+      document.getElementById("year").textContent = new Date().getFullYear();
+
+      // Contact Form Submission
+      const contactForm = document.getElementById("contact-form");
+      const formFeedback = document.getElementById("form-feedback");
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        formFeedback.textContent = "Thank you for your message! We will get back to you shortly.";
+        formFeedback.className = "mt-4 text-center text-success";
+        contactForm.reset();
+        setTimeout(() => {
+          formFeedback.textContent = "";
+        }, 5000);
+      });
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousel = document.getElementById("custom-carousel");
+        const carouselContainer = document.querySelector(".carousel-items-container");
+        const prevBtn = document.getElementById("custom-prev-btn");
+        const nextBtn = document.getElementById("custom-next-btn");
+
+        if (carouselContainer) {
+          // ============== AUTOSLIDE CONFIGURATION ==============
+          // Change this value to control the auto-slide speed in milliseconds
+          // For example, 5000 is 5 seconds, 2000 is 2 seconds.
+          const slideIntervalTime = 1000;
+          // =====================================================
+
+          const items = carouselContainer.querySelectorAll(".carousel-item-custom");
+          const totalItems = items.length;
+          const itemsVisible = 3;
+          let currentIndex = 0;
+          let autoSlideInterval;
+
+          function updateCarousel() {
+            const itemWidth = items[0].offsetWidth;
+            const newTransform = -currentIndex * itemWidth;
+            carouselContainer.style.transform = `translateX(${newTransform}px)`;
+
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.disabled = currentIndex >= totalItems - itemsVisible;
+          }
+
+          function slideNext() {
+            if (currentIndex < totalItems - itemsVisible) {
+              currentIndex++;
+            } else {
+              // Loop back to the start
+              currentIndex = 0;
+            }
+            updateCarousel();
+          }
+
+          function startAutoSlide() {
+            stopAutoSlide(); // Prevent multiple intervals
+            autoSlideInterval = setInterval(slideNext, slideIntervalTime);
+          }
+
+          function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+          }
+
+          nextBtn.addEventListener("click", () => {
+            // Clicking next also resets the auto-slide timer
+            slideNext();
+            startAutoSlide();
+          });
+
+          prevBtn.addEventListener("click", () => {
+            if (currentIndex > 0) {
+              currentIndex--;
+              updateCarousel();
+              // Clicking prev also resets the auto-slide timer
+              startAutoSlide();
+            }
+          });
+
+          // Pause on hover
+          carousel.addEventListener("mouseenter", stopAutoSlide);
+          carousel.addEventListener("mouseleave", startAutoSlide);
+
+          // Initial state
+          updateCarousel();
+          // Start the auto-sliding
+          startAutoSlide();
+          // Recalculate on window resize
+          window.addEventListener("resize", updateCarousel);
+        }
+      });
+    </script>
+  </body>
+</html>
