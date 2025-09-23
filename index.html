@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MedsWell Professional Product Catalog</title>
+    <title>Sunil's Pharmacy - Professional Contact Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -11,703 +11,260 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
+      /* All your CSS styles remain exactly the same */
       :root {
-        --bs-primary-rgb: 13, 110, 253; /* Bootstrap Blue for consistency */
-        --brand-secondary: #f0f5ff;
-        --brand-text: #343a40;
-        --brand-light-gray: #f8f9fa;
-        --brand-border: #dee2e6;
+        --primary-color: #0d2c54;
+        --secondary-color: #21b2a6;
+        --light-gray: #f8f9fa;
+        --text-dark: #343a40;
+        --text-light: #6c757d;
+        --border-radius: 12px;
       }
-
       body {
+        background-color: var(--light-gray);
         font-family: "Poppins", sans-serif;
-        background-color: #fcfdff;
-        color: var(--brand-text);
+        color: var(--text-dark);
       }
-
-      /* --- Header & Search --- */
-      .catalog-header {
+      .profile-page {
+        position: relative;
         background-color: #ffffff;
-        padding: 2.5rem 1rem;
-        border-bottom: 1px solid var(--brand-border);
+        max-width: 800px;
+        margin: 4rem auto;
+        border-radius: var(--border-radius);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+        transition: margin 0.3s ease;
+      }
+      .profile-header {
+        height: 250px;
+        position: relative;
+        transition: height 0.3s ease;
+      }
+      .header-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .profile-header::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+      }
+      .profile-photo {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid #ffffff;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        position: absolute;
+        top: 250px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        transition: all 0.3s ease;
+      }
+      .profile-content {
+        padding: 100px 2rem 2rem;
+        text-align: center;
+        transition: padding 0.3s ease;
+      }
+      .profile-name {
+        font-weight: 700;
+        font-size: 2.25rem;
+        color: var(--primary-color);
+        transition: font-size 0.3s ease;
+      }
+      .profile-title {
+        font-weight: 500;
+        color: var(--text-light);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        font-size: 0.9rem;
         margin-bottom: 2rem;
       }
-
-      .search-bar {
-        max-width: 500px;
-      }
-
-      /* --- Filter Design --- */
-      #filter-container {
+      .info-section {
+        color: var(--text-dark);
+        margin: 2rem 0;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
         gap: 0.75rem;
       }
-
-      .filter-btn {
-        border: none;
-        border-radius: 50px;
-        padding: 0.6rem 1.5rem;
-        font-weight: 500;
-        background-color: #e9ecef;
-        color: #495057;
-        transition: all 0.2s ease-in-out;
+      .info-section .icon {
+        color: var(--secondary-color);
+        margin-top: 0.1em;
       }
-
-      .filter-btn:hover {
-        background-color: #ced4da;
-      }
-
-      .filter-btn.active {
-        background-color: var(--bs-primary);
-        color: white;
-        box-shadow: 0 4px 12px rgba(var(--bs-primary-rgb), 0.3);
-        transform: translateY(-2px);
-      }
-
-      /* --- Product Card CSS --- */
-      .product-card {
-        border: 1px solid var(--brand-border);
-        border-radius: 0.75rem;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-        background-color: #fff;
-      }
-
-      .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      }
-
-      .product-image-container {
-        position: relative;
-        cursor: pointer;
-      }
-
-      .product-image {
-        height: 220px;
-        width: 100%;
-        object-fit: contain;
-        padding: 10px;
-        background-color: #ffffff;
-      }
-
-      .product-checkbox {
-        position: absolute;
-        top: 15px;
-        right: 15px;
-        width: 24px;
-        height: 24px;
-        cursor: pointer;
-        z-index: 10;
-      }
-
-      .card-body {
-        padding: 1rem;
+      .action-buttons {
+        margin-top: 2.5rem;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex-grow: 1;
-      }
-
-      .card-title {
-        font-weight: 600;
-        font-size: 1.05rem;
-        margin-bottom: 0.25rem;
-      }
-
-      .card-price {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: var(--bs-primary);
-      }
-
-      /* --- Floating Action Button (FAB) --- */
-      .floating-order-btn {
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1050;
-        border-radius: 50px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        font-size: 1.1rem;
-        padding: 0.8rem 1.5rem;
-        display: none;
-      }
-
-      .floating-order-btn.visible {
-        display: flex;
-      }
-
-      .item-count-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background-color: #dc3545;
-        color: white;
-        border-radius: 50%;
-        width: 28px;
-        height: 28px;
-        display: flex;
-        align-items: center;
+        flex-wrap: wrap;
         justify-content: center;
+        gap: 1rem;
+      }
+      .btn-custom {
+        padding: 0.8rem 1.5rem;
+        border-radius: 50px;
         font-weight: 600;
-        border: 2px solid white;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        border: 2px solid transparent;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
       }
-
-      /* --- Modal CSS --- */
-      .modal-content {
-        border-radius: 1rem;
-        border: none;
+      .btn-custom.btn-primary {
+        background-color: var(--primary-color);
+        color: white;
       }
-
-      .modal-header {
-        background-color: var(--brand-secondary);
-        border-bottom: none;
+      .btn-custom.btn-primary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(13, 44, 84, 0.3);
+      }
+      .btn-custom.btn-secondary {
+        background-color: var(--secondary-color);
+        color: white;
+      }
+      .btn-custom.btn-secondary:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 15px rgba(33, 178, 166, 0.4);
+      }
+      .btn-custom.btn-outline {
+        border-color: #e0e0e0;
+        color: var(--text-light);
+      }
+      .btn-custom.btn-outline:hover {
+        background-color: var(--light-gray);
+        color: var(--primary-color);
+        border-color: var(--light-gray);
+      }
+      .profile-footer {
         padding: 1.5rem;
+        background-color: var(--light-gray);
+        color: var(--text-light);
+        font-size: 0.9rem;
+        text-align: center;
       }
-
-      .modal-title {
-        font-weight: 600;
-      }
-
-      #modal-product-details .list-group-item {
-        padding-left: 0;
-        padding-right: 0;
-        border-color: var(--brand-border);
-        background: transparent;
-      }
-      #modal-product-details .list-group-item:last-child {
-        border-bottom: none;
-      }
-
-      /* --- Responsive Adjustments --- */
-      @media (max-width: 767.98px) {
-        .catalog-header {
-          padding-top: 2rem;
-          padding-bottom: 2rem;
+      @media (max-width: 768px) {
+        .profile-page {
+          margin: 2rem auto;
+        }
+        .profile-header {
+          height: 220px;
+        }
+        .profile-photo {
+          width: 140px;
+          height: 140px;
+          top: 220px;
+        }
+        .profile-content {
+          padding-top: 80px;
+        }
+        .profile-name {
+          font-size: 2rem;
+        }
+        .info-section {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
       }
-
-      @media (max-width: 575.98px) {
-        .floating-order-btn {
-          bottom: 20px;
-          right: 20px;
+      @media (max-width: 576px) {
+        .profile-page {
+          margin: 0;
+          border-radius: 0;
+          box-shadow: none;
+        }
+        .profile-header {
+          height: 180px;
+        }
+        .profile-photo {
+          width: 120px;
+          height: 120px;
+          top: 180px;
+          border-width: 4px;
+        }
+        .profile-content {
+          padding: 70px 1.5rem 1.5rem;
+        }
+        .profile-name {
+          font-size: 1.75rem;
+        }
+        .profile-title {
+          font-size: 0.8rem;
+          margin-bottom: 1.5rem;
+        }
+        .action-buttons {
+          flex-direction: column;
+          gap: 0.75rem;
+          width: 100%;
+          max-width: 320px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .btn-custom {
+          width: 100%;
+          justify-content: center;
+        }
+        .info-section {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
         }
       }
     </style>
   </head>
   <body>
-    <header class="catalog-header">
-      <div class="container">
-        <div class="text-center">
-          <h1 class="display-5 fw-bold text-primary">MedsWell Product Catalog</h1>
-          <p class="lead text-muted">Your trusted partner in quality medical supplies.</p>
-        </div>
-        <div class="row justify-content-center mt-4">
-          <div class="col-md-8 col-lg-6">
-            <div class="input-group search-bar">
-              <span class="input-group-text bg-light border-0"><i class="fa-solid fa-magnifying-glass"></i></span>
-              <input type="text" id="search-input" class="form-control border-0 bg-light" placeholder="Search for products..." />
-            </div>
-          </div>
-        </div>
-      </div>
-    </header>
+    <div class="profile-page">
+      <header class="profile-header">
+        <img src="https://images.unsplash.com/photo-1690129069978-20a87fe95bf9?q=80&w=654&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pharmacy Banner" class="header-image" />
+      </header>
+      <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961" alt="Owner Profile Photo" class="profile-photo" />
+      <main class="profile-content">
+        <h1 class="profile-name">MedsWell</h1>
+        <p class="profile-title">Aniket Parmar (Owner)</p>
 
-    <main class="container pb-5">
-      <div class="d-flex justify-content-center flex-wrap mb-5" id="filter-container">
-        <button type="button" class="filter-btn active" data-filter="all">All</button>
-        <button type="button" class="filter-btn" data-filter="hygiene">Hygiene</button>
-        <button type="button" class="filter-btn" data-filter="medical">Medical</button>
-        <button type="button" class="filter-btn" data-filter="pain_relief">Pain Relief</button>
-        <button type="button" class="filter-btn" data-filter="vitamins">Vitamins</button>
-      </div>
-
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="product-list">
-        <div class="col" data-category="hygiene" data-product-name="Soulspas-P Syrup" data-product-form="Syrup" data-product-mg="100ml" data-product-mrp="65">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOSPAS-P.jpg">
-              <img src="./assets/First/SOSPAS-P.jpg" class="card-img-top product-image" alt="Soulspas-P Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulspas-P Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 65 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="hygiene" data-product-name="SoulPro" data-product-form="Protein Powder" data-product-mg="200g" data-product-mrp="255">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOUL PRO.jpg">
-              <img src="./assets/First/SOUL PRO.jpg" class="card-img-top product-image" alt="SoulPro" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">SoulPro</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 255 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soul Vita" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="75">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOUL VITA.jpg">
-              <img src="./assets/First/SOUL VITA.jpg" class="card-img-top product-image" alt="Soul Vita" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soul Vita</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 75 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="pain_relief" data-product-name="Soulcef DT TAB" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="109">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCEF DT.png">
-              <img src="./assets/First/SOULCEF DT.png" class="card-img-top product-image" alt="Soulcef DT TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulcef DT TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 109 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="vitamins" data-product-name="Soulcet M TAB" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="65">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCET-M.jpg">
-              <img src="./assets/First/SOULCET-M.jpg" class="card-img-top product-image" alt="Soulcet M TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulcet M TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 65 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulcid-20 CAP" data-product-form="Capsule" data-product-mg="20mg / 10 Capsules" data-product-mrp="45">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCID.png">
-              <img src="./assets/First/SOULCID.png" class="card-img-top product-image" alt="Soulcid-20 CAP" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulcid-20 CAP</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 45 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulcold- DS Syrup" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="60">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulcold DS.jpg">
-              <img src="./assets/First/Soulcold DS.jpg" class="card-img-top product-image" alt="Soulcold- DS Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulcold- DS Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 60 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulcure AM Syrup" data-product-form="Syrup" data-product-mg="100ml" data-product-mrp="64">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCURE-AM.jpg">
-              <img src="./assets/First/SOULCURE-AM.jpg" class="card-img-top product-image" alt="Soulcure AM Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulcure AM Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 64 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulgesic Syrup" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="64">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulgesic.jpg">
-              <img src="./assets/First/Soulgesic.jpg" class="card-img-top product-image" alt="Soulgesic Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulgesic Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 64 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulmef-DS" data-product-form="Suspension" data-product-mg="60ml" data-product-mrp="75">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULMEF-DS.png">
-              <img src="./assets/First/SOULMEF-DS.png" class="card-img-top product-image" alt="Soulmef-DS" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulmef-DS</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 75 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulmef TAB" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="45">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULMEF.png">
-              <img src="./assets/First/SOULMEF.png" class="card-img-top product-image" alt="Soulmef TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulmef TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 45 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulmox-CV Syrup" data-product-form="Dry Syrup" data-product-mg="30ml" data-product-mrp="67.87">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulmox CV- Dry Syrup.jpg">
-              <img src="./assets/First/Soulmox CV- Dry Syrup.jpg" class="card-img-top product-image" alt="Soulmox-CV Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulmox-CV Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 67.87 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulnac-P" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="75">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULNAC-P.jpg">
-              <img src="./assets/First/SOULNAC-P.jpg" class="card-img-top product-image" alt="Soulnac-P" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulnac-P</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 75 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulpod 200 TAB" data-product-form="Tablet" data-product-mg="200mg" data-product-mrp="150">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULPOD.jpg">
-              <img src="./assets/First/SOULPOD.jpg" class="card-img-top product-image" alt="Soulpod 200 TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulpod 200 TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 150 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulrab DSR CAP" data-product-form="Capsule" data-product-mg="10 Capsules" data-product-mrp="80">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULRAB-DSR.jpg">
-              <img src="./assets/First/SOULRAB-DSR.jpg" class="card-img-top product-image" alt="Soulrab DSR CAP" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulrab DSR CAP</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 80 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulsera AP TAB" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="110">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULSERA-AP.jpg">
-              <img src="./assets/First/SOULSERA-AP.jpg" class="card-img-top product-image" alt="Soulsera AP TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulsera AP TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 110 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulsetron Syrup" data-product-form="Syrup" data-product-mg="30ml" data-product-mrp="60">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULSETRON- syrup.jpg">
-              <img src="./assets/First/SOULSETRON- syrup.jpg" class="card-img-top product-image" alt="Soulsetron Syrup" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulsetron Syrup</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 60 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="Soulsetron TAB" data-product-form="Tablet" data-product-mg="10 Tablets" data-product-mrp="52">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulsetron.jpg">
-              <img src="./assets/First/Soulsetron.jpg" class="card-img-top product-image" alt="Soulsetron TAB" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">Soulsetron TAB</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 52 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col" data-category="medical" data-product-name="URISOUL Syp" data-product-form="Syrup" data-product-mg="100ml" data-product-mrp="125">
-          <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/URISOUL.jpg">
-              <img src="./assets/First/URISOUL.jpg" class="card-img-top product-image" alt="URISOUL Syp" />
-              <input class="form-check-input product-checkbox" type="checkbox" />
-            </div>
-            <div class="card-body">
-              <div>
-                <h5 class="card-title">URISOUL Syp</h5>
-              </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price">MRP 125 ₹</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <button class="btn btn-success floating-order-btn align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#orderModal">
-      <i class="fa-solid fa-cart-shopping"></i>
-      <span>Place Order</span>
-      <span class="item-count-badge">0</span>
-    </button>
-    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="productModalLabel">Product Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body p-4">
-            <div class="row g-4">
-              <div class="col-md-5 text-center">
-                <img src="" alt="Product Image" id="modal-product-image" class="img-fluid rounded" />
-              </div>
-              <div class="col-md-7 d-flex flex-column">
-                <h2 class="fw-bold mb-3" id="modal-product-name"></h2>
-                <div id="modal-product-details" class="mb-3"></div>
-                <div class="mt-auto">
-                  <hr class="my-3" />
-                  <div class="d-flex justify-content-between align-items-center">
-                    <span class="text-muted fs-5">Price:</span>
-                    <span class="h3 fw-bold text-primary mb-0" id="modal-product-price"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="orderModalLabel">Your Order Summary</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body p-4" id="order-modal-body"></div>
-          <div class="modal-footer flex-column align-items-stretch p-3">
-            <button type="button" class="btn btn-success btn-lg w-100" id="submit-order-btn"><i class="fa-brands fa-whatsapp me-2"></i>Submit via WhatsApp</button>
-            <button type="button" class="btn btn-secondary w-100 mt-2" data-bs-dismiss="modal">Close</button>
-          </div>
-        </div>
-      </div>
+        <section class="info-section">
+          <i class="fa-solid fa-location-dot icon fa-fw"></i>
+          <span>766/9, J.S.D Complex, Near Bus Stand, SURKHAI. Ta: chikhli, Di:Navsari Pin code: 396560</span>
+        </section>
+        <section class="action-buttons">
+          <button id="save-contact-btn" class="btn-custom btn-primary"><i class="fa-solid fa-user-plus"></i> Add to Contact</button>
+          <a href="https://wa.me/919904685222" class="btn-custom btn-secondary" target="_blank"> <i class="fa-brands fa-whatsapp"></i> WhatsApp </a>
+          <a href="mailto:medswelldistributors@gmail.com" class="btn-custom btn-outline"> <i class="fa-solid fa-envelope"></i> Email </a>
+          <a href="/catlogue.html" class="btn-custom btn-outline" target="_blank"> <i class="fa-solid fa-book-open"></i> Catalogue </a>
+        </section>
+      </main>
+      <footer class="profile-footer">Your Trusted Health Partner</footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const productModal = document.getElementById("productModal");
-        const orderModal = document.getElementById("orderModal");
-        const submitOrderBtn = document.getElementById("submit-order-btn");
-        const searchInput = document.getElementById("search-input");
-        const productListContainer = document.getElementById("product-list");
-        const allProductCols = Array.from(productListContainer.children);
-        const filterButtons = document.querySelectorAll("#filter-container .filter-btn");
-        const floatingOrderBtn = document.querySelector(".floating-order-btn");
-        const itemCountBadge = document.querySelector(".item-count-badge");
-        const selectedProducts = new Set();
+      document.addEventListener("DOMContentLoaded", function () {
+        const saveContactBtn = document.getElementById("save-contact-btn");
 
-        productListContainer.addEventListener("click", (event) => {
-          if (event.target.classList.contains("product-checkbox")) {
-            const card = event.target.closest(".col");
-            if (!card) return;
-            const productName = card.getAttribute("data-product-name");
-            if (event.target.checked) {
-              selectedProducts.add(productName);
-            } else {
-              selectedProducts.delete(productName);
-            }
-            updateOrderButton();
+        saveContactBtn.addEventListener("click", async () => {
+          const nameToCopy = "Medswell Distributor";
+          const phoneNumber = "tel:+919904685222";
+
+          // Step 1: Try to copy the name to the clipboard
+          try {
+            await navigator.clipboard.writeText(nameToCopy);
+            // Give feedback to the user that the copy was successful
+            alert(`'${nameToCopy}' copied to clipboard. The dialer will now open.`);
+          } catch (err) {
+            console.error("Failed to copy text: ", err);
+            // If copy fails, inform the user but still proceed
+            alert("Could not copy name. Opening the dialer.");
           }
-        });
 
-        const updateOrderButton = () => {
-          const count = selectedProducts.size;
-          itemCountBadge.textContent = count;
-          if (count > 0) {
-            floatingOrderBtn.classList.add("visible");
-          } else {
-            floatingOrderBtn.classList.remove("visible");
-          }
-        };
-
-        const filterAndSearchProducts = () => {
-          const activeFilter = document.querySelector("#filter-container .filter-btn.active").getAttribute("data-filter");
-          const searchTerm = searchInput.value.toLowerCase();
-          allProductCols.forEach((col) => {
-            const category = col.getAttribute("data-category");
-            const productName = col.getAttribute("data-product-name").toLowerCase();
-            const matchesFilter = activeFilter === "all" || category === activeFilter;
-            const matchesSearch = productName.includes(searchTerm);
-            if (matchesFilter && matchesSearch) {
-              col.style.display = "";
-            } else {
-              col.style.display = "none";
-            }
-          });
-        };
-
-        productModal.addEventListener("show.bs.modal", (event) => {
-          const triggerElement = event.relatedTarget;
-          const card = triggerElement.closest(".col");
-
-          const productName = card.getAttribute("data-product-name");
-          const imageUrl = triggerElement.closest(".product-image-container").getAttribute("data-image-url");
-          const productForm = card.getAttribute("data-product-form");
-          const productMg = card.getAttribute("data-product-mg");
-          const productMrp = card.getAttribute("data-product-mrp");
-
-          const modalImage = productModal.querySelector("#modal-product-image");
-          const modalName = productModal.querySelector("#modal-product-name");
-          const modalDetailsContainer = productModal.querySelector("#modal-product-details");
-          const modalPrice = productModal.querySelector("#modal-product-price");
-
-          modalImage.src = imageUrl;
-          modalName.textContent = productName;
-          modalPrice.innerHTML = `MRP ${productMrp} &#8377;`;
-
-          let detailsHtml = '<ul class="list-group list-group-flush">';
-          if (productForm) {
-            detailsHtml += `<li class="list-group-item d-flex justify-content-between">
-                                <strong>Form:</strong> <span>${productForm}</span>
-                            </li>`;
-          }
-          if (productMg) {
-            detailsHtml += `<li class="list-group-item d-flex justify-content-between">
-                                <strong>Strength/Vol:</strong> <span>${productMg}</span>
-                            </li>`;
-          }
-          detailsHtml += "</ul>";
-
-          if (productForm || productMg) {
-            modalDetailsContainer.innerHTML = detailsHtml;
-          } else {
-            modalDetailsContainer.innerHTML = "";
-          }
-        });
-
-        orderModal.addEventListener("show.bs.modal", () => {
-          const modalBody = orderModal.querySelector("#order-modal-body");
-          if (selectedProducts.size === 0) {
-            modalBody.innerHTML = '<p class="text-center text-muted">No products selected. Please check items from the catalog to add them to your order.</p>';
-            submitOrderBtn.disabled = true;
-          } else {
-            let listHTML = '<ul class="list-group list-group-flush">';
-            selectedProducts.forEach((productName) => {
-              listHTML += `<li class="list-group-item">${productName}</li>`;
-            });
-            listHTML += "</ul>";
-            modalBody.innerHTML = listHTML;
-            submitOrderBtn.disabled = false;
-          }
-        });
-
-        filterButtons.forEach((button) => {
-          button.addEventListener("click", () => {
-            filterButtons.forEach((btn) => btn.classList.remove("active"));
-            button.classList.add("active");
-            filterAndSearchProducts();
-          });
-        });
-
-        searchInput.addEventListener("input", filterAndSearchProducts);
-
-        submitOrderBtn.addEventListener("click", () => {
-          if (selectedProducts.size === 0) return;
-          let message = "Hello! I would like to place an order for the following items:\n\n";
-          selectedProducts.forEach((productName) => (message += `- ${productName}\n`));
-          message += "\nPlease confirm the availability and total price.";
-          const whatsappNumber = "919904685222";
-          const encodedMessage = encodeURIComponent(message);
-          const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-          window.open(whatsappURL, "_blank");
+          // Step 2: Open the phone's dialer
+          window.location.href = phoneNumber;
         });
       });
     </script>
