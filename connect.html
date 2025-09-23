@@ -6,27 +6,25 @@
     <title>Sunil's Pharmacy - Professional Contact Page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
+      /* All your CSS styles remain exactly the same */
       :root {
-        --primary-color: #0d2c54; /* Deep Corporate Blue */
-        --secondary-color: #21b2a6; /* Vibrant Teal Accent */
+        --primary-color: #0d2c54;
+        --secondary-color: #21b2a6;
         --light-gray: #f8f9fa;
         --text-dark: #343a40;
         --text-light: #6c757d;
         --border-radius: 12px;
       }
-
       body {
         background-color: var(--light-gray);
         font-family: "Poppins", sans-serif;
         color: var(--text-dark);
       }
-
       .profile-page {
         position: relative;
         background-color: #ffffff;
@@ -35,21 +33,18 @@
         border-radius: var(--border-radius);
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
         overflow: hidden;
-        transition: margin 0.3s ease; /* Smooth transition for resizing */
+        transition: margin 0.3s ease;
       }
-
       .profile-header {
         height: 250px;
         position: relative;
         transition: height 0.3s ease;
       }
-
       .header-image {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-
       .profile-header::after {
         content: "";
         position: absolute;
@@ -59,7 +54,6 @@
         height: 100%;
         background: linear-gradient(to top, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
       }
-
       .profile-photo {
         width: 160px;
         height: 160px;
@@ -74,20 +68,17 @@
         z-index: 10;
         transition: all 0.3s ease;
       }
-
       .profile-content {
         padding: 100px 2rem 2rem;
         text-align: center;
         transition: padding 0.3s ease;
       }
-
       .profile-name {
         font-weight: 700;
         font-size: 2.25rem;
         color: var(--primary-color);
         transition: font-size 0.3s ease;
       }
-
       .profile-title {
         font-weight: 500;
         color: var(--text-light);
@@ -96,24 +87,18 @@
         font-size: 0.9rem;
         margin-bottom: 2rem;
       }
-
       .info-section {
         color: var(--text-dark);
         margin: 2rem 0;
         display: flex;
-        /* --- THIS IS THE FIX --- */
-        /* Aligns icon to the top of the text, which is better for wrapping text */
         align-items: flex-start;
         justify-content: center;
         gap: 0.75rem;
       }
-
       .info-section .icon {
         color: var(--secondary-color);
-        /* Add a little top margin to perfectly align with the text's baseline */
         margin-top: 0.1em;
       }
-
       .action-buttons {
         margin-top: 2.5rem;
         display: flex;
@@ -121,7 +106,6 @@
         justify-content: center;
         gap: 1rem;
       }
-
       .btn-custom {
         padding: 0.8rem 1.5rem;
         border-radius: 50px;
@@ -135,7 +119,6 @@
         align-items: center;
         gap: 0.5rem;
       }
-
       .btn-custom.btn-primary {
         background-color: var(--primary-color);
         color: white;
@@ -144,7 +127,6 @@
         transform: translateY(-3px);
         box-shadow: 0 4px 15px rgba(13, 44, 84, 0.3);
       }
-
       .btn-custom.btn-secondary {
         background-color: var(--secondary-color);
         color: white;
@@ -153,7 +135,6 @@
         transform: translateY(-3px);
         box-shadow: 0 4px 15px rgba(33, 178, 166, 0.4);
       }
-
       .btn-custom.btn-outline {
         border-color: #e0e0e0;
         color: var(--text-light);
@@ -163,7 +144,6 @@
         color: var(--primary-color);
         border-color: var(--light-gray);
       }
-
       .profile-footer {
         padding: 1.5rem;
         background-color: var(--light-gray);
@@ -171,10 +151,6 @@
         font-size: 0.9rem;
         text-align: center;
       }
-
-      /* --- RESPONSIVE STYLES START HERE --- */
-
-      /* For Tablets and smaller devices */
       @media (max-width: 768px) {
         .profile-page {
           margin: 2rem auto;
@@ -199,8 +175,6 @@
           align-items: center;
         }
       }
-
-      /* For Mobile Phones */
       @media (max-width: 576px) {
         .profile-page {
           margin: 0;
@@ -251,46 +225,46 @@
       <header class="profile-header">
         <img src="https://images.unsplash.com/photo-1690129069978-20a87fe95bf9?q=80&w=654&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pharmacy Banner" class="header-image" />
       </header>
-
       <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1961" alt="Owner Profile Photo" class="profile-photo" />
-
       <main class="profile-content">
-        <h1 class="profile-name">MedsWell</h1>
-        <p class="profile-title">Aniket Parmar (Owner)</p>
-
+        <h1 class="profile-name">Sunil's Pharmacy</h1>
+        <p class="profile-title">Sunil Patel (Owner)</p>
         <section class="info-section">
           <i class="fa-solid fa-location-dot icon fa-fw"></i>
-          <span>766/9, J.S.D Complex, Near Bus Stand, SURKHAI. Ta: chikhli, Di:Navsari Pin code: 396560</span>
+          <span>123 Medical Lane, Diamond Nagar, Surat, Gujarat 395006</span>
         </section>
-
         <section class="action-buttons">
-          <a id="save-contact-btn" href="#" class="btn-custom btn-primary" download="SunilPharmacy.vcf"> <i class="fa-solid fa-user-plus"></i> Add to Contact </a>
-          <a href="https://wa.me/919904685222" class="btn-custom btn-secondary" target="_blank"> <i class="fa-brands fa-whatsapp"></i> WhatsApp </a>
-          <a href="mailto:medswelldistributors@gmail.com" class="btn-custom btn-outline"> <i class="fa-solid fa-envelope"></i> Email </a>
-          <a href="/index.html" class="btn-custom btn-outline" target="_blank"> <i class="fa-solid fa-book-open"></i> Catalogue </a>
+          <button id="save-contact-btn" class="btn-custom btn-primary"><i class="fa-solid fa-user-plus"></i> Add to Contact</button>
+          <a href="https://wa.me/919876543210" class="btn-custom btn-secondary" target="_blank"> <i class="fa-brands fa-whatsapp"></i> WhatsApp </a>
+          <a href="mailto:info@sunilpharmacy.com" class="btn-custom btn-outline"> <i class="fa-solid fa-envelope"></i> Email </a>
+          <a href="https://example.com/catalogue" class="btn-custom btn-outline" target="_blank"> <i class="fa-solid fa-book-open"></i> Catalogue </a>
         </section>
       </main>
-
       <footer class="profile-footer">Your Trusted Health Partner</footer>
     </div>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const contact = {
-          name: "Aniket Parmar (MedsWell Distributors)",
-          phone: "++919904685222",
-          email: "medswelldistributors@gmail.com",
-          address: "766/9, J.S.D Complex, Near Bus Stand, SURKHAI.Ta: chikhli, Di:Navsari Pin code: 396560",
-        };
-        const vcard = `BEGIN:VCARD
-VERSION:3.0
-FN:${contact.name}
-TEL;TYPE=CELL:${contact.phone}
-EMAIL:${contact.email}
-ADR;TYPE=WORK:;;${contact.address}
-END:VCARD`;
         const saveContactBtn = document.getElementById("save-contact-btn");
-        saveContactBtn.href = `data:text/vcard;charset=utf-8,${encodeURIComponent(vcard)}`;
+
+        saveContactBtn.addEventListener("click", async () => {
+          const nameToCopy = "Medswell Distributor";
+          const phoneNumber = "tel:+919904685222";
+
+          // Step 1: Try to copy the name to the clipboard
+          try {
+            await navigator.clipboard.writeText(nameToCopy);
+            // Give feedback to the user that the copy was successful
+            alert(`'${nameToCopy}' copied to clipboard. The dialer will now open.`);
+          } catch (err) {
+            console.error("Failed to copy text: ", err);
+            // If copy fails, inform the user but still proceed
+            alert("Could not copy name. Opening the dialer.");
+          }
+
+          // Step 2: Open the phone's dialer
+          window.location.href = phoneNumber;
+        });
       });
     </script>
   </body>
