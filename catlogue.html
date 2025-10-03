@@ -18,26 +18,11 @@
         --brand-light-gray: #f8f9fa;
         --brand-border: #dee2e6;
       }
-
       body {
         font-family: "Poppins", sans-serif;
         background-color: #fcfdff;
         color: var(--brand-text);
       }
-
-      /* --- Header & Search --- */
-      .catalog-header {
-        background-color: #ffffff;
-        padding: 2.5rem 1rem;
-        border-bottom: 1px solid var(--brand-border);
-        margin-bottom: 2rem;
-      }
-
-      .search-bar {
-        max-width: 500px;
-      }
-
-      /* --- Product Card CSS --- */
       .product-card {
         border: 1px solid var(--brand-border);
         border-radius: 0.75rem;
@@ -46,17 +31,10 @@
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         background-color: #fff;
       }
-
-      .product-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-      }
-
       .product-image-container {
         position: relative;
         cursor: pointer;
       }
-
       .product-image {
         height: 220px;
         width: 100%;
@@ -64,7 +42,6 @@
         padding: 10px;
         background-color: #ffffff;
       }
-
       .product-checkbox {
         position: absolute;
         top: 15px;
@@ -74,7 +51,6 @@
         cursor: pointer;
         z-index: 10;
       }
-
       .card-body {
         padding: 1rem;
         display: flex;
@@ -82,31 +58,49 @@
         justify-content: space-between;
         flex-grow: 1;
       }
-
       .card-title {
         font-weight: 600;
         font-size: 1.05rem;
         margin-bottom: 0.25rem;
       }
-
-      .card-body span {
+      .product-content {
         font-size: 0.85rem;
         color: #6c757d;
       }
-
+      .packing-info {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: #0d6efd;
+      }
       .card-price-amount {
         font-size: 0.9rem !important;
         text-decoration: line-through;
         color: #6c757d !important;
       }
-
       .card-price {
         font-size: 1.15rem !important;
         font-weight: 700;
         color: var(--bs-primary) !important;
       }
-
-      /* --- Floating Action Button (FAB) --- */
+      .quantity-selector {
+        width: 120px;
+      }
+      .quantity-selector .input-group-text {
+        padding: 0.375rem 0.5rem;
+      }
+      .catalog-header {
+        background-color: #ffffff;
+        padding: 2.5rem 1rem;
+        border-bottom: 1px solid var(--brand-border);
+        margin-bottom: 2rem;
+      }
+      .search-bar {
+        max-width: 500px;
+      }
+      .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
       .floating-order-btn {
         position: fixed;
         bottom: 30px;
@@ -118,11 +112,9 @@
         padding: 0.8rem 1.5rem;
         display: none;
       }
-
       .floating-order-btn.visible {
         display: flex;
       }
-
       .item-count-badge {
         position: absolute;
         top: -8px;
@@ -138,41 +130,25 @@
         font-weight: 600;
         border: 2px solid white;
       }
-
-      /* --- Modal CSS --- */
       .modal-content {
         border-radius: 1rem;
         border: none;
       }
-
       .modal-header {
         background-color: var(--brand-secondary);
         border-bottom: none;
         padding: 1.5rem;
       }
-
       .modal-title {
         font-weight: 600;
-      }
-
-      #modal-product-details .list-group-item {
-        padding-left: 0;
-        padding-right: 0;
-        border-color: var(--brand-border);
-        background: transparent;
-      }
-      #modal-product-details .list-group-item:last-child {
-        border-bottom: none;
       }
     </style>
   </head>
   <body>
     <header class="catalog-header">
-      <div class="container">
-        <div class="text-center">
-          <h1 class="display-5 fw-bold text-primary">MedsWell Product Catalog</h1>
-          <p class="lead text-muted">Your trusted partner in quality medical supplies.</p>
-        </div>
+      <div class="container text-center">
+        <h1 class="display-5 fw-bold text-primary">MedsWell Product Catalog</h1>
+        <p class="lead text-muted">Your trusted partner in quality medical supplies.</p>
         <div class="row justify-content-center mt-4">
           <div class="col-md-8 col-lg-6">
             <div class="input-group search-bar">
@@ -186,372 +162,521 @@
 
     <main class="container pb-5">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="product-list">
-        <div class="col" data-category="pain_relief" data-product-name="Soulspas-P Syrup" data-product-content="Dicyclomine 5mg & Paracetamol 125mg Suspension" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="65" data-product-rate="18">
+        <div class="col" data-product-name="Soulspas-P Syrup" data-product-content="Dicyclomine & Paracetamol Suspension" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="65" data-product-rate="18" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOSPAS-P.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOSPAS-P.jpg" class="card-img-top product-image" alt="Soulspas-P Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulspas-P Syrup</h5>
-                <span>Dicyclomine 5mg & Paracetamol 125mg Suspension</span><br /><br />
+                <span class="product-content">Dicyclomine & Paracetamol Suspension</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 65 ₹</span>
-                <span class="card-price">Rate 18 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 65 ₹</span><br />
+                  <span class="card-price">Rate 18 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="vitamins" data-product-name="SoulPro" data-product-content="Comprehensive Nutrition Supplement" data-product-form="Protein Powder" data-product-mg="200gm" data-product-mrp="255" data-product-rate="74">
+        <div class="col" data-product-name="SoulPro" data-product-content="Comprehensive Nutrition Supplement" data-product-form="Protein Powder" data-product-mg="200gm" data-product-mrp="255" data-product-rate="74" data-unit-of-sale="Jar" data-unit-name="Jar">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOUL PRO.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOUL PRO.jpg" class="card-img-top product-image" alt="SoulPro" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">SoulPro</h5>
-                <span>Comprehensive Nutrition Supplement</span><br /><br />
+                <span class="product-content">Comprehensive Nutrition Supplement</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 255 ₹</span>
-                <span class="card-price">Rate 74 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 255 ₹</span><br />
+                  <span class="card-price">Rate 74 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Jar</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="vitamins" data-product-name="Soul Vita" data-product-content="Dextrose and Ascorbic Acid with Zinc Powder" data-product-form="Powder" data-product-mg="105gm" data-product-mrp="75" data-product-rate="18">
+        <div class="col" data-product-name="Soul Vita" data-product-content="Dextrose and Ascorbic Acid with Zinc Powder" data-product-form="Powder" data-product-mg="105gm" data-product-mrp="75" data-product-rate="18" data-unit-of-sale="Box" data-unit-name="Box">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOUL VITA.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOUL VITA.jpg" class="card-img-top product-image" alt="Soul Vita" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soul Vita</h5>
-                <span>Dextrose and Ascorbic Acid with Zinc Powder</span><br /><br />
+                <span class="product-content">Dextrose and Ascorbic Acid with Zinc Powder</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 75 ₹</span>
-                <span class="card-price">Rate 18 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 75 ₹</span><br />
+                  <span class="card-price">Rate 18 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Box</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="medical" data-product-name="Soulcef DT TAB" data-product-content="Cefixime Dispersible Tablets I.P." data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="109" data-product-rate="51">
+        <div class="col" data-product-name="Soulcef DT TAB" data-product-content="Cefixime Dispersible Tablets I.P." data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="109" data-product-rate="51" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCEF DT.png">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULCEF DT.png" class="card-img-top product-image" alt="Soulcef DT TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulcef DT TAB</h5>
-                <span>Cefixime Dispersible Tablets I.P.</span><br /><br />
+                <span class="product-content">Cefixime Dispersible Tablets I.P.</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 109 ₹</span>
-                <span class="card-price">Rate 51 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 109 ₹</span><br />
+                  <span class="card-price">Rate 51 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="hygiene" data-product-name="Soulcet M TAB" data-product-content="Montelukast sodium and Levocetrizine Hydrochloride Tablet IP 5/10 mg" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="65" data-product-rate="14">
+        <div class="col" data-product-name="Soulcet M TAB" data-product-content="Montelukast sodium and Levocetrizine Hydrochloride Tablet IP 5/10 mg" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="65" data-product-rate="14" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCET-M.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULCET-M.jpg" class="card-img-top product-image" alt="Soulcet M TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulcet M TAB</h5>
-                <span>Montelukast sodium and Levocetrizine Hydrochloride Tablet IP 5/10 mg</span><br /><br />
+                <span class="product-content">Montelukast sodium and Levocetrizine Hydrochloride Tablet IP 5/10 mg</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 65 ₹</span>
-                <span class="card-price">Rate 14 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 65 ₹</span><br />
+                  <span class="card-price">Rate 14 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="medical" data-product-name="Soulcid-20 CAP" data-product-content="Omeprazole Gastro-resistant Capsules IP 20mg" data-product-form="Capsule" data-product-mg="20x15" data-product-mrp="45" data-product-rate="11">
+        <div class="col" data-product-name="Soulcid-20 CAP" data-product-content="Omeprazole Gastro-resistant Capsules IP 20mg" data-product-form="Capsule" data-product-mg="20x15" data-product-mrp="45" data-product-rate="11" data-unit-of-sale="Strip" data-units-per-strip="15" data-unit-name="Capsule">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCID.png">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULCID.png" class="card-img-top product-image" alt="Soulcid-20 CAP" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulcid-20 CAP</h5>
-                <span>Omeprazole Gastro-resistant Capsules IP 20mg</span><br /><br />
+                <span class="product-content">Omeprazole Gastro-resistant Capsules IP 20mg</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 45 ₹</span>
-                <span class="card-price">Rate 11 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 45 ₹</span><br />
+                  <span class="card-price">Rate 11 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="medical" data-product-name="Soulcold-DS Syrup" data-product-content="Paracetamol, Phenylephrine Hydrochloride, Chlorpheniramine Maleate Syrup" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="60" data-product-rate="19">
+        <div class="col" data-product-name="Soulcold-DS Syrup" data-product-content="Paracetamol, Phenylephrine Hydrochloride, Chlorpheniramine Maleate Syrup" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="60" data-product-rate="19" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulcold DS.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/Soulcold DS.jpg" class="card-img-top product-image" alt="Soulcold-DS Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulcold-DS Syrup</h5>
-                <span>Paracetamol, Phenylephrine Hydrochloride, Chlorpheniramine Maleate Syrup</span><br /><br />
+                <span class="product-content">Paracetamol, Phenylephrine Hydrochloride, Chlorpheniramine Maleate Syrup</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 60 ₹</span>
-                <span class="card-price">Rate 19 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 60 ₹</span><br />
+                  <span class="card-price">Rate 19 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="medical" data-product-name="Soulcure AM Syrup" data-product-content="Levosalbutamol, Ambroxol Hydrochloride & Guaiphenesin Syrup " data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="64" data-product-rate="21">
+        <div class="col" data-product-name="Soulcure AM Syrup" data-product-content="Levosalbutamol, Ambroxol Hydrochloride & Guaiphenesin Syrup" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="64" data-product-rate="21" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULCURE-AM.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULCURE-AM.jpg" class="card-img-top product-image" alt="Soulcure AM Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulcure AM Syrup</h5>
-                <span>Levosalbutamol, Ambroxol Hydrochloride & Guaiphenesin Syrup</span><br /><br />
+                <span class="product-content">Levosalbutamol, Ambroxol Hydrochloride & Guaiphenesin Syrup</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 64 ₹</span>
-                <span class="card-price">Rate 21 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 64 ₹</span><br />
+                  <span class="card-price">Rate 21 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="pain_relief" data-product-name="Soulgesic Syrup" data-product-content="Ibuprofen and Paracetamol Suspension " data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="64" data-product-rate="19">
+        <div class="col" data-product-name="Soulgesic Syrup" data-product-content="Ibuprofen and Paracetamol Suspension" data-product-form="Syrup" data-product-mg="60ml" data-product-mrp="64" data-product-rate="19" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulgesic.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/Soulgesic.jpg" class="card-img-top product-image" alt="Soulgesic Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulgesic Syrup</h5>
-                <span>Ibuprofen and Paracetamol Suspension </span><br /><br />
+                <span class="product-content">Ibuprofen and Paracetamol Suspension</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 64 ₹</span>
-                <span class="card-price">Rate 19 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 64 ₹</span><br />
+                  <span class="card-price">Rate 19 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="pain_relief" data-product-name="Soulmef-DS" data-product-content="Mefenamic Acid & Paracetamol Suspension 100mg/250mg" data-product-form="Suspension" data-product-mg="60ml" data-product-mrp="75" data-product-rate="18">
+        <div class="col" data-product-name="Soulmef-DS" data-product-content="Mefenamic Acid & Paracetamol Suspension 100mg/250mg" data-product-form="Suspension" data-product-mg="60ml" data-product-mrp="75" data-product-rate="18" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULMEF-DS.png">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULMEF-DS.png" class="card-img-top product-image" alt="Soulmef-DS" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulmef-DS</h5>
-                <span>Mefenamic Acid & Paracetamol Suspension 100mg/250mg</span><br /><br />
+                <span class="product-content">Mefenamic Acid & Paracetamol Suspension 100mg/250mg</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 75 ₹</span>
-                <span class="card-price">Rate 18 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 75 ₹</span><br />
+                  <span class="card-price">Rate 18 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="col" data-category="medical" data-product-name="Soulmef TAB" data-product-content="Mefenamic Acid & Dicyclomine HCL" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="45" data-product-rate="8">
+        <div class="col" data-product-name="Soulmef TAB" data-product-content="Mefenamic Acid & Dicyclomine HCL" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="45" data-product-rate="8" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULMEF.png">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULMEF.png" class="card-img-top product-image" alt="Soulmef TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulmef TAB</h5>
-                <span>Mefenamic Acid & Dicyclomine HCL</span><br /><br />
+                <span class="product-content">Mefenamic Acid & Dicyclomine HCL</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 45 ₹</span>
-                <span class="card-price">Rate 8 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 45 ₹</span><br />
+                  <span class="card-price">Rate 8 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulmox-CV Syrup" data-product-content="Amoxycillin & Potassium Clavulanate" data-product-form="Dry Syrup" data-product-mg="30ml" data-product-mrp="68" data-product-rate="36">
+
+        <div class="col" data-product-name="Soulmox-CV Syrup" data-product-content="Amoxycillin & Potassium Clavulanate" data-product-form="Dry Syrup" data-product-mg="30ml" data-product-mrp="68" data-product-rate="36" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulmox CV- Dry Syrup.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/Soulmox CV- Dry Syrup.jpg" class="card-img-top product-image" alt="Soulmox-CV Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulmox-CV Syrup</h5>
-                <span>Amoxycillin & Potassium Clavulanate</span><br /><br />
+                <span class="product-content">Amoxycillin & Potassium Clavulanate</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 68 ₹</span>
-                <span class="card-price">Rate 36 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 68 ₹</span><br />
+                  <span class="card-price">Rate 36 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulnac-P" data-product-content="Aceclofenac & Paracetamol" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="75" data-product-rate="8">
+
+        <div class="col" data-product-name="Soulnac-P" data-product-content="Aceclofenac & Paracetamol" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="75" data-product-rate="8" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULNAC-P.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULNAC-P.jpg" class="card-img-top product-image" alt="Soulnac-P" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulnac-P</h5>
-                <span>Aceclofenac & Paracetamol</span><br /><br />
+                <span class="product-content">Aceclofenac & Paracetamol</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 75 ₹</span>
-                <span class="card-price">Rate 8 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 75 ₹</span><br />
+                  <span class="card-price">Rate 8 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulpod 200 TAB" data-product-content="Cefpodoxime Proxetil" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="150" data-product-rate="66">
+
+        <div class="col" data-product-name="Soulpod 200 TAB" data-product-content="Cefpodoxime Proxetil" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="150" data-product-rate="66" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULPOD.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULPOD.jpg" class="card-img-top product-image" alt="Soulpod 200 TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulpod 200 TAB</h5>
-                <span>Cefpodoxime Proxetil</span><br /><br />
+                <span class="product-content">Cefpodoxime Proxetil</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 150 ₹</span>
-                <span class="card-price">Rate 66 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 150 ₹</span><br />
+                  <span class="card-price">Rate 66 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulrab DSR CAP" data-product-content="Rabeprazole & Domperidone" data-product-form="Capsule" data-product-mg="1x10" data-product-mrp="80" data-product-rate="14">
+
+        <div class="col" data-product-name="Soulrab DSR CAP" data-product-content="Rabeprazole & Domperidone" data-product-form="Capsule" data-product-mg="1x10" data-product-mrp="80" data-product-rate="14" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Capsule">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULRAB-DSR.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULRAB-DSR.jpg" class="card-img-top product-image" alt="Soulrab DSR CAP" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulrab DSR CAP</h5>
-                <span>Rabeprazole & Domperidone</span><br /><br />
+                <span class="product-content">Rabeprazole & Domperidone</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 80 ₹</span>
-                <span class="card-price">Rate 14 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 80 ₹</span><br />
+                  <span class="card-price">Rate 14 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulsera AP TAB" data-product-content="Aceclofenac, Paracetamol & Serratiopeptidase" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="110" data-product-rate="15">
+
+        <div class="col" data-product-name="Soulsera AP TAB" data-product-content="Aceclofenac, Paracetamol & Serratiopeptidase" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="110" data-product-rate="15" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULSERA-AP.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULSERA-AP.jpg" class="card-img-top product-image" alt="Soulsera AP TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulsera AP TAB</h5>
-                <span>Aceclofenac, Paracetamol & Serratiopeptidase</span><br /><br />
+                <span class="product-content">Aceclofenac, Paracetamol & Serratiopeptidase</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 110 ₹</span>
-                <span class="card-price">Rate 15 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 110 ₹</span><br />
+                  <span class="card-price">Rate 15 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulsetron Syrup" data-product-content="Ondansetron Oral Solution" data-product-form="Syrup" data-product-mg="30ml" data-product-mrp="60" data-product-rate="15">
+
+        <div class="col" data-product-name="Soulsetron Syrup" data-product-content="Ondansetron Oral Solution" data-product-form="Syrup" data-product-mg="30ml" data-product-mrp="60" data-product-rate="15" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/SOULSETRON- syrup.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/SOULSETRON- syrup.jpg" class="card-img-top product-image" alt="Soulsetron Syrup" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulsetron Syrup</h5>
-                <span>Ondansetron Oral Solution</span><br /><br />
+                <span class="product-content">Ondansetron Oral Solution</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 60 ₹</span>
-                <span class="card-price">Rate 15 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 60 ₹</span><br />
+                  <span class="card-price">Rate 15 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Soulsetron TAB" data-product-content="Ondansetron Orally Tablets" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="52" data-product-rate="6">
+
+        <div class="col" data-product-name="Soulsetron TAB" data-product-content="Ondansetron Orally Tablets" data-product-form="Tablet" data-product-mg="1x10" data-product-mrp="52" data-product-rate="6" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/Soulsetron.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/Soulsetron.jpg" class="card-img-top product-image" alt="Soulsetron TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Soulsetron TAB</h5>
-                <span>Ondansetron Orally Tablets</span><br /><br />
+                <span class="product-content">Ondansetron Orally Tablets</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 52 ₹</span>
-                <span class="card-price">Rate 6 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 52 ₹</span><br />
+                  <span class="card-price">Rate 6 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="URISOUL Syp" data-product-content="Disodium Hydrogen Citrate Syrup" data-product-form="Syrup" data-product-mg="100ml" data-product-mrp="125" data-product-rate="23">
+
+        <div class="col" data-product-name="URISOUL Syp" data-product-content="Disodium Hydrogen Citrate Syrup" data-product-form="Syrup" data-product-mg="100ml" data-product-mrp="125" data-product-rate="23" data-unit-of-sale="Bottle" data-unit-name="Bottle">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/URISOUL.jpg">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/URISOUL.jpg" class="card-img-top product-image" alt="URISOUL Syp" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">URISOUL Syp</h5>
-                <span>Disodium Hydrogen Citrate Syrup</span><br /><br />
+                <span class="product-content">Disodium Hydrogen Citrate Syrup</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 125 ₹</span>
-                <span class="card-price">Rate 23 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 125 ₹</span><br />
+                  <span class="card-price">Rate 23 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Bottle</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="col" data-category="medical" data-product-name="Cold S" data-product-content="Paracetamol,Phenylephrrine Tablets Hydrochloride & Chlorpheniramine Maleate Tablets" data-product-form="Tablet" data-product-mg="" data-product-mrp="50" data-product-rate="8">
+
+        <div class="col" data-product-name="Cold S" data-product-content="Paracetamol,Phenylephrrine Tablets Hydrochloride & Chlorpheniramine Maleate Tablets" data-product-form="Tablet" data-product-mg="" data-product-mrp="50" data-product-rate="8" data-unit-of-sale="Strip" data-units-per-strip="10" data-unit-name="Tablet">
           <div class="card product-card h-100">
-            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal" data-image-url="./assets/First/COLD-S.png">
+            <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="./assets/First/COLD-S.png" class="card-img-top product-image" alt="COLD-S TAB" />
               <input class="form-check-input product-checkbox" type="checkbox" />
             </div>
             <div class="card-body">
               <div>
                 <h5 class="card-title">Cold-S</h5>
-                <span>Paracetamol,Phenylephrrine Tablets Hydrochloride & Chlorpheniramine Maleate Tablets</span><br /><br />
+                <span class="product-content">Paracetamol,Phenylephrrine Tablets Hydrochloride & Chlorpheniramine Maleate Tablets</span>
+                <div class="packing-info-container mt-2"></div>
               </div>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="card-price-amount">MRP 50 ₹</span>
-                <span class="card-price">Rate 8 ₹</span>
+              <div class="mt-3 d-flex justify-content-between align-items-center">
+                <div>
+                  <span class="card-price-amount">MRP 50 ₹</span><br />
+                  <span class="card-price">Rate 8 ₹</span>
+                </div>
+                <div class="quantity-selector input-group input-group-sm" style="display: none">
+                  <span class="input-group-text quantity-unit-label">Strip</span>
+                  <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
+                </div>
               </div>
             </div>
           </div>
@@ -564,6 +689,7 @@
       <span>Place Order</span>
       <span class="item-count-badge">0</span>
     </button>
+
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -578,13 +704,14 @@
               </div>
               <div class="col-md-7 d-flex flex-column">
                 <h2 class="fw-bold mb-3" id="modal-product-name"></h2>
-                <div id="modal-product-details" class="mb-3"></div>
+                <div id="modal-product-details"></div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
     <div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
@@ -606,62 +733,104 @@
       document.addEventListener("DOMContentLoaded", () => {
         const productModal = document.getElementById("productModal");
         const orderModal = document.getElementById("orderModal");
-        const submitOrderBtn = document.getElementById("submit-order-btn");
         const searchInput = document.getElementById("search-input");
         const productListContainer = document.getElementById("product-list");
         const allProductCols = Array.from(productListContainer.children);
         const floatingOrderBtn = document.querySelector(".floating-order-btn");
         const itemCountBadge = document.querySelector(".item-count-badge");
-        const selectedProducts = new Set();
 
-        productListContainer.addEventListener("click", (event) => {
-          if (event.target.classList.contains("product-checkbox")) {
-            const card = event.target.closest(".col");
-            if (!card) return;
-            const productName = card.getAttribute("data-product-name");
-            if (event.target.checked) {
-              selectedProducts.add(productName);
-            } else {
-              selectedProducts.delete(productName);
+        const selectedProducts = new Map();
+
+        const displayPackingInfo = () => {
+          allProductCols.forEach((card) => {
+            const { unitOfSale, unitsPerStrip, stripsPerBox, unitName } = card.dataset;
+            const container = card.querySelector(".packing-info-container");
+            let infoText = "";
+            if (stripsPerBox && unitsPerStrip) {
+              infoText = `${unitsPerStrip} ${unitName}s / Strip | ${stripsPerBox} Strips / Box`;
+            } else if (unitsPerStrip) {
+              infoText = `${unitsPerStrip} ${unitName}s / Strip`;
             }
-            updateOrderButton();
-          }
-        });
-
-        const updateOrderButton = () => {
-          const count = selectedProducts.size;
-          itemCountBadge.textContent = count;
-          if (count > 0) {
-            floatingOrderBtn.classList.add("visible");
-          } else {
-            floatingOrderBtn.classList.remove("visible");
-          }
-        };
-
-        const filterAndSearchProducts = () => {
-          const searchTerm = searchInput.value.toLowerCase();
-          allProductCols.forEach((col) => {
-            const productName = col.getAttribute("data-product-name").toLowerCase();
-            const matchesSearch = productName.includes(searchTerm);
-            if (matchesSearch) {
-              col.style.display = "";
-            } else {
-              col.style.display = "none";
+            if (infoText && container) {
+              container.innerHTML = `<small class="packing-info">${infoText}</small>`;
+            }
+            const label = card.querySelector(".quantity-unit-label");
+            if (label) {
+              label.textContent = unitOfSale;
             }
           });
         };
 
+        const updateOrderButton = () => {
+          const count = selectedProducts.size;
+          itemCountBadge.textContent = count;
+          floatingOrderBtn.classList.toggle("visible", count > 0);
+        };
+
+        const calculateTotalUnits = (card, quantity) => {
+          const { unitOfSale, unitsPerStrip, stripsPerBox } = card.dataset;
+          if (unitOfSale === "Box") {
+            return quantity * (parseInt(stripsPerBox) || 1) * (parseInt(unitsPerStrip) || 1);
+          }
+          if (unitOfSale === "Strip") {
+            return quantity * (parseInt(unitsPerStrip) || 1);
+          }
+          return quantity;
+        };
+
+        productListContainer.addEventListener("change", (event) => {
+          const target = event.target;
+          const card = target.closest(".col");
+          if (!card) return;
+
+          const productName = card.dataset.productName;
+          const quantitySelector = card.querySelector(".quantity-selector");
+
+          if (target.classList.contains("product-checkbox")) {
+            const quantityInput = card.querySelector(".quantity-input");
+            quantityInput.value = 1;
+
+            if (target.checked) {
+              quantitySelector.style.display = "flex";
+              const quantity = 1;
+              const totalUnits = calculateTotalUnits(card, quantity);
+              selectedProducts.set(productName, {
+                quantity: quantity,
+                unit: card.dataset.unitOfSale,
+                totalUnits: totalUnits,
+                unitName: card.dataset.unitName,
+              });
+            } else {
+              quantitySelector.style.display = "none";
+              selectedProducts.delete(productName);
+            }
+          }
+
+          if (target.classList.contains("quantity-input")) {
+            let quantity = parseInt(target.value, 10);
+            if (isNaN(quantity) || quantity < 1) {
+              quantity = 1;
+              target.value = 1;
+            }
+            const totalUnits = calculateTotalUnits(card, quantity);
+            const existingProduct = selectedProducts.get(productName);
+            if (existingProduct) {
+              existingProduct.quantity = quantity;
+              existingProduct.totalUnits = totalUnits;
+            }
+          }
+          updateOrderButton();
+        });
+
+        // --- EVENT LISTENER FOR PRODUCT DETAILS MODAL ---
         productModal.addEventListener("show.bs.modal", (event) => {
           const triggerElement = event.relatedTarget;
           const card = triggerElement.closest(".col");
+          if (!card) return;
 
-          const productName = card.dataset.productName;
-          const imageUrl = triggerElement.closest(".product-image-container").dataset.imageUrl;
-          const productForm = card.dataset.productForm;
-          const productMg = card.dataset.productMg;
-          const productMrp = card.dataset.productMrp;
-          const productContent = card.dataset.productContent;
-          const productRate = card.dataset.productRate;
+          const { productName, productContent, productForm, productMg, productMrp, productRate } = card.dataset;
+
+          const imageUrl = card.querySelector(".product-image").src;
 
           const modalImage = productModal.querySelector("#modal-product-image");
           const modalName = productModal.querySelector("#modal-product-name");
@@ -671,67 +840,71 @@
           modalName.textContent = productName;
 
           let detailsHtml = '<ul class="list-group list-group-flush">';
-          if (productContent) {
-            detailsHtml += `<li class="list-group-item d-flex justify-content-between">
-                                    <strong>Content:</strong> <span>${productContent}</span>
-                                </li>`;
-          }
-          if (productForm) {
-            detailsHtml += `<li class="list-group-item d-flex justify-content-between">
-                                    <strong>Form:</strong> <span>${productForm}</span>
-                                </li>`;
-          }
-          if (productMg) {
-            detailsHtml += `<li class="list-group-item d-flex justify-content-between">
-                                    <strong>Strength/Vol:</strong> <span>${productMg}</span>
-                                </li>`;
-          }
+          if (productContent) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Content:</strong> <span>${productContent}</span></li>`;
+          if (productForm) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Form:</strong> <span>${productForm}</span></li>`;
+          if (productMg) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Strength/Vol:</strong> <span>${productMg}</span></li>`;
           detailsHtml += '</ul><hr class="my-3"/>';
-
-          if (productMrp) {
-            detailsHtml += `<div class="d-flex justify-content-between align-items-center mb-2">
-                                  <span class="text-muted fs-5">MRP:</span>
-                                  <span class="fs-5 text-decoration-line-through">&#8377; ${productMrp}</span>
-                                </div>`;
-          }
-          if (productRate) {
-            detailsHtml += `<div class="d-flex justify-content-between align-items-center">
-                                  <span class="text-muted fs-5">Your Rate:</span>
-                                  <span class="h3 fw-bold text-primary mb-0">&#8377; ${productRate}</span>
-                                </div>`;
-          }
+          if (productMrp) detailsHtml += `<div class="d-flex justify-content-between align-items-center mb-2"><span class="text-muted fs-5">MRP:</span><span class="fs-5 text-decoration-line-through">&#8377; ${productMrp}</span></div>`;
+          if (productRate) detailsHtml += `<div class="d-flex justify-content-between align-items-center"><span class="text-muted fs-5">Your Rate:</span><span class="h3 fw-bold text-primary mb-0">&#8377; ${productRate}</span></div>`;
 
           modalDetailsContainer.innerHTML = detailsHtml;
         });
 
+        // --- EVENT LISTENER FOR ORDER SUMMARY MODAL ---
         orderModal.addEventListener("show.bs.modal", () => {
           const modalBody = orderModal.querySelector("#order-modal-body");
+          const submitOrderBtn = orderModal.querySelector("#submit-order-btn");
+
           if (selectedProducts.size === 0) {
-            modalBody.innerHTML = '<p class="text-center text-muted">No products selected. Please check items from the catalog to add them to your order.</p>';
+            modalBody.innerHTML = '<p class="text-center text-muted">No products selected.</p>';
             submitOrderBtn.disabled = true;
           } else {
             let listHTML = '<h6>Selected Products:</h6><ul class="list-group list-group-flush">';
-            selectedProducts.forEach((productName) => {
-              listHTML += `<li class="list-group-item">${productName}</li>`;
-            });
+            for (const [productName, details] of selectedProducts.entries()) {
+              let totalText = "";
+              if (details.unit.toLowerCase() !== details.unitName.toLowerCase()) {
+                totalText = `(${details.totalUnits} ${details.unitName}s total)`;
+              }
+              listHTML += `<li class="list-group-item d-flex justify-content-between">
+                            <span>${productName} <small class="text-muted d-block">${totalText}</small></span> 
+                            <strong>${details.quantity} ${details.unit}(s)</strong>
+                          </li>`;
+            }
             listHTML += "</ul>";
             modalBody.innerHTML = listHTML;
             submitOrderBtn.disabled = false;
           }
         });
 
-        searchInput.addEventListener("input", filterAndSearchProducts);
-
-        submitOrderBtn.addEventListener("click", () => {
-          if (selectedProducts.size === 0) return;
-          let message = "Hello MedsWell! I would like to place an order for the following items:\n\n";
-          selectedProducts.forEach((productName) => (message += `- ${productName}\n`));
-          message += "\nPlease confirm the availability and total price.";
-          const whatsappNumber = "919904685222";
-          const encodedMessage = encodeURIComponent(message);
-          const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-          window.open(whatsappURL, "_blank");
+        orderModal.addEventListener("click", (event) => {
+          if (event.target.id === "submit-order-btn") {
+            if (selectedProducts.size === 0) return;
+            let message = "Hello MedsWell! I would like to place an order for:\n\n";
+            for (const [productName, details] of selectedProducts.entries()) {
+              let totalText = "";
+              if (details.unit.toLowerCase() !== details.unitName.toLowerCase()) {
+                totalText = ` (${details.totalUnits} ${details.unitName}s)`;
+              }
+              message += `- ${productName}: ${details.quantity} ${details.unit}(s)${totalText}\n`;
+            }
+            message += "\nPlease confirm availability and total price.";
+            const whatsappNumber = "919904685222";
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            window.open(whatsappURL, "_blank");
+          }
         });
+
+        searchInput.addEventListener("input", () => {
+          const searchTerm = searchInput.value.toLowerCase();
+          allProductCols.forEach((col) => {
+            const productName = col.dataset.productName.toLowerCase();
+            col.style.display = productName.includes(searchTerm) ? "" : "none";
+          });
+        });
+
+        // Initialize the page
+        displayPackingInfo();
       });
     </script>
   </body>
