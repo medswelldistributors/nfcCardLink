@@ -1326,7 +1326,7 @@
           </div>
         </div>
 
-        <div class="col" data-product-name="Dexzone" data-product-content="Dexamethasone Tablets I.P." data-product-form="Tablet" data-product-mg="0.5 mg" data-product-mrp="XXX" data-product-rate="XXX" data-unit-of-sale="Bag" data-unit-name="Bag">
+        <div class="col" data-product-name="Dexzone" data-product-content="Dexamethasone Tablets I.P." data-product-form="Tablet" data-product-mg="0.5 mg" data-product-mrp="80" data-product-rate="42.25" data-unit-of-sale="Bag" data-unit-name="Bag">
           <div class="card product-card h-100">
             <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
               <img src="https://res.cloudinary.com/dfvqt9wcy/image/upload/v1761153216/Dexzone_cztajm.png" class="card-img-top product-image" alt="Dexzone" />
@@ -1340,8 +1340,8 @@
               </div>
               <div class="mt-3 d-flex justify-content-between align-items-center">
                 <div>
-                  <span class="card-price-amount">MRP XXX ₹</span><br />
-                  <span class="card-price">Rate XXX ₹</span>
+                  <span class="card-price-amount">MRP 80 ₹</span><br />
+                  <span class="card-price">Rate 42.25 ₹</span>
                 </div>
                 <div class="quantity-selector input-group input-group-sm" style="display: none">
                   <span class="input-group-text quantity-unit-label">Bag</span>
@@ -1602,7 +1602,7 @@
               <div class="mt-3 d-flex justify-content-between align-items-center">
                 <div>
                   <span class="card-price-amount">MRP 150 ₹</span><br />
-                  <span class="card-price">Rate 52 ₹</span>
+                  <span class="card-price">Rate 18 ₹</span>
                 </div>
                 <div class="quantity-selector input-group input-group-sm" style="display: none">
                   <span class="input-group-text quantity-unit-label">Tablet</span>
@@ -2346,11 +2346,29 @@
           }
         });
 
+        // search based on name
+        // searchInput.addEventListener("input", () => {
+        // const searchTerm = searchInput.value.toLowerCase();
+        // allProductCols.forEach((col) => {
+        // const productName = col.dataset.productName.toLowerCase();
+        // col.style.display = productName.includes(searchTerm) ? "" : "none";
+        // });
+        // });
+
+        // search based on components
         searchInput.addEventListener("input", () => {
           const searchTerm = searchInput.value.toLowerCase();
+
           allProductCols.forEach((col) => {
+            // Get both the name and the content from the data attributes
             const productName = col.dataset.productName.toLowerCase();
-            col.style.display = productName.includes(searchTerm) ? "" : "none";
+            const productContent = col.dataset.productContent.toLowerCase(); // <-- This line was added
+
+            // Check if the search term is in *either* the name or the content
+            const isMatch = productName.includes(searchTerm) || productContent.includes(searchTerm); // <-- This logic was updated
+
+            // Show or hide the column based on the match
+            col.style.display = isMatch ? "" : "none";
           });
         });
 
