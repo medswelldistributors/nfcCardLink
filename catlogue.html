@@ -432,7 +432,6 @@
               }
               message += `- ${productName}: ${details.quantity} ${details.unit}(s)${totalText}\n`;
             }
-            message += "\nPlease confirm availability and total price.";
             const whatsappNumber = "919904685222";
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
