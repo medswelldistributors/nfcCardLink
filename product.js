@@ -1915,7 +1915,7 @@ const masterProduct = [
     "rate": 0,
     "unitOfSale": "Bottle",
     "unitName": "Bottle",
-    "imageUrl": "Blank"
+    "imageUrl": "https://res.cloudinary.com/dfvqt9wcy/image/upload/v1766676744/Humium_Magnesium_and_Sinion_Oral_Suspension_IP_mp99yz.png"
   },
   {
     "id": "hb-up-iron-tonic",
@@ -1976,5 +1976,17 @@ const masterProduct = [
     "unitOfSale": "Box",
     "unitName": "Tube",
     "imageUrl": "https://res.cloudinary.com/dfvqt9wcy/image/upload/v1766676744/VAGINAL_GEL_WITH_APPLICATOR_qjicnu.png"
+  },
+  {
+    "id": "stopack-tablets",
+    "name": "Stopack",
+    "content": "Acetaminophen and Caffeine Tablets U.S.P.",
+    "form": "Tablet",
+    "mg": "N/A",
+    "mrp": 0,
+    "rate": 0,
+    "unitOfSale": "Box",
+    "unitName": "Strip",
+    "imageUrl": "https://res.cloudinary.com/dfvqt9wcy/image/upload/v1766770957/Stopack_qwzzfu.png"
   }
 ];
