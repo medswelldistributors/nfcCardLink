@@ -1983,8 +1983,8 @@ const masterProduct = [
     "content": "Acetaminophen and Caffeine Tablets U.S.P.",
     "form": "Tablet",
     "mg": "N/A",
-    "mrp": 0,
-    "rate": 0,
+    "mrp": 30,
+    "rate": 5.5,
     "unitOfSale": "Box",
     "unitName": "Strip",
     "imageUrl": "https://res.cloudinary.com/dfvqt9wcy/image/upload/v1766770957/Stopack_qwzzfu.png"
