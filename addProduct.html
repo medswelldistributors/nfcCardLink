@@ -44,12 +44,12 @@
         background-image: linear-gradient(transparent, transparent 23px, #e9ecef 23px, #e9ecef 24px, transparent 24px);
         background-size: 100% var(--line-height);
         background-attachment: local; /* Scrolls with text */
-        
+
         line-height: var(--line-height);
         border: 2px solid #e9ecef;
         border-radius: 10px;
         padding: 0 15px; /* Padding adjust ki taaki lines match karein */
-        padding-top: 0px; 
+        padding-top: 0px;
         padding-right: 50px;
         font-size: 1rem;
         font-family: monospace; /* Monospace font alignment ke liye best hai */
@@ -82,28 +82,47 @@
         z-index: 5;
         transition: 0.2s;
       }
-      .btn-paste-float:hover { background-color: var(--brand-secondary); color: white; }
-
-      /* --- LIVE PREVIEW STYLES --- */
-      .preview-container {
-        background: #f8f9fa;
-        border-radius: 8px;
-        padding: 10px;
-        border: 1px dashed #dee2e6;
-        max-height: 200px;
-        overflow-y: auto;
-        display: flex;
-        flex-direction: column;
-        gap: 5px;
+      .btn-paste-float:hover {
+        background-color: var(--brand-secondary);
+        color: white;
       }
 
-      .preview-item {
-        font-size: 0.85rem;
-        padding: 4px 10px;
+      /* --- LIVE PREVIEW STYLES --- */
+      /* Jab naya Product shuru ho (#1, #2...) */
+      .preview-product-head {
+        background-color: #d1e7dd; /* Darker Green */
+        color: #0f5132;
+        border-left: 4px solid #198754;
+        font-weight: 600;
+      }
+
+      /* Product ki detail lines (Description etc.) */
+      .preview-product-detail {
+        background-color: #f1f8f5; /* Light Green */
+        color: #555;
+        border-left: 4px solid transparent; /* Align karne ke liye */
+        margin-left: 0;
+        padding-left: 20px; /* Thoda indent */
+      }
+
+      /* Empty Separator */
+      .preview-separator {
+        background-color: #f8d7da;
+        color: #842029;
+        border: 1px solid #f5c2c7;
+        justify-content: center;
+        font-size: 0.75rem;
+        opacity: 0.8;
+        height: 25px; /* Patla bar */
+      }
+
+      .badge-number {
+        background: #198754;
+        color: white;
         border-radius: 4px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+        padding: 2px 6px;
+        margin-right: 10px;
+        font-size: 0.75rem;
       }
 
       .preview-data {
@@ -128,8 +147,23 @@
       }
 
       /* Alert & Layout */
-      .alert-custom { display: none; align-items: center; border-radius: 10px; }
-      .loading-overlay { display: none; /* Hidden by default */ position: absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8); z-index:10; justify-content:center; align-items:center; }
+      .alert-custom {
+        display: none;
+        align-items: center;
+        border-radius: 10px;
+      }
+      .loading-overlay {
+        display: none; /* Hidden by default */
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        z-index: 10;
+        justify-content: center;
+        align-items: center;
+      }
     </style>
   </head>
   <body>
@@ -140,7 +174,6 @@
     <main class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-          
           <div id="alert-box" class="alert alert-custom mb-3" role="alert">
             <i id="alert-icon" class="fa-solid fa-circle-check me-2"></i>
             <span id="alert-message"></span>
@@ -153,43 +186,35 @@
 
             <form id="addProductForm">
               <div class="mb-3">
-                <label class="form-label text-primary fw-bold">
-                  <i class="fa-solid fa-pen-to-square me-2"></i>Product Input
-                </label>
-                
+                <label class="form-label text-primary fw-bold"> <i class="fa-solid fa-pen-to-square me-2"></i>Product Input </label>
+
                 <div class="textarea-wrapper">
-                  <textarea 
-                    class="form-control custom-textarea" 
-                    id="productData" 
-                    placeholder="Line 1: Product Name | Price&#10;Line 2: (Leave Empty)&#10;Line 3: Product Name..."
-                  ></textarea>
-                  
+                  <textarea class="form-control custom-textarea" id="productData" placeholder="Line 1: Product Name | Price&#10;Line 2: (Leave Empty)&#10;Line 3: Product Name..."></textarea>
+
                   <button type="button" class="btn-paste-float" id="pasteBtn" title="Paste">
                     <i class="fa-solid fa-paste"></i>
                   </button>
                 </div>
                 <div class="form-text text-muted d-flex justify-content-between">
-                   <span><i class="fa-solid fa-circle-info me-1"></i> Background lines help identify spacing.</span>
-                   <span id="line-counter">0 Lines</span>
+                  <span><i class="fa-solid fa-circle-info me-1"></i> Background lines help identify spacing.</span>
+                  <span id="line-counter">0 Lines</span>
                 </div>
               </div>
 
               <div class="mb-4">
                 <label class="form-label small text-muted text-uppercase fw-bold">Live Visualizer</label>
                 <div id="preview-area" class="preview-container">
-                    <div class="text-center text-muted small py-3">Start typing to see structure...</div>
+                  <div class="text-center text-muted small py-3">Start typing to see structure...</div>
                 </div>
               </div>
 
               <div class="d-flex justify-content-end gap-2">
                 <button type="button" class="btn btn-light rounded-pill px-4" id="clearBtn">Clear</button>
-                <button type="submit" class="btn btn-primary rounded-pill px-4" style="background: var(--brand-primary); border:none;">
-                  Add Product
-                </button>
+                <button type="submit" class="btn btn-primary rounded-pill px-4" style="background: var(--brand-primary); border: none">Add Product</button>
               </div>
             </form>
           </div>
-          
+
           <div class="text-center mt-3">
             <a href="/catlogue.html" class="text-decoration-none text-muted small">Back to Catalog</a>
           </div>
@@ -198,97 +223,100 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const inputField = document.getElementById('productData');
-            const previewArea = document.getElementById('preview-area');
-            const lineCounter = document.getElementById('line-counter');
-            const pasteBtn = document.getElementById('pasteBtn');
-            const clearBtn = document.getElementById('clearBtn');
-            const form = document.getElementById('addProductForm');
-            const loader = document.getElementById('loader');
+      document.addEventListener("DOMContentLoaded", () => {
+        const inputField = document.getElementById("productData");
+        const previewArea = document.getElementById("preview-area");
+        const lineCounter = document.getElementById("line-counter");
+        const pasteBtn = document.getElementById("pasteBtn");
+        const clearBtn = document.getElementById("clearBtn");
+        const form = document.getElementById("addProductForm");
+        const loader = document.getElementById("loader");
 
-            // --- 1. LIVE VISUALIZATION LOGIC ---
-            const updatePreview = () => {
-                const text = inputField.value;
-                // Split by newline
-                const lines = text.split('\n');
-                
-                lineCounter.textContent = `${lines.length} Lines`;
+        // --- 1. LIVE VISUALIZATION LOGIC ---
+        const updatePreview = () => {
+          const text = inputField.value;
+          // Split by newline
+          const lines = text.split("\n");
 
-                // Clear previous preview
-                previewArea.innerHTML = '';
+          lineCounter.textContent = `${lines.length} Lines`;
 
-                if(text.trim() === '') {
-                    previewArea.innerHTML = '<div class="text-center text-muted small py-3">Start typing to see structure...</div>';
-                    return;
-                }
+          // Clear previous preview
+          previewArea.innerHTML = "";
 
-                // Generate Visual Blocks
-                lines.forEach((line, index) => {
-                    const div = document.createElement('div');
-                    div.className = 'preview-item';
-                    
-                    const lineNum = `<span class="line-num">#${index + 1}</span>`;
+          if (text.trim() === "") {
+            previewArea.innerHTML = '<div class="text-center text-muted small py-3">Start typing to see structure...</div>';
+            return;
+          }
 
-                    if (line.trim() === '') {
-                        // Empty Line Styling
-                        div.classList.add('preview-empty');
-                        div.innerHTML = `${lineNum} <span><i class="fa-solid fa-ban me-2"></i>Empty Line (Ignored/Separator)</span>`;
-                    } else {
-                        // Data Line Styling
-                        div.classList.add('preview-data');
-                        div.innerHTML = `${lineNum} <span>${line.substring(0, 40)}${line.length > 40 ? '...' : ''}</span>`;
-                    }
-                    previewArea.appendChild(div);
-                });
-                
-                // Scroll preview to bottom to follow typing
-                previewArea.scrollTop = previewArea.scrollHeight;
-            };
+          // Generate Visual Blocks
+          lines.forEach((line, index) => {
+            const div = document.createElement("div");
+            div.className = "preview-item";
 
-            // Event Listeners for Typing/Pasting
-            inputField.addEventListener('input', updatePreview);
+            const lineNum = `<span class="line-num">#${index + 1}</span>`;
 
-            // --- 2. PASTE BUTTON LOGIC ---
-            pasteBtn.addEventListener('click', async () => {
-                try {
-                    const text = await navigator.clipboard.readText();
-                    if(text) {
-                        inputField.value = text;
-                        inputField.focus();
-                        updatePreview(); // Trigger Visual Update
-                    }
-                } catch (err) { alert("Please paste manually (Ctrl+V)"); }
-            });
+            if (line.trim() === "") {
+              // Empty Line Styling
+              div.classList.add("preview-empty");
+              div.innerHTML = `${lineNum} <span><i class="fa-solid fa-ban me-2"></i>Empty Line (Ignored/Separator)</span>`;
+            } else {
+              // Data Line Styling
+              div.classList.add("preview-data");
+              div.innerHTML = `${lineNum} <span>${line.substring(0, 40)}${line.length > 40 ? "..." : ""}</span>`;
+            }
+            previewArea.appendChild(div);
+          });
 
-            // --- 3. CLEAR BUTTON ---
-            clearBtn.addEventListener('click', () => {
-                inputField.value = '';
-                updatePreview();
-                inputField.focus();
-            });
+          // Scroll preview to bottom to follow typing
+          previewArea.scrollTop = previewArea.scrollHeight;
+        };
 
-            // --- 4. SUBMIT LOGIC ---
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                // Simple Alert Logic
-                if(!inputField.value.trim()) {
-                    alert("Please enter data"); return;
-                }
-                
-                loader.style.display = 'flex';
-                
-                // Simulate API Call
-                setTimeout(() => {
-                    loader.style.display = 'none';
-                    alert("Products Added Successfully!"); // Replace with custom alert logic if needed
-                    inputField.value = '';
-                    updatePreview();
-                }, 1000);
-            });
+        // Event Listeners for Typing/Pasting
+        inputField.addEventListener("input", updatePreview);
+
+        // --- 2. PASTE BUTTON LOGIC ---
+        pasteBtn.addEventListener("click", async () => {
+          try {
+            const text = await navigator.clipboard.readText();
+            if (text) {
+              inputField.value = text;
+              inputField.focus();
+              updatePreview(); // Trigger Visual Update
+            }
+          } catch (err) {
+            alert("Please paste manually (Ctrl+V)");
+          }
         });
+
+        // --- 3. CLEAR BUTTON ---
+        clearBtn.addEventListener("click", () => {
+          inputField.value = "";
+          updatePreview();
+          inputField.focus();
+        });
+
+        // --- 4. SUBMIT LOGIC ---
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          // Simple Alert Logic
+          if (!inputField.value.trim()) {
+            alert("Please enter data");
+            return;
+          }
+
+          loader.style.display = "flex";
+
+          // Simulate API Call
+          setTimeout(() => {
+            loader.style.display = "none";
+            alert("Products Added Successfully!"); // Replace with custom alert logic if needed
+            inputField.value = "";
+            updatePreview();
+          }, 1000);
+        });
+      });
     </script>
     <script type="module" src="./addProduct.js"></script>
   </body>
