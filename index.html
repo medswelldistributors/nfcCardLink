@@ -258,29 +258,6 @@
         <a href="mailto:parmaraush1816@gmail.com" class="text-dark text-decoration-none" style="white-space: nowrap"> <i class="fa-solid fa-envelope"></i> Email </a>
       </small>
     </div>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const saveContactBtn = document.getElementById("save-contact-btn");
-
-        saveContactBtn.addEventListener("click", async () => {
-          const nameToCopy = "Medswell Distributor";
-          const phoneNumber = "tel:+919904685222";
-
-          // Step 1: Try to copy the name to the clipboard
-          try {
-            await navigator.clipboard.writeText(nameToCopy);
-            // Give feedback to the user that the copy was successful
-            alert(`'${nameToCopy}' copied to clipboard. The dialer will now open.`);
-          } catch (err) {
-            console.error("Failed to copy text: ", err);
-            // If copy fails, inform the user but still proceed
-            alert("Could not copy name. Opening the dialer.");
-          }
-
-          // Step 2: Open the phone's dialer
-          window.location.href = phoneNumber;
-        });
-      });
-    </script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
