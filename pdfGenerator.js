@@ -200,7 +200,7 @@ export async function generateProductPDF() {
     const tableData = products.map((product, index) => [
       index + 1,                                    // NO
       product.name || "-",                          // NAME
-      product.company || "-",                       // COMPANY
+      product.companyName || "-",                   // COMPANY
       product.content || "-",                       // CONTENT
       product.mrp ? `${product.mrp}` : "-",         // MRP
       product.rate ? `${product.rate}` : "-",       // RATE

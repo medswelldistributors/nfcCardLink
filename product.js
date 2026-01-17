@@ -44,6 +44,7 @@ function renderProducts(products) {
                 data-product-mg="${product.mg || ""}" 
                 data-product-mrp="${product.mrp}" 
                 data-product-rate="${product.rate}" 
+                data-company-name="${product.companyName || ""}"
                 data-unit-of-sale="${product.unitOfSale}"
                 data-unit-name="${product.unitName}"
                 ${product.unitsPerStrip ? `data-units-per-strip="${product.unitsPerStrip}"` : ""}
@@ -51,7 +52,7 @@ function renderProducts(products) {
                 >
             <div class="card product-card h-100">
               <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
-                <img src="${product.imageUrl}" class="card-img-top product-image" alt="${product.name}" />
+                <img src="${product.imageUrl}" class="card-img-top product-image" alt="${product.name}" loading="lazy" />
                 <input class="form-check-input product-checkbox" type="checkbox" />
               </div>
               <div class="card-body">
@@ -167,7 +168,7 @@ function initModals() {
     const card = triggerElement.closest(".col");
     if (!card) return;
 
-    const { productName, productContent, productForm, productMg, productMrp, productRate } = card.dataset;
+    const { productName, productContent, productForm, productMg, productMrp, productRate, companyName } = card.dataset;
 
     const imageUrl = card.querySelector(".product-image").src;
 
@@ -181,6 +182,7 @@ function initModals() {
     let detailsHtml = '<ul class="list-group list-group-flush">';
     if (productContent) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Content:</strong> <span>${productContent}</span></li>`;
     if (productForm) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Form:</strong> <span>${productForm}</span></li>`;
+    if (companyName) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Company:</strong> <span>${companyName}</span></li>`;
     if (productMg) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Strength/Vol:</strong> <span>${productMg}</span></li>`;
     detailsHtml += '</ul><hr class="my-3"/>';
     if (productMrp) detailsHtml += `<div class="d-flex justify-content-between align-items-center mb-2"><span class="text-muted fs-5">MRP:</span><span class="fs-5 text-decoration-line-through">&#8377; ${productMrp}</span></div>`;
