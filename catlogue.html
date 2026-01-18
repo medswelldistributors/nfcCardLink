@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -32,7 +32,9 @@
         border-radius: 0.75rem;
         overflow: hidden;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-        transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        transition:
+          transform 0.2s ease-in-out,
+          box-shadow 0.2s ease-in-out;
         background-color: #fff;
       }
       .product-image-container {
@@ -92,8 +94,8 @@
       .quantity-selector .input-group-text {
         padding: 0.375rem 0.5rem;
       }
-     /* --- HEADER & SEARCH SECTION START --- */
-      
+      /* --- HEADER & SEARCH SECTION START --- */
+
       .catalog-header {
         background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%); /* Naya Gradient Background */
         padding: 2.5rem 1rem 1.5rem 1rem;
@@ -139,9 +141,9 @@
         height: 45px;
         font-size: 1rem;
         padding-left: 5px;
-        box-shadow: none; 
+        box-shadow: none;
       }
-      
+
       #search-input:focus {
         background: transparent;
         outline: none;
@@ -175,18 +177,50 @@
         box-shadow: 0 4px 12px rgba(13, 110, 253, 0.25);
         transform: translateY(-2px);
       }
-      
+
       /* Mobile ke liye adjustment */
       @media (max-width: 576px) {
         .catalog-header {
-            padding: 2rem 1rem;
+          padding: 2rem 1rem;
         }
         .search-wrapper {
-            width: 100%;
+          width: 100%;
         }
       }
-      
+
       /* --- HEADER SECTION END --- */
+
+      /* --- POPULAR PRODUCT CARD STYLING --- */
+      .product-card.popular-card {
+        background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%);
+        border: 2px solid #fbbf24;
+        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.25);
+      }
+      .product-card.popular-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(251, 191, 36, 0.35);
+      }
+      .popular-badge {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+        color: #ffffff;
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
+      }
+      .popular-badge i {
+        font-size: 0.7rem;
+      }
+      /* --- END POPULAR PRODUCT CARD STYLING --- */
+
       .product-card:hover {
         transform: translateY(-5px);
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
@@ -239,18 +273,16 @@
       <div class="container text-center">
         <h1 class="display-5 fw-bold text-primary mb-2">MedsWell Product Catalog</h1>
         <p class="lead text-muted mb-4">Your trusted partner in quality medical supplies.</p>
-        
+
         <div class="search-wrapper">
-            <div class="search-icon-box">
-                <i class="fa-solid fa-magnifying-glass"></i>
-            </div>
-            <input type="text" id="search-input" class="form-control" placeholder="Search medicine, brand, or category..." aria-label="Search" />
+          <div class="search-icon-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <input type="text" id="search-input" class="form-control" placeholder="Search medicine, brand, or category..." aria-label="Search" />
         </div>
 
         <div class="action-area">
-            <button id="generate-pdf-btn" class="btn btn-pdf-pill">
-              <i class="fa-solid fa-file-pdf me-2"></i> Download Full Catalog (PDF)
-            </button>
+          <button id="generate-pdf-btn" class="btn btn-pdf-pill"><i class="fa-solid fa-file-pdf me-2"></i> Download Full Catalog (PDF)</button>
         </div>
       </div>
     </header>

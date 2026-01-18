@@ -36,6 +36,10 @@ function renderProducts(products) {
   container.innerHTML = "";
 
   products.forEach((product) => {
+    const isPopular = product.isPopular === true;
+    const popularClass = isPopular ? " popular-card" : "";
+    const popularBadge = isPopular ? '<span class="popular-badge"><i class="fa-solid fa-star"></i> Popular</span>' : "";
+
     const html = `
           <div class="col" 
                 data-product-name="${product.name}" 
@@ -47,11 +51,13 @@ function renderProducts(products) {
                 data-company-name="${product.companyName || ""}"
                 data-unit-of-sale="${product.unitOfSale}"
                 data-unit-name="${product.unitName}"
+                data-is-popular="${isPopular}"
                 ${product.unitsPerStrip ? `data-units-per-strip="${product.unitsPerStrip}"` : ""}
                 ${product.stripsPerBox ? `data-strips-per-box="${product.stripsPerBox}"` : ""}
                 >
-            <div class="card product-card h-100">
+            <div class="card product-card h-100${popularClass}">
               <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
+                ${popularBadge}
                 <img src="${product.imageUrl}" class="card-img-top product-image" alt="${product.name}" loading="lazy" />
                 <input class="form-check-input product-checkbox" type="checkbox" />
               </div>

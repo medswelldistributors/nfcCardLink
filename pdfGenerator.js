@@ -2,19 +2,19 @@
  * =============================================================================
  * PDF GENERATOR MODULE - MedsWell Product Catalogue
  * =============================================================================
- * 
+ *
  * Purpose: Generates a professional PDF catalogue of all products from Firebase.
  * Author: Added as plug-and-play feature (does not modify existing code)
- * 
+ *
  * Dependencies:
  * - jsPDF (loaded via CDN in HTML)
  * - jspdf-autotable plugin (loaded via CDN in HTML)
  * - Firebase config from ./firebase.js
- * 
+ *
  * Usage:
  * - Import and call generateProductPDF() to generate and download PDF
  * - Or click the "Download Catalogue PDF" button on the catalogue page
- * 
+ *
  * =============================================================================
  */
 
@@ -38,13 +38,13 @@ const PDF_CONFIG = {
 
   // Colors (matching website design)
   colors: {
-    primary: [13, 110, 253],      // Bootstrap Blue (#0d6efd)
-    headerBg: [52, 58, 64],       // Dark gray (#343a40)
-    headerText: [255, 255, 255],  // White
-    rowEven: [255, 255, 255],     // White
-    rowOdd: [248, 249, 250],      // Light gray (#f8f9fa)
-    text: [52, 58, 64],           // Dark gray
-    border: [222, 226, 230],      // Light border (#dee2e6)
+    primary: [13, 110, 253], // Bootstrap Blue (#0d6efd)
+    headerBg: [52, 58, 64], // Dark gray (#343a40)
+    headerText: [255, 255, 255], // White
+    rowEven: [255, 255, 255], // White
+    rowOdd: [248, 249, 250], // Light gray (#f8f9fa)
+    text: [52, 58, 64], // Dark gray
+    border: [222, 226, 230], // Light border (#dee2e6)
   },
 
   // Fonts (using built-in fonts for reliability)
@@ -74,16 +74,21 @@ const PDF_CONFIG = {
 /**
  * Fetches all products from the Firebase 'catlogue' collection.
  * This ensures the PDF always contains the latest data.
- * 
+ *
  * @returns {Promise<Array>} Array of product objects
  */
 async function fetchAllProducts() {
   try {
     const snapshot = await getDocs(collection(db, "catlogue"));
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
+    return snapshot.docs.map((doc) => {
+      const data = doc.data();
+
+      return {
+        id: doc.id,
+        ...data,
+        isPopular: data.isPopular === true, // Preserve the popular flag
+      };
+    });
   } catch (error) {
     console.error("[PDF Generator] Error fetching products:", error);
     throw new Error("Failed to fetch products from database");
@@ -97,7 +102,7 @@ async function fetchAllProducts() {
 /**
  * Generates a QR code image URL for the given text.
  * Uses Google Charts API for simplicity.
- * 
+ *
  * @param {string} text - Text to encode in QR code
  * @param {number} size - Size of QR code in pixels
  * @returns {string} URL of QR code image
@@ -108,7 +113,7 @@ function getQRCodeUrl(text, size = 80) {
 
 /**
  * Loads an image and returns it as a base64 data URL.
- * 
+ *
  * @param {string} url - Image URL to load
  * @returns {Promise<string>} Base64 data URL of the image
  */
@@ -136,7 +141,7 @@ async function loadImageAsBase64(url) {
 /**
  * Generates and downloads a professional PDF catalogue of all products.
  * This is the main export function - call this to generate the PDF.
- * 
+ *
  * @returns {Promise<void>}
  */
 export async function generateProductPDF() {
@@ -184,10 +189,7 @@ export async function generateProductPDF() {
     let qrBase64 = null;
 
     try {
-      [logoBase64, qrBase64] = await Promise.all([
-        loadImageAsBase64(PDF_CONFIG.logoUrl),
-        loadImageAsBase64(getQRCodeUrl(PDF_CONFIG.orderUrl, 100)),
-      ]);
+      [logoBase64, qrBase64] = await Promise.all([loadImageAsBase64(PDF_CONFIG.logoUrl), loadImageAsBase64(getQRCodeUrl(PDF_CONFIG.orderUrl, 100))]);
     } catch (imgError) {
       console.warn("[PDF Generator] Could not load images:", imgError);
       // Continue without images
@@ -198,12 +200,12 @@ export async function generateProductPDF() {
 
     // 5. Prepare table data
     const tableData = products.map((product, index) => [
-      index + 1,                                    // NO
-      product.name || "-",                          // NAME
-      product.companyName || "-",                   // COMPANY
-      product.content || "-",                       // CONTENT
-      product.mrp ? `${product.mrp}` : "-",         // MRP
-      product.rate ? `${product.rate}` : "-",       // RATE
+      index + 1, // NO
+      product.name || "-", // NAME
+      product.companyName || "-", // COMPANY
+      product.content || "-", // CONTENT
+      product.mrp ? `${product.mrp}` : "-", // MRP
+      product.rate ? `${product.rate}` : "-", // RATE
     ]);
 
     // 6. Calculate column widths in mm
@@ -238,18 +240,43 @@ export async function generateProductPDF() {
         halign: "center",
       },
       columnStyles: {
-        0: { cellWidth: colWidths.no, halign: "center" },      // NO
-        1: { cellWidth: colWidths.name },                       // NAME
-        2: { cellWidth: colWidths.company },                    // COMPANY
-        3: { cellWidth: colWidths.content },                    // CONTENT
-        4: { cellWidth: colWidths.mrp, halign: "center" },     // MRP
-        5: { cellWidth: colWidths.rate, halign: "center" },    // RATE
+        0: { cellWidth: colWidths.no, halign: "center" }, // NO
+        1: { cellWidth: colWidths.name }, // NAME
+        2: { cellWidth: colWidths.company }, // COMPANY
+        3: { cellWidth: colWidths.content }, // CONTENT
+        4: { cellWidth: colWidths.mrp }, // MRP
+        5: { cellWidth: colWidths.rate }, // RATE
       },
       alternateRowStyles: {
         fillColor: PDF_CONFIG.colors.rowOdd,
       },
       bodyStyles: {
         fillColor: PDF_CONFIG.colors.rowEven,
+      },
+      // Apply styles for popular products (must use didParseCell for font changes)
+      didParseCell: (data) => {
+        if (data.section !== "body") return;
+
+        const product = products[data.row.index];
+        if (!product?.isPopular) return;
+
+        // Yellow background and bold text for popular products
+        data.cell.styles.fillColor = [254, 243, 199]; // #FEF3C7
+        data.cell.styles.fontStyle = "bold";
+      },
+      // Draw amber stripe after cell is drawn
+      didDrawCell: (data) => {
+        if (data.section !== "body") return;
+
+        const product = products[data.row.index];
+        if (!product?.isPopular) return;
+
+        // Draw amber stripe only once per row (first column)
+        if (data.column.index === 0) {
+          const { x, y, height } = data.cell;
+          doc.setFillColor(245, 158, 11); // amber stripe #F59E0B
+          doc.rect(x - 1.2, y, 1.2, height, "F");
+        }
       },
       didDrawPage: (data) => {
         // Add page number to each page
@@ -268,7 +295,6 @@ export async function generateProductPDF() {
     // Restore button state
     btn.innerHTML = originalContent;
     btn.disabled = false;
-
   } catch (error) {
     console.error("[PDF Generator] Error generating PDF:", error);
     alert("Failed to generate PDF. Please check the console for details.");
@@ -288,7 +314,7 @@ export async function generateProductPDF() {
 
 /**
  * Draws the PDF header with logo, company name, URL, and QR code.
- * 
+ *
  * @param {jsPDF} doc - jsPDF document instance
  * @param {number} y - Starting Y position
  * @param {string|null} logoBase64 - Base64 encoded logo image
@@ -342,7 +368,7 @@ function drawHeader(doc, y, logoBase64, qrBase64, pageWidth, contentWidth) {
 
 /**
  * Adds page number at the bottom of the page.
- * 
+ *
  * @param {jsPDF} doc - jsPDF document instance
  * @param {number} pageNum - Current page number
  * @param {number} pageHeight - Page height in mm
@@ -351,17 +377,12 @@ function drawHeader(doc, y, logoBase64, qrBase64, pageWidth, contentWidth) {
 function addPageNumber(doc, pageNum, pageHeight, pageWidth) {
   doc.setFontSize(PDF_CONFIG.fonts.pageNumber.size);
   doc.setTextColor(100, 100, 100);
-  doc.text(
-    `${pageNum}`,
-    pageWidth / 2,
-    pageHeight - 10,
-    { align: "center" }
-  );
+  doc.text(`${pageNum}`, pageWidth / 2, pageHeight - 10, { align: "center" });
 }
 
 /**
  * Formats a date as YYYY-MM-DD for filename.
- * 
+ *
  * @param {Date} date - Date to format
  * @returns {string} Formatted date string
  */
