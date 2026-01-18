@@ -1,6 +1,16 @@
-// product.js
+/**
+ * [FILE ROLE]
+ * - Fetch products from Firestore
+ * - Render catalogue UI
+ * - Handle search, cart, WhatsApp order
+ *
+ * [FLOW]
+ * Page Load → fetchProducts → renderProducts
+ * User Action → updateCart → generateOrderMessage
+ */
+
 import { db } from "./firebase.js";
-import { collection, getDocs, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 /* ======================
    STATE
@@ -17,6 +27,7 @@ async function fetchProducts() {
     ...doc.data(),
   }));
 }
+
 /* ======================
    WRITE To FIRESTORE
 ====================== */
@@ -27,6 +38,46 @@ export async function addProduct(product) {
     createdAt: serverTimestamp(),
   });
 }
+
+/* ======================
+   UPDATE PRODUCT
+====================== */
+
+export async function updateProduct(docId, productData) {
+  const productRef = doc(db, "catlogue", docId);
+  return await updateDoc(productRef, {
+    ...productData,
+    updatedAt: serverTimestamp(),
+  });
+}
+
+/* ======================
+   DELETE PRODUCT
+====================== */
+
+export async function deleteProduct(docId) {
+  const productRef = doc(db, "catlogue", docId);
+  return await deleteDoc(productRef);
+}
+
+/* ======================
+   GET SINGLE PRODUCT
+====================== */
+
+export async function getProductById(docId) {
+  const productRef = doc(db, "catlogue", docId);
+  const productSnap = await getDoc(productRef);
+  if (productSnap.exists()) {
+    return { id: productSnap.id, ...productSnap.data() };
+  }
+  return null;
+}
+
+/* ======================
+   EXPORT FETCH FOR OTHER MODULES
+====================== */
+
+export { fetchProducts };
 
 /* ======================
    RENDER PRODUCTS

@@ -1,3 +1,12 @@
+/**
+ * [FILE ROLE]
+ * - Parse bulk text input
+ * - Preview parsed products
+ * - Add products to Firestore
+ *
+ * [FLOW]
+ * Text Input → parseText(helper.js) → preview → addProduct()
+ */
 import { parseBulkProducts } from "./helper.js";
 import { addProduct } from "./product.js";
 

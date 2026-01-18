@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedsWell Admin - Update Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      :root {
+        --brand-primary: #0d2c54;
+        --brand-secondary: #21b2a6;
+        --brand-bg: #f8f9fa;
+        --brand-text: #343a40;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--brand-bg);
+        color: var(--brand-text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .admin-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      /* Search Section */
+      .search-wrapper {
+        position: relative;
+        background: #fff;
+        border-radius: 50px;
+        padding: 5px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border: 1px solid #eee;
+        display: flex;
+        align-items: center;
+      }
+
+      .search-wrapper:focus-within {
+        box-shadow: 0 8px 25px rgba(33, 178, 166, 0.15);
+        border-color: var(--brand-secondary);
+      }
+
+      .search-icon-box {
+        width: 45px;
+        height: 45px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--brand-secondary);
+        font-size: 1.1rem;
+        margin-left: 5px;
+      }
+
+      #search-input {
+        border: none;
+        background: transparent;
+        height: 45px;
+        font-size: 1rem;
+        box-shadow: none;
+      }
+
+      #search-input:focus {
+        background: transparent;
+        outline: none;
+      }
+
+      /* Product List */
+      .product-item {
+        padding: 12px 15px;
+        border: 1px solid #e9ecef;
+        border-radius: 10px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .product-item:hover {
+        background: #f0f9f8;
+        border-color: var(--brand-secondary);
+      }
+
+      .product-item.selected {
+        background: #d1f2ef;
+        border-color: var(--brand-secondary);
+        border-width: 2px;
+      }
+
+      .product-item .product-name {
+        font-weight: 600;
+        color: var(--brand-primary);
+      }
+
+      .product-item .product-rate {
+        color: var(--brand-secondary);
+        font-weight: 600;
+      }
+
+      /* Form Styling */
+      .form-label {
+        font-weight: 500;
+        color: var(--brand-primary);
+        font-size: 0.9rem;
+      }
+
+      .form-control:focus {
+        border-color: var(--brand-secondary);
+        box-shadow: 0 0 0 3px rgba(33, 178, 166, 0.1);
+      }
+
+      /* Alert Styles */
+      .alert-custom {
+        display: none;
+        align-items: center;
+        border-radius: 10px;
+      }
+
+      .alert-success-custom {
+        background: #d1e7dd;
+        border: 1px solid #a3cfbb;
+        color: #0f5132;
+      }
+
+      .alert-error-custom {
+        background: #f8d7da;
+        border: 1px solid #f5c2c7;
+        color: #842029;
+      }
+
+      /* Loading Overlay */
+      .loading-overlay {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.85);
+        z-index: 10;
+        justify-content: center;
+        align-items: center;
+        border-radius: 12px;
+      }
+
+      /* Popular Badge */
+      .badge-popular {
+        background: linear-gradient(135deg, #fbbf24, #f59e0b);
+        color: white;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 20px;
+      }
+
+      /* Scroll area for products */
+      .products-scroll {
+        max-height: 300px;
+        overflow-y: auto;
+      }
+
+      /* Section dividers */
+      .section-divider {
+        border-top: 2px solid #e9ecef;
+        margin: 1.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="text-center py-4 bg-white border-bottom mb-4">
+      <h1 class="h3 fw-bold" style="color: var(--brand-primary)">MedsWell Admin</h1>
+    </header>
+
+    <main class="container pb-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+          <!-- Alert Box -->
+          <div id="alert-box" class="alert alert-custom mb-3" role="alert">
+            <i id="alert-icon" class="fa-solid fa-circle-check me-2"></i>
+            <span id="alert-message"></span>
+          </div>
+
+          <div class="admin-card p-4 position-relative">
+            <!-- Loading Overlay -->
+            <div class="loading-overlay" id="loader">
+              <div class="spinner-border text-primary" role="status"></div>
+            </div>
+
+            <!-- STEP 1: Search Products -->
+            <div id="search-section">
+              <label class="form-label text-primary fw-bold mb-3"> <i class="fa-solid fa-magnifying-glass me-2"></i>Search Product to Edit </label>
+
+              <div class="search-wrapper mb-3">
+                <div class="search-icon-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+                <input type="text" id="search-input" class="form-control" placeholder="Type product name..." />
+              </div>
+
+              <div id="products-list" class="products-scroll">
+                <div class="text-center text-muted small py-3"><i class="fa-solid fa-arrow-up me-2"></i>Start typing to search products...</div>
+              </div>
+            </div>
+
+            <div class="section-divider" id="divider" style="display: none"></div>
+
+            <!-- STEP 2: Edit Form (Hidden initially) -->
+            <div id="edit-section" style="display: none">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <label class="form-label text-primary fw-bold mb-0"> <i class="fa-solid fa-pen-to-square me-2"></i>Edit Product </label>
+                <button type="button" class="btn btn-sm btn-outline-secondary" id="cancelEditBtn"><i class="fa-solid fa-xmark me-1"></i>Cancel</button>
+              </div>
+
+              <form id="updateProductForm">
+                <input type="hidden" id="productId" />
+
+                <div class="row g-3">
+                  <!-- Name -->
+                  <div class="col-12">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="name" required />
+                  </div>
+
+                  <!-- Company Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">Company Name</label>
+                    <input type="text" class="form-control" id="companyName" />
+                  </div>
+
+                  <!-- Content -->
+                  <div class="col-md-6">
+                    <label class="form-label">Content</label>
+                    <input type="text" class="form-control" id="content" />
+                  </div>
+
+                  <!-- Form -->
+                  <div class="col-md-4">
+                    <label class="form-label">Form</label>
+                    <input type="text" class="form-control" id="form" placeholder="Tablet, Syrup..." />
+                  </div>
+
+                  <!-- MG -->
+                  <div class="col-md-4">
+                    <label class="form-label">Strength/MG</label>
+                    <input type="text" class="form-control" id="mg" />
+                  </div>
+
+                  <!-- Is Popular -->
+                  <div class="col-md-4 d-flex align-items-end">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" id="isPopular" />
+                      <label class="form-check-label" for="isPopular"> <i class="fa-solid fa-star text-warning me-1"></i> Popular Product </label>
+                    </div>
+                  </div>
+
+                  <!-- MRP -->
+                  <div class="col-md-6">
+                    <label class="form-label">MRP (₹)</label>
+                    <input type="number" class="form-control" id="mrp" step="0.01" required />
+                  </div>
+
+                  <!-- Rate -->
+                  <div class="col-md-6">
+                    <label class="form-label">Rate (₹)</label>
+                    <input type="number" class="form-control" id="rate" step="0.01" required />
+                  </div>
+
+                  <!-- Unit of Sale -->
+                  <div class="col-md-6">
+                    <label class="form-label">Unit of Sale</label>
+                    <input type="text" class="form-control" id="unitOfSale" placeholder="Box, Strip, Bottle..." />
+                  </div>
+
+                  <!-- Unit Name -->
+                  <div class="col-md-6">
+                    <label class="form-label">Unit Name</label>
+                    <input type="text" class="form-control" id="unitName" placeholder="Tablet, Capsule, ML..." />
+                  </div>
+
+                  <!-- Image URL -->
+                  <div class="col-12">
+                    <label class="form-label">Image URL</label>
+                    <input type="url" class="form-control" id="imageUrl" placeholder="https://..." />
+                  </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="d-flex justify-content-between gap-2 mt-4">
+                  <button type="button" class="btn btn-outline-danger rounded-pill px-4" id="deleteBtn"><i class="fa-solid fa-trash me-2"></i>Delete</button>
+                  <button type="submit" class="btn btn-primary rounded-pill px-4" style="background: var(--brand-primary); border: none"><i class="fa-solid fa-save me-2"></i>Update Product</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="text-center mt-3">
+            <a href="/catlogue.html" class="text-decoration-none text-muted small">Back to Catalog</a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./updateProduct.js"></script>
+  </body>
+</html>
