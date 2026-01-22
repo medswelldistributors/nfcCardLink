@@ -1,5 +1,5 @@
 import { db, auth } from "./firebase.js";
-import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 /* ======================
@@ -63,10 +63,13 @@ export async function fetchProducts() {
 ====================== */
 
 export async function addProduct(product) {
-  return await addDoc(collection(db, "catlogue"), {
+  const docRef = doc(collection(db, "catlogue")); // auto-gen ID
+  await setDoc(docRef, {
     ...product,
+    id: docRef.id, // ✅ store auto ID inside document
     createdAt: serverTimestamp(),
   });
+  return docRef;
 }
 
 /* ======================
