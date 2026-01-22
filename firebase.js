@@ -1,10 +1,18 @@
+/**
+ * [FILE ROLE]
+ * - provide firebase connection to other files
+ *
+ * [FLOW]
+ * initializeApp → getFirestore → getAuth → Result
+ *
+ * [DEPENDENCIES]
+ * - firebase.js (db connection)
+ * - firebase.js (auth connection)
+ */
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBityHCGW6rlK1HcqGv0CSrSxzxtiCI1nA",
   authDomain: "medswell-distributors.firebaseapp.com",

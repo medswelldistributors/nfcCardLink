@@ -1,18 +1,17 @@
 /**
- * =============================================================================
- * ENHANCED PDF GENERATOR - MedsWell Product Catalogue
- * =============================================================================
+ * [FILE ROLE]
+ * - generate pdf from firebase products
+ * -
  *
- * FEATURES:
- * - Professional header with logo (left) and QR code (right)
- * - Popular products highlighted with amber background + stripe
- * - Local assets (logo & QR from ./assets/)
+ * [FLOW]
+ * fetchAllProducts → generateProductPDF → Result
  *
- * =============================================================================
+ * [DEPENDENCIES]
+ * - firebase.js (db connection)
+ * - other imports...
  */
 
-import { db } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { fetchProducts } from "./services.firebase.js";
 
 /* =============================================================================
    CONFIGURATION
@@ -62,11 +61,10 @@ const PDF_CONFIG = {
 
 async function fetchAllProducts() {
   try {
-    const snapshot = await getDocs(collection(db, "catlogue"));
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-      isPopular: doc.data().isPopular === true,
+    const products = await fetchProducts();
+    return products.map((product) => ({
+      ...product,
+      isPopular: product.isPopular === true,
     }));
   } catch (error) {
     console.error("[PDF] Error fetching products:", error);

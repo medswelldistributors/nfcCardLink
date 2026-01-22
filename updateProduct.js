@@ -5,13 +5,19 @@
  * - Update / delete product
  */
 
-import { fetchProducts, updateProduct, deleteProduct } from "./product.js";
+import { fetchProducts, updateProduct, deleteProduct, getProductById } from "./services.firebase.js";
+import { validateProductForm } from "./helper.js";
+import { initAdminPage } from "./adminNavbar.js";
 
 // --- GLOBAL STATE ---
 let allProducts = [];
 let selectedProductId = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // --- INIT ADMIN PAGE: Auth check, navbar, logout ---
+  const user = await initAdminPage();
+  if (!user) return;
+
   // --- DOM Elements ---
   const searchInput = document.getElementById("search-input");
   const productsList = document.getElementById("products-list");
@@ -22,10 +28,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   const deleteBtn = document.getElementById("deleteBtn");
   const loader = document.getElementById("loader");
 
-  // Alert Elements
-  const alertBox = document.getElementById("alert-box");
-  const alertMsg = document.getElementById("alert-message");
-  const alertIcon = document.getElementById("alert-icon");
+  // Toast Elements
+  const toastContainer = document.getElementById("toast-container");
+  const toastBox = document.getElementById("toast-box");
+  const toastMsg = document.getElementById("toast-message");
+  const toastIcon = document.getElementById("toast-icon");
+  const toastClose = document.getElementById("toast-close");
 
   // Form Fields
   const formFields = {
@@ -43,22 +51,72 @@ document.addEventListener("DOMContentLoaded", async () => {
     imageUrl: document.getElementById("imageUrl"),
   };
 
-  // --- HELPER: Show Alerts ---
-  const showAlert = (message, type) => {
-    alertBox.style.display = "flex";
-    alertMsg.textContent = message;
-
-    if (type === "success") {
-      alertBox.className = "alert alert-custom alert-success-custom mb-4";
-      alertIcon.className = "fa-solid fa-circle-check me-2 fs-5";
-    } else {
-      alertBox.className = "alert alert-custom alert-error-custom mb-4";
-      alertIcon.className = "fa-solid fa-triangle-exclamation me-2 fs-5";
+  // --- HELPER: Show Toast ---
+  const showToast = (message, type = "info", duration = 4000) => {
+    // Clear any existing timeout
+    if (toastBox.hideTimeout) {
+      clearTimeout(toastBox.hideTimeout);
     }
 
+    // Set message and styling
+    toastMsg.textContent = message;
+    toastBox.className = "toast-custom p-3";
+
+    switch (type) {
+      case "success":
+        toastBox.classList.add("toast-success-custom");
+        toastIcon.className = "fa-solid fa-circle-check me-2 fs-6";
+        break;
+      case "error":
+        toastBox.classList.add("toast-error-custom");
+        toastIcon.className = "fa-solid fa-triangle-exclamation me-2 fs-6";
+        break;
+      case "warning":
+        toastBox.classList.add("toast-warning-custom");
+        toastIcon.className = "fa-solid fa-exclamation-triangle me-2 fs-6";
+        break;
+      case "info":
+      default:
+        toastBox.classList.add("toast-info-custom");
+        toastIcon.className = "fa-solid fa-info-circle me-2 fs-6";
+        break;
+    }
+
+    // Show toast
+    toastBox.style.display = "flex";
+
+    // Auto hide after duration
+    toastBox.hideTimeout = setTimeout(() => {
+      hideToast();
+    }, duration);
+
+    // Close button functionality
+    const closeHandler = () => {
+      hideToast();
+    };
+    toastClose.addEventListener("click", closeHandler);
+
+    // Store handler for cleanup
+    toastBox.closeHandler = closeHandler;
+  };
+
+  // --- HELPER: Hide Toast ---
+  const hideToast = () => {
+    if (toastBox.hideTimeout) {
+      clearTimeout(toastBox.hideTimeout);
+    }
+
+    // Remove event listener
+    if (toastBox.closeHandler) {
+      toastClose.removeEventListener("click", toastBox.closeHandler);
+      toastBox.closeHandler = null;
+    }
+
+    toastBox.style.animation = "toastSlideOut 0.3s ease-in";
     setTimeout(() => {
-      alertBox.style.display = "none";
-    }, 3000);
+      toastBox.style.display = "none";
+      toastBox.style.animation = "";
+    }, 300);
   };
 
   // --- HELPER: Render Products List ---
@@ -127,10 +185,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
     loader.style.display = "flex";
     allProducts = await fetchProducts();
+    console.log(allProducts);
+
     console.log(`[UpdateProduct] Loaded ${allProducts.length} products`);
+    showToast(`Loaded ${allProducts.length} products successfully!`, "success", 3000);
   } catch (error) {
     console.error("[UpdateProduct] Error loading products:", error);
-    showAlert("Failed to load products", "error");
+
+    // Handle specific error types
+    if (error.code === "permission-denied") {
+      showToast("Authentication required. Please log in to view products.", "error");
+    } else if (error.code === "unavailable") {
+      showToast("Service temporarily unavailable. Please try refreshing the page.", "error");
+    } else {
+      showToast("Failed to load products. Please check your connection and try again.", "error");
+    }
   } finally {
     loader.style.display = "none";
   }
@@ -186,14 +255,28 @@ document.addEventListener("DOMContentLoaded", async () => {
     e.preventDefault();
 
     const docId = formFields.productId.value;
+    console.log("Documetn Id is: ", docId);
+
     if (!docId) {
-      showAlert("No product selected", "error");
+      showToast("Please select a product to update.", "warning");
       return;
     }
 
     loader.style.display = "flex";
 
+    // Show loading toast
+    showToast("Updating product...", "info", 2000);
+
     try {
+      // Check if product exists
+      const existingProduct = await getProductById(docId);
+      console.log("Existing Product", existingProduct);
+
+      if (!existingProduct) {
+        showToast("Product not found. It may have been deleted by another user.", "error");
+        return;
+      }
+
       const updatedData = {
         name: formFields.name.value.trim(),
         companyName: formFields.companyName.value.trim(),
@@ -208,6 +291,14 @@ document.addEventListener("DOMContentLoaded", async () => {
         imageUrl: formFields.imageUrl.value.trim() || null,
       };
 
+      // Validate product data
+      const validation = validateProductForm(updatedData);
+      if (!validation.isValid) {
+        showToast(validation.firstError, "error");
+        loader.style.display = "none";
+        return;
+      }
+
       await updateProduct(docId, updatedData);
 
       // Update local cache
@@ -216,7 +307,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         allProducts[index] = { ...allProducts[index], ...updatedData };
       }
 
-      showAlert("Product updated successfully!", "success");
+      showToast("Product updated successfully!", "success");
 
       // Re-render search results if applicable
       const query = searchInput.value.toLowerCase().trim();
@@ -226,7 +317,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } catch (error) {
       console.error("[UpdateProduct] Error updating product:", error);
-      showAlert("Failed to update product", "error");
+
+      // Handle specific error types
+      if (error.code === "permission-denied") {
+        showToast("Authentication required. Please log in and try again.", "error");
+      } else if (error.code === "unavailable") {
+        showToast("Service temporarily unavailable. Please try again later.", "error");
+      } else {
+        showToast("Failed to update product. Please check your connection and try again.", "error");
+      }
     } finally {
       loader.style.display = "none";
     }
@@ -236,7 +335,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   deleteBtn.addEventListener("click", async () => {
     const docId = formFields.productId.value;
     if (!docId) {
-      showAlert("No product selected", "error");
+      showToast("Please select a product to delete.", "warning");
       return;
     }
 
@@ -247,13 +346,16 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     loader.style.display = "flex";
 
+    // Show loading toast
+    showToast("Deleting product...", "info", 2000);
+
     try {
       await deleteProduct(docId);
 
       // Remove from local cache
       allProducts = allProducts.filter((p) => p.id !== docId);
 
-      showAlert("Product deleted successfully!", "success");
+      showToast("Product deleted successfully!", "success");
 
       // Clear form and hide edit section
       clearForm();
@@ -269,7 +371,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } catch (error) {
       console.error("[UpdateProduct] Error deleting product:", error);
-      showAlert("Failed to delete product", "error");
+
+      // Handle specific error types
+      if (error.code === "permission-denied") {
+        showToast("Authentication required. Please log in and try again.", "error");
+      } else if (error.code === "unavailable") {
+        showToast("Service temporarily unavailable. Please try again later.", "error");
+      } else {
+        showToast("Failed to delete product. Please check your connection and try again.", "error");
+      }
     } finally {
       loader.style.display = "none";
     }

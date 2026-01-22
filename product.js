@@ -9,81 +9,17 @@
  * User Action → updateCart → generateOrderMessage
  */
 
-import { db } from "./firebase.js";
-import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-/* ======================
-   STATE
-====================== */
-const selectedProducts = new Map();
-
-/* ======================
-   FETCH PRODUCTS
-====================== */
-async function fetchProducts() {
-  const snapshot = await getDocs(collection(db, "catlogue"));
-  return snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-}
-
-/* ======================
-   WRITE To FIRESTORE
-====================== */
-
-export async function addProduct(product) {
-  return await addDoc(collection(db, "catlogue"), {
-    ...product,
-    createdAt: serverTimestamp(),
-  });
-}
-
-/* ======================
-   UPDATE PRODUCT
-====================== */
-
-export async function updateProduct(docId, productData) {
-  const productRef = doc(db, "catlogue", docId);
-  return await updateDoc(productRef, {
-    ...productData,
-    updatedAt: serverTimestamp(),
-  });
-}
-
-/* ======================
-   DELETE PRODUCT
-====================== */
-
-export async function deleteProduct(docId) {
-  const productRef = doc(db, "catlogue", docId);
-  return await deleteDoc(productRef);
-}
-
-/* ======================
-   GET SINGLE PRODUCT
-====================== */
-
-export async function getProductById(docId) {
-  const productRef = doc(db, "catlogue", docId);
-  const productSnap = await getDoc(productRef);
-  if (productSnap.exists()) {
-    return { id: productSnap.id, ...productSnap.data() };
-  }
-  return null;
-}
-
-/* ======================
-   EXPORT FETCH FOR OTHER MODULES
-====================== */
-
-export { fetchProducts };
+import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById } from "./services.firebase.js";
 
 /* ======================
    RENDER PRODUCTS
 ====================== */
 function renderProducts(products) {
   const container = document.getElementById("product-list");
+  if (!container) {
+    console.error("Product list container not found");
+    return;
+  }
   container.innerHTML = "";
 
   products.forEach((product) => {
@@ -305,3 +241,19 @@ document.addEventListener("DOMContentLoaded", async () => {
   bindEvents();
   initModals();
 });
+
+/*
+ * [catlogue.html loads]
+ *       ↓
+ * [product.js: DOMContentLoaded]
+ *       ↓
+ * [fetchProducts()] ──→ Firebase Firestore
+ *       ↓
+ * [renderProducts()] ──→ Creates HTML cards
+ *       ↓
+ * [bindEvents()] ──→ Attaches click/search handlers
+ *       ↓
+ * [User clicks product] ──→ [show modal]
+ * [User checks product] ──→ [add to cart Map]
+ * [User clicks "Place Order"] ──→ [WhatsApp redirect]
+ */

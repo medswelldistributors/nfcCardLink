@@ -1,258 +1,478 @@
-# MedsWell Distributors - Product Catalogue System
+# MedsWell Distributors - Developer Documentation
 
-> A complete medical product catalogue and ordering system built for **MedsWell Distributors**, Surkhai, Gujarat.
-
----
-
-## 📋 Project Overview
-
-| Attribute         | Value                                                                                     |
-| ----------------- | ----------------------------------------------------------------------------------------- |
-| **Business Name** | MedsWell Distributors                                                                     |
-| **Owner**         | Aniket Parmar                                                                             |
-| **Location**      | 766/9, J.S.D Complex, Near Bus Stand, SURKHAI, Ta: Chikhli, Di: Navsari, Gujarat - 396560 |
-| **Live URL**      | https://medswelldistributors.in                                                           |
-| **Contact**       | +91 9904685222 (WhatsApp)                                                                 |
+> **Complete technical documentation for AI agents and developers to add, modify, or remove features with full consistency.**
 
 ---
 
-## 🎯 Features
+## 🏢 Project Overview
 
-### Customer Features
-
-- 📦 **Product Catalogue** - Browse all medical products with images, prices, and details
-- 🔍 **Real-time Search** - Filter products by name or content as you type
-- 🛒 **Cart System** - Select products with quantity, order via WhatsApp
-- 📄 **PDF Download** - Generate complete catalogue PDF with QR code
-- ⭐ **Popular Products** - Highlighted products with yellow badge and PDF marking
-- 📱 **Responsive Design** - Works on all devices (mobile/tablet/desktop)
-
-### Admin Features
-
-- 🔐 **Admin Login** - Firebase authentication protected admin panel
-- ➕ **Add Products** - Bulk add products using text input (notebook-style textarea)
-- ✏️ **Update Products** - Search, edit and update existing products
-- 🗑️ **Delete Products** - Remove products with confirmation
-- ⭐ **Toggle Popular** - Mark/unmark products as popular
+| Attribute      | Value                                                |
+| -------------- | ---------------------------------------------------- |
+| **Project**    | MedsWell Distributors Product Catalogue              |
+| **Type**       | Medical Product Catalogue & Ordering System          |
+| **Owner**      | Aniket Parmar                                        |
+| **Live URL**   | https://medswelldistributors.in                      |
+| **Tech Stack** | HTML5, CSS3, JavaScript (ES6), Bootstrap 5, Firebase |
 
 ---
 
-## 🗂️ File Structure
+## 🎨 Design System & Brand Colors
+
+### CSS Variables (Root)
+
+```css
+:root {
+  --brand-primary: #0d2c54; /* Dark Blue - Headers, Navbar, Buttons */
+  --brand-secondary: #21b2a6; /* Teal - Accents, Links, Badges */
+  --brand-bg: #f8f9fa; /* Light Gray - Page Background */
+  --brand-text: #343a40; /* Dark Gray - Body Text */
+}
+```
+
+### Color Usage Reference
+
+| Color              | Hex       | RGB                  | Usage                                     |
+| ------------------ | --------- | -------------------- | ----------------------------------------- |
+| **Primary**        | `#0d2c54` | `rgb(13, 44, 84)`    | Navbar brand, button backgrounds, headers |
+| **Secondary**      | `#21b2a6` | `rgb(33, 178, 166)`  | Links, active states, badges, checkmarks  |
+| **Background**     | `#f8f9fa` | `rgb(248, 249, 250)` | Page background                           |
+| **Text**           | `#343a40` | `rgb(52, 58, 64)`    | Body text, paragraphs                     |
+| **Popular BG**     | `#FEF3C7` | `rgb(254, 243, 199)` | Popular product card background           |
+| **Popular Stripe** | `#F59E0B` | `rgb(245, 158, 11)`  | Popular indicator stripe/badge            |
+| **Success**        | `#198754` | `rgb(25, 135, 84)`   | Success toasts, green accents             |
+| **Error**          | `#dc3545` | `rgb(220, 53, 69)`   | Error toasts, delete button, warnings     |
+| **Warning**        | `#ffc107` | `rgb(255, 193, 7)`   | Warning alerts, popular star              |
+
+### Typography
+
+```css
+font-family: "Poppins", sans-serif;
+/* Weights used: 400, 500, 600, 700 */
+/* Google Fonts Link: https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap */
+```
+
+---
+
+## 📁 Complete File Structure
 
 ```
 catlogue/
 ├── assets/
-│   ├── Card.jpg                 # Logo image for PDF header
-│   └── Medswell_Site_QR.png     # QR code for PDF
+│   ├── Card.jpg                 # Company logo for PDF header
+│   └── Medswell_Site_QR.png     # QR code for PDF footer
 │
-├── index.html                   # Landing/Profile page
-├── index.js                     # Landing page JavaScript (vCard download)
-├── catlogue.html                # Main product catalogue page
-├── product.js                   # Product rendering & ordering logic
-├── login.html                   # Admin login page
-├── login.js                     # Firebase auth login logic
-├── addProduct.html              # Admin - bulk add products page
-├── addProduct.js                # Add product form logic
-├── updateProduct.html           # Admin - search & edit products
-├── updateProduct.js             # Update/delete product logic
-├── helper.js                    # Text parsing utility functions
-├── pdfGenerator.js              # PDF catalogue generation
-├── firebase.js                  # Firebase configuration & exports
-└── README.md                    # This documentation file
+├── index.html                   # Landing/Profile page (public)
+├── index.js                     # vCard download functionality
+│
+├── catlogue.html                # Product catalogue display (public)
+├── product.js                   # Product rendering, cart, WhatsApp ordering
+├── pdfGenerator.js              # PDF catalogue generation with jsPDF
+│
+├── login.html                   # Admin login page (public)
+├── login.js                     # Firebase authentication logic
+│
+├── addProduct.html              # Bulk add products (auth protected)
+├── addProduct.js                # Form submission, preview, product addition
+│
+├── updateProduct.html           # Search & edit products (auth protected)
+├── updateProduct.js             # Update, delete product logic
+│
+├── help.html                    # Admin help guide (auth protected)
+├── help.js                      # Help page auth handler
+│
+├── firebase.js                  # Firebase config & exports (db, auth)
+├── services.firebase.js         # Firestore CRUD + Auth functions
+├── helper.js                    # Text parsing utility (parseBulkProducts)
+│
+└── README.md                    # This documentation
 ```
 
 ---
 
-## 🛠️ Tech Stack
+## 🔧 File Roles & Responsibilities
 
-| Technology                   | Purpose                     |
-| ---------------------------- | --------------------------- |
-| **HTML5 / CSS3**             | Structure and styling       |
-| **JavaScript (ES6 Modules)** | Application logic           |
-| **Bootstrap 5.3**            | Responsive UI components    |
-| **Font Awesome 6**           | Icons                       |
-| **Google Fonts (Poppins)**   | Typography                  |
-| **Firebase Firestore**       | NoSQL database for products |
-| **Firebase Auth**            | Admin authentication        |
-| **jsPDF + AutoTable**        | PDF generation              |
-| **Cloudinary**               | Image hosting               |
+### Core firebase.js
 
----
+```javascript
+// PURPOSE: Firebase initialization and exports
+// EXPORTS: db (Firestore), auth (Firebase Auth)
 
-## 🗃️ Database Structure
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-### Firebase Firestore Collection: `catlogue`
-
-Each product document has these fields:
-
-| Field         | Type      | Description             | Example                |
-| ------------- | --------- | ----------------------- | ---------------------- |
-| `name`        | string    | Product name            | "Paracetamol 500mg"    |
-| `companyName` | string    | Manufacturer            | "Cipla Ltd"            |
-| `content`     | string    | Composition/ingredients | "Paracetamol IP 500mg" |
-| `form`        | string    | Dosage form             | "Tablet"               |
-| `mg`          | string    | Strength/volume         | "500mg"                |
-| `mrp`         | number    | Maximum retail price    | 45.00                  |
-| `rate`        | number    | Dealer price            | 35.50                  |
-| `unitOfSale`  | string    | Selling unit            | "Box" / "Strip"        |
-| `unitName`    | string    | Individual unit name    | "Tablet" / "Capsule"   |
-| `imageUrl`    | string    | Product image URL       | "https://..."          |
-| `isPopular`   | boolean   | Popular product flag    | true                   |
-| `createdAt`   | timestamp | Creation time           | (auto)                 |
-| `updatedAt`   | timestamp | Last update time        | (auto)                 |
-
----
-
-## 📄 Page Descriptions
-
-### 1. Landing Page (`index.html`)
-
-- Company profile card with logo, owner photo
-- Contact buttons: Add to Contact, WhatsApp, Email
-- Link to product catalogue
-
-### 2. Catalogue Page (`catlogue.html`)
-
-- Grid of product cards with images
-- Real-time search filter
-- Click card to see product modal
-- Checkbox to add to cart with quantity selector
-- Floating "Place Order" button → WhatsApp order
-- PDF download button
-
-### 3. Login Page (`login.html`)
-
-- Admin authentication using Firebase
-- Email/password login
-- Redirects to addProduct after login
-
-### 4. Add Product (`addProduct.html`)
-
-- Notebook-style textarea with line numbers
-- Live preview visualizer showing parsed products
-- Paste button for quick input
-- Bulk product addition to Firebase
-
-### 5. Update Product (`updateProduct.html`)
-
-- Real-time search to find products
-- Click product to select and edit
-- Form with all editable fields
-- Update and Delete buttons
-
----
-
-## 🎨 Design System
-
-### Brand Colors
-
-| Name           | Hex       | Usage                     |
-| -------------- | --------- | ------------------------- |
-| Primary        | `#0d2c54` | Headers, buttons          |
-| Secondary      | `#21b2a6` | Accents, links            |
-| Popular Bg     | `#FEF3C7` | Popular product highlight |
-| Popular Stripe | `#F59E0B` | Popular indicator stripe  |
-
-### Typography
-
-- **Font**: Poppins (Google Fonts)
-- **Weights**: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
-
----
-
-## 📄 PDF Features
-
-The PDF generator creates a professional catalogue with:
-
-- **Header**: Black background, company logo (left), title (center), QR code (right)
-- **Table**: Product list with NO, NAME, COMPANY, CONTENT, MRP, RATE columns
-- **Popular Highlighting**: Yellow row background + amber stripe on left
-- **Page Numbers**: Centered at bottom
-- **File Name**: `MedsWell_Catalogue_YYYY-MM-DD.pdf`
-
----
-
-## 🔧 Firebase Functions (product.js)
-
-| Function                  | Description                     |
-| ------------------------- | ------------------------------- |
-| `fetchProducts()`         | Get all products from Firestore |
-| `addProduct(data)`        | Add new product document        |
-| `updateProduct(id, data)` | Update existing product         |
-| `deleteProduct(id)`       | Delete product document         |
-| `getProductById(id)`      | Get single product by ID        |
-
----
-
-## 💡 How to Add New Products
-
-### Bulk Text Format (for addProduct page):
-
-```
-Product Name
-Content/Composition
-Form (Tablet/Syrup/etc)
-Strength/MG
-MRP
-Rate
-Unit of Sale (Box/Strip)
-Unit Name (Tablet/Capsule)
-Image URL (optional)
-
-Next Product Name
-...
+const firebaseConfig = {
+  /* ... */
+};
+const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app);
 ```
 
-Products are separated by **empty lines**.
+### services.firebase.js - API Functions
+
+| Function                     | Purpose                   | Parameters       | Returns             |
+| ---------------------------- | ------------------------- | ---------------- | ------------------- | ------ |
+| `fetchProducts()`            | Get all products          | none             | `Array<Product>`    |
+| `addProduct(product)`        | Add new product           | `Product object` | `DocumentReference` |
+| `updateProduct(docId, data)` | Update product            | `string, object` | `void`              |
+| `deleteProduct(docId)`       | Delete product            | `string`         | `void`              |
+| `getProductById(docId)`      | Get single product        | `string`         | `Product            | null`  |
+| `checkAuth()`                | Check if user logged in   | none             | `Promise<User       | null>` |
+| `requireAuth(redirectUrl)`   | Redirect if not logged in | `string`         | `User               | null`  |
+| `logout(redirectUrl)`        | Sign out user             | `string`         | `void`              |
+| `getCurrentUser()`           | Get current user sync     | none             | `User               | null`  |
+
+### helper.js - Parsing Functions
+
+| Function                     | Purpose                     | Input             | Output           |
+| ---------------------------- | --------------------------- | ----------------- | ---------------- |
+| `parseBulkProducts(rawText)` | Parse text to product array | Multi-line string | `Array<Product>` |
 
 ---
 
-## 🔐 Admin Access
+## 🗃️ Database Schema (Firebase Firestore)
 
-| Page           | URL                   | Protected        |
-| -------------- | --------------------- | ---------------- |
-| Add Product    | `/addProduct.html`    | ✅ Firebase Auth |
-| Update Product | `/updateProduct.html` | ✅ Firebase Auth |
-| Login          | `/login.html`         | Public           |
+### Collection: `catlogue`
+
+| Field         | Type        | Required | Description          | Example                  |
+| ------------- | ----------- | -------- | -------------------- | ------------------------ |
+| `name`        | `string`    | ✅       | Product name         | `"Dolo 650"`             |
+| `companyName` | `string`    | ✅       | Manufacturer name    | `"Micro Labs"`           |
+| `content`     | `string`    | ✅       | Composition          | `"Paracetamol"`          |
+| `form`        | `string`    | ✅       | Dosage form          | `"Tablet"` / `"Syrup"`   |
+| `mg`          | `string`    | ✅       | Strength/volume      | `"650mg"` / `"100ml"`    |
+| `mrp`         | `number`    | ✅       | Maximum retail price | `35`                     |
+| `rate`        | `number`    | ✅       | Dealer/selling price | `28`                     |
+| `unitOfSale`  | `string`    | ✅       | Selling unit         | `"Box"` / `"Strip"`      |
+| `unitName`    | `string`    | ✅       | Individual unit      | `"Tablet"` / `"Capsule"` |
+| `imageUrl`    | `string`    | ❌       | Product image URL    | `"https://..."`          |
+| `isPopular`   | `boolean`   | ❌       | Popular flag         | `true` / `false`         |
+| `createdAt`   | `timestamp` | Auto     | Creation timestamp   | -                        |
+| `updatedAt`   | `timestamp` | Auto     | Update timestamp     | -                        |
+
+### Product Object Example
+
+```javascript
+{
+  id: "abc123xyz",
+  name: "Dolo 650",
+  companyName: "Micro Labs",
+  content: "Paracetamol",
+  form: "Tablet",
+  mg: "650mg",
+  mrp: 35,
+  rate: 28,
+  unitOfSale: "Strip",
+  unitName: "Tablet",
+  imageUrl: "https://example.com/dolo.jpg",
+  isPopular: true,
+  createdAt: Timestamp,
+  updatedAt: Timestamp
+}
+```
 
 ---
 
-## 🚀 Deployment
+## 📄 Page Architecture
 
-The site is hosted at: **https://medswelldistributors.in**
+### Public Pages (No Auth Required)
 
-To deploy updates:
+| Page      | File            | Script       | Purpose                           |
+| --------- | --------------- | ------------ | --------------------------------- |
+| Landing   | `index.html`    | `index.js`   | Company profile, contact buttons  |
+| Catalogue | `catlogue.html` | `product.js` | Product grid, search, cart, order |
+| Login     | `login.html`    | `login.js`   | Admin authentication              |
 
-1. Make changes to files
-2. Commit and push to hosting provider
-3. Clear browser cache if needed
+### Protected Pages (Auth Required)
+
+| Page           | File                 | Script             | Purpose              |
+| -------------- | -------------------- | ------------------ | -------------------- |
+| Add Product    | `addProduct.html`    | `addProduct.js`    | Bulk product entry   |
+| Update Product | `updateProduct.html` | `updateProduct.js` | Edit/delete products |
+| Help           | `help.html`          | `help.js`          | Admin usage guide    |
+
+### Auth Flow
+
+```
+Page Load → requireAuth() → onAuthStateChanged
+    ├── User exists → Continue page execution
+    └── No user → Redirect to index.html (login)
+```
 
 ---
 
-## 📞 Support & Credits
+## 🛒 Add Product Input Format
 
-**Developed by**: Parmar Aayush  
+### Text Format (Line by Line)
+
+```
+Line 1:  Product Name       (Required)
+Line 2:  Company Name       (Required)
+Line 3:  Content            (Required)
+Line 4:  Form               (Required)
+Line 5:  Strength/mg        (Required)
+Line 6:  MRP                (Required, Number)
+Line 7:  Rate               (Required, Number)
+Line 8:  Unit of Sale       (Required)
+Line 9:  Unit Name          (Required)
+Line 10: Image URL          (Optional)
+
+[Empty Line = Product Separator]
+```
+
+### Example Input
+
+```
+Dolo 650
+Micro Labs
+Paracetamol
+Tablet
+650mg
+35
+28
+Strip
+Tablet
+https://example.com/dolo.jpg
+
+Crocin Advance
+GSK
+Paracetamol
+Tablet
+500mg
+25
+20
+Box
+Tablet
+```
+
+---
+
+## 🔐 Authentication System
+
+### Firebase Auth Configuration
+
+- **Method**: Email/Password
+- **Storage**: IndexedDB (browser)
+- **Persistence**: `browserLocalPersistence` (survives browser close)
+- **Token Expiry**: Auto-refresh (~1 hour tokens)
+
+### Auth Functions Usage
+
+```javascript
+// Check auth on page load
+const user = await requireAuth("index.html");
+if (!user) return;
+
+// Logout
+await logout("index.html");
+
+// Get current user
+const currentUser = getCurrentUser();
+```
+
+---
+
+## 📄 PDF Generation (pdfGenerator.js)
+
+### PDF Structure
+
+| Section      | Description                                               |
+| ------------ | --------------------------------------------------------- |
+| Header       | Black background, logo (left), title (center), QR (right) |
+| Table        | Columns: NO, NAME, COMPANY, CONTENT, MRP, RATE            |
+| Popular Rows | Yellow background (#FEF3C7) + amber left stripe           |
+| Footer       | Page numbers centered                                     |
+
+### Generated Filename
+
+```
+MedsWell_Catalogue_YYYY-MM-DD.pdf
+```
+
+---
+
+## 🧩 Component Patterns
+
+### Admin Navbar HTML Template
+
+```html
+<nav class="navbar navbar-expand-lg admin-navbar" id="admin-navbar">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <i class="fa-solid fa-pills me-2" style="color: var(--brand-secondary)"></i>
+      MedsWell Admin
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNavbar">
+      <span class="navbar-toggler-icon"><i class="fa-solid fa-bars"></i></span>
+    </button>
+    <div class="collapse navbar-collapse" id="adminNavbar">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="index.html" data-page="home"><i class="fa-solid fa-home me-2"></i>Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="catlogue.html" data-page="catalogue"><i class="fa-solid fa-list me-2"></i>Catalogue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="addProduct.html" data-page="addProduct"><i class="fa-solid fa-plus me-2"></i>Add Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="updateProduct.html" data-page="updateProduct"><i class="fa-solid fa-edit me-2"></i>Update Product</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="help.html" data-page="help"><i class="fa-solid fa-circle-question me-2"></i>Help</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="#" id="logoutBtn"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+```
+
+### Toast Notification Pattern
+
+```javascript
+// Toast types: success, error, warning, info
+showToast("Message here", "success", 3000); // duration in ms
+```
+
+### Admin Page JS Template
+
+```javascript
+import { requireAuth, logout } from "./services.firebase.js";
+
+document.addEventListener("DOMContentLoaded", async () => {
+  // Auth check
+  const user = await requireAuth("index.html");
+  if (!user) return;
+
+  // Logout button
+  const logoutBtn = document.getElementById("logoutBtn");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      logout();
+    });
+  }
+
+  // Page logic here...
+});
+```
+
+---
+
+## 🤖 AI Agent Prompt Templates
+
+### For Adding New Feature
+
+```
+PROJECT: MedsWell Distributors Catalogue
+TECH: HTML, CSS, JS (ES6), Bootstrap 5, Firebase Firestore
+COLORS: Primary=#0d2c54, Secondary=#21b2a6, BG=#f8f9fa
+
+FILES TO MODIFY:
+- [list relevant files]
+
+CURRENT STRUCTURE:
+- services.firebase.js: All Firestore CRUD operations
+- helper.js: Text parsing utilities
+- Each page has: HTML file + corresponding JS file
+
+DATABASE: Firebase Firestore, collection "catlogue"
+PRODUCT FIELDS: name, companyName, content, form, mg, mrp, rate, unitOfSale, unitName, imageUrl, isPopular
+
+TASK: [Describe feature to add]
+
+REQUIREMENTS:
+- Maintain color scheme (use CSS variables)
+- Follow existing code patterns
+- Add auth check for admin pages
+- Use Bootstrap 5 components
+```
+
+### For Bug Fixes
+
+```
+PROJECT: MedsWell Catalogue
+BUG LOCATION: [file name]
+CURRENT BEHAVIOR: [what's happening]
+EXPECTED BEHAVIOR: [what should happen]
+
+CONTEXT:
+- Auth: uses requireAuth() from services.firebase.js
+- DB: Firebase Firestore, collection "catlogue"
+- UI: Bootstrap 5 + Custom CSS with brand variables
+```
+
+### For Removing Feature
+
+```
+PROJECT: MedsWell Catalogue
+
+FEATURE TO REMOVE: [feature name]
+
+FILES AFFECTED:
+- [list files]
+
+CLEANUP NEEDED:
+- Remove imports
+- Remove event listeners
+- Remove HTML elements
+- Remove CSS (if feature-specific)
+- Remove navbar links if applicable
+```
+
+---
+
+## 📦 Dependencies
+
+### CDN Links (Always Include)
+
+```html
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Bootstrap JS (before closing body) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+```
+
+### Firebase Imports (ES Modules)
+
+```javascript
+// firebase.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+// services.firebase.js
+import { collection, getDocs, addDoc, doc, getDoc, updateDoc, deleteDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+```
+
+### PDF Generation (for pdfGenerator.js)
+
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+```
+
+---
+
+## 📞 Contact
+
+**Developer**: Parmar Aayush  
 **WhatsApp**: +91 8154818652  
 **Email**: parmaraush1816@gmail.com
 
 ---
 
-## 📝 AI Agent Prompt Template
-
-When giving prompts to AI agents about this project, use this template:
-
-```
-Project: MedsWell Distributors Product Catalogue
-Tech Stack: HTML, CSS, JavaScript (ES6), Bootstrap 5, Firebase Firestore, jsPDF
-Main Files:
-- catlogue.html / product.js - Product display and ordering
-- addProduct.html / addProduct.js - Bulk product addition
-- updateProduct.html / updateProduct.js - Edit/delete products
-- pdfGenerator.js - PDF catalogue generation
-- firebase.js - Firebase config
-
-Database: Firebase Firestore, collection "catlogue"
-Product fields: name, companyName, content, form, mg, mrp, rate, unitOfSale, unitName, imageUrl, isPopular
-
-Current Task: [describe what you need]
-```
+> 📝 **Last Updated**: January 2026

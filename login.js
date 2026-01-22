@@ -1,5 +1,17 @@
+/**
+ * [FILE ROLE]
+ * - handle login and authentication
+ *
+ * [FLOW]
+ *  submit → signInWithEmailAndPassword → Result
+ *
+ * [DEPENDENCIES]
+ * - firebase.js (auth connection)
+ * - other imports...
+ */
 import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { auth } from "./firebase.js";
+import { validateLoginForm } from "./helper.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginForm = document.getElementById("loginForm");
@@ -63,8 +75,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
 
-    if (!email || !password) {
-      showError("Please fill in all fields.");
+    // Validate login form
+    const validation = validateLoginForm(email, password);
+    if (!validation.isValid) {
+      showError(validation.error);
       return;
     }
 

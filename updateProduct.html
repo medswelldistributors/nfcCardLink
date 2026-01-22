@@ -25,6 +25,131 @@
         flex-direction: column;
       }
 
+      /* Admin Navigation Bar */
+      .admin-navbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: all 0.3s ease;
+      }
+
+      .admin-navbar.scrolled {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--brand-primary) !important;
+        font-size: 1.5rem;
+      }
+
+      .navbar-brand:hover {
+        color: var(--brand-secondary) !important;
+      }
+
+      .navbar-nav .nav-link {
+        color: var(--brand-text);
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        margin: 0 0.25rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: var(--brand-secondary);
+        background-color: rgba(33, 178, 166, 0.1);
+      }
+
+      .navbar-nav .nav-link.active {
+        color: var(--brand-secondary);
+        background-color: rgba(33, 178, 166, 0.15);
+        font-weight: 600;
+      }
+
+      .navbar-nav .nav-link.active::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30px;
+        height: 3px;
+        background: var(--brand-secondary);
+        border-radius: 2px;
+      }
+
+      /* Hamburger Menu */
+      .navbar-toggler {
+        border: 2px solid var(--brand-primary);
+        padding: 0.5rem;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--brand-primary);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+      }
+
+      .navbar-toggler:hover {
+        background-color: var(--brand-primary);
+        border-color: var(--brand-primary);
+        color: white;
+      }
+
+      .navbar-toggler:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 178, 166, 0.25);
+      }
+
+      .navbar-toggler-icon {
+        width: 1.5em;
+        height: 1.5em;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background-image: none !important;
+        background: transparent !important;
+      }
+
+      .navbar-toggler-icon i {
+        font-size: 1.2em;
+        line-height: 1;
+        color: inherit;
+      }
+
+      /* Mobile Menu */
+      @media (max-width: 991.98px) {
+        .navbar-collapse {
+          background: #ffffff;
+          border-radius: 0 0 12px 12px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          margin-top: 1rem;
+          padding: 1rem 0;
+        }
+
+        .navbar-nav .nav-link {
+          margin: 0.25rem 1rem;
+          padding: 0.75rem 1rem;
+        }
+
+        .navbar-nav .nav-link.active::after {
+          display: none;
+        }
+      }
+
+      /* Animation for mobile menu */
+      .navbar-collapse.collapsing {
+        transition: height 0.3s ease;
+      }
+
       .admin-card {
         background: #ffffff;
         border: none;
@@ -119,23 +244,68 @@
         box-shadow: 0 0 0 3px rgba(33, 178, 166, 0.1);
       }
 
-      /* Alert Styles */
-      .alert-custom {
-        display: none;
-        align-items: center;
-        border-radius: 10px;
+      /* Toast Styles */
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1050;
+        max-width: 400px;
       }
 
-      .alert-success-custom {
-        background: #d1e7dd;
+      .toast-custom {
+        display: none;
+        align-items: center;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        margin-bottom: 10px;
+        animation: toastSlideIn 0.3s ease-out;
+      }
+
+      .toast-success-custom {
+        background: linear-gradient(135deg, #d1e7dd, #c3e6cb);
         border: 1px solid #a3cfbb;
         color: #0f5132;
       }
 
-      .alert-error-custom {
-        background: #f8d7da;
-        border: 1px solid #f5c2c7;
-        color: #842029;
+      .toast-error-custom {
+        background: linear-gradient(135deg, #f8d7da, #f5c2c7);
+        border: 1px solid #f1aeb5;
+        color: #721c24;
+      }
+
+      .toast-warning-custom {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 1px solid #ffeaa7;
+        color: #856404;
+      }
+
+      .toast-info-custom {
+        background: linear-gradient(135deg, #d1ecf1, #bee5eb);
+        border: 1px solid #abdde5;
+        color: #0c5460;
+      }
+
+      @keyframes toastSlideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes toastSlideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(100%);
+          opacity: 0;
+        }
       }
 
       /* Loading Overlay */
@@ -176,17 +346,19 @@
     </style>
   </head>
   <body>
-    <header class="text-center py-4 bg-white border-bottom mb-4">
-      <h1 class="h3 fw-bold" style="color: var(--brand-primary)">MedsWell Admin</h1>
-    </header>
+    <!-- Admin Navbar (Injected by adminNavbar.js) -->
+    <div id="navbar-container"></div>
 
     <main class="container pb-5">
       <div class="row justify-content-center">
         <div class="col-12 col-md-10 col-lg-8">
-          <!-- Alert Box -->
-          <div id="alert-box" class="alert alert-custom mb-3" role="alert">
-            <i id="alert-icon" class="fa-solid fa-circle-check me-2"></i>
-            <span id="alert-message"></span>
+          <!-- Toast Container -->
+          <div class="toast-container" id="toast-container">
+            <div id="toast-box" class="toast-custom p-3" role="alert">
+              <i id="toast-icon" class="fa-solid fa-circle-check me-2"></i>
+              <span id="toast-message"></span>
+              <button type="button" class="btn-close ms-auto" id="toast-close" aria-label="Close"></button>
+            </div>
           </div>
 
           <div class="admin-card p-4 position-relative">

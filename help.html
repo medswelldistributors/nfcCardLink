@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedsWell Admin - Help Guide</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+      :root {
+        --brand-primary: #0d2c54;
+        --brand-secondary: #21b2a6;
+        --brand-bg: #f8f9fa;
+        --brand-text: #343a40;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--brand-bg);
+        color: var(--brand-text);
+        min-height: 100vh;
+      }
+
+      /* Admin Navigation Bar */
+      .admin-navbar {
+        background: #ffffff;
+        border-bottom: 1px solid #e9ecef;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: var(--brand-primary) !important;
+        font-size: 1.5rem;
+      }
+
+      .navbar-nav .nav-link {
+        color: var(--brand-text);
+        font-weight: 500;
+        padding: 0.75rem 1rem;
+        margin: 0 0.25rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      .navbar-nav .nav-link:hover {
+        color: var(--brand-secondary);
+        background-color: rgba(33, 178, 166, 0.1);
+      }
+
+      .navbar-nav .nav-link.active {
+        color: var(--brand-secondary);
+        background-color: rgba(33, 178, 166, 0.15);
+        font-weight: 600;
+      }
+
+      /* Help Card Styling */
+      .help-card {
+        background: #ffffff;
+        border: none;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+      }
+
+      .help-card-header {
+        background: linear-gradient(135deg, var(--brand-primary), var(--brand-secondary));
+        color: white;
+        padding: 1.25rem 1.5rem;
+        border-radius: 16px 16px 0 0;
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+
+      .help-card-body {
+        padding: 1.5rem;
+      }
+
+      .step-number {
+        background: var(--brand-secondary);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-right: 12px;
+        flex-shrink: 0;
+      }
+
+      .step-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 1rem;
+        padding: 0.75rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+        border-left: 4px solid var(--brand-secondary);
+      }
+
+      .tip-box {
+        background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+        border: 1px solid #ffc107;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      .tip-box i {
+        color: #ffc107;
+      }
+
+      .warning-box {
+        background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+        border: 1px solid #dc3545;
+        border-radius: 10px;
+        padding: 1rem;
+        margin-top: 1rem;
+      }
+
+      .warning-box i {
+        color: #dc3545;
+      }
+
+      .code-block {
+        background: #2d3436;
+        color: #dfe6e9;
+        padding: 1rem;
+        border-radius: 10px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        white-space: pre-wrap;
+        margin: 1rem 0;
+      }
+
+      .field-table {
+        font-size: 0.9rem;
+      }
+
+      .field-table th {
+        background: var(--brand-primary);
+        color: white;
+      }
+
+      .badge-required {
+        background: #dc3545;
+        color: white;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 20px;
+      }
+
+      .badge-optional {
+        background: #6c757d;
+        color: white;
+        font-size: 0.7rem;
+        padding: 3px 8px;
+        border-radius: 20px;
+      }
+
+      .page-header {
+        background: linear-gradient(135deg, var(--brand-primary), #1a4a7c);
+        color: white;
+        padding: 2rem;
+        border-radius: 20px;
+        margin-bottom: 2rem;
+      }
+
+      .toc-link {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: var(--brand-text);
+        text-decoration: none;
+        border-radius: 8px;
+        margin-bottom: 0.25rem;
+        transition: all 0.2s;
+      }
+
+      .toc-link:hover {
+        background: rgba(33, 178, 166, 0.15);
+        color: var(--brand-secondary);
+      }
+
+      /* Hamburger Menu */
+      .navbar-toggler {
+        border: 2px solid var(--brand-primary);
+        padding: 0.5rem;
+        border-radius: 8px;
+        background: transparent;
+        color: var(--brand-primary);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+      }
+
+      .navbar-toggler:hover {
+        background-color: var(--brand-primary);
+        border-color: var(--brand-primary);
+        color: white;
+      }
+
+      .navbar-toggler:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(33, 178, 166, 0.25);
+      }
+
+      .navbar-toggler-icon {
+        width: 1.5em;
+        height: 1.5em;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        background-image: none !important;
+        background: transparent !important;
+      }
+
+      .navbar-toggler-icon i {
+        font-size: 1.2em;
+        line-height: 1;
+        color: inherit;
+      }
+
+      @media (max-width: 991.98px) {
+        .navbar-collapse {
+          background: #ffffff;
+          border-radius: 0 0 12px 12px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          margin-top: 1rem;
+          padding: 1rem 0;
+        }
+
+        .navbar-nav .nav-link {
+          margin: 0.25rem 1rem;
+          padding: 0.75rem 1rem;
+        }
+
+        .navbar-nav .nav-link.active::after {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Admin Navbar (Injected by adminNavbar.js) -->
+    <div id="navbar-container"></div>
+
+    <main class="container py-4">
+      <!-- Page Header -->
+      <div class="page-header text-center">
+        <h1><i class="fa-solid fa-book-open me-3"></i>Admin Help Guide</h1>
+        <p class="mb-0 opacity-75">MedsWell Admin Panel का complete usage guide</p>
+      </div>
+
+      <div class="row">
+        <!-- Table of Contents -->
+        <div class="col-lg-3 mb-4">
+          <div class="help-card">
+            <div class="help-card-header"><i class="fa-solid fa-list-ul me-2"></i>Quick Links</div>
+            <div class="help-card-body p-2">
+              <a href="#add-product" class="toc-link"><i class="fa-solid fa-plus me-2 text-muted"></i>Product Add करें</a>
+              <a href="#update-product" class="toc-link"><i class="fa-solid fa-edit me-2 text-muted"></i>Product Update करें</a>
+              <a href="#delete-product" class="toc-link"><i class="fa-solid fa-trash me-2 text-muted"></i>Product Delete करें</a>
+              <a href="#pdf-report" class="toc-link"><i class="fa-solid fa-file-pdf me-2 text-muted"></i>PDF Report बनाएं</a>
+              <a href="#login-logout" class="toc-link"><i class="fa-solid fa-right-from-bracket me-2 text-muted"></i>Login / Logout</a>
+              <a href="#faq" class="toc-link"><i class="fa-solid fa-circle-question me-2 text-muted"></i>FAQs</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="col-lg-9">
+          <!-- ========== ADD PRODUCT ========== -->
+          <div class="help-card" id="add-product">
+            <div class="help-card-header"><i class="fa-solid fa-plus-circle me-2"></i>Product Add कैसे करें?</div>
+            <div class="help-card-body">
+              <h6 class="text-primary fw-bold mb-3">📋 Input Format (Line by Line)</h6>
+              <p>एक product add करने के लिए textarea में नीचे दिए गए sequence में data enter करें:</p>
+
+              <table class="table table-bordered field-table">
+                <thead>
+                  <tr>
+                    <th>Line #</th>
+                    <th>Field Name</th>
+                    <th>Example</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Product Name</td>
+                    <td>Dolo 650</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Company Name</td>
+                    <td>Micro Labs</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Content</td>
+                    <td>Paracetamol</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>Form</td>
+                    <td>Tablet</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>Strength (mg/ml)</td>
+                    <td>650mg</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>MRP</td>
+                    <td>35</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>7</td>
+                    <td>Rate</td>
+                    <td>28</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>8</td>
+                    <td>Unit of Sale</td>
+                    <td>Strip</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>9</td>
+                    <td>Unit Name</td>
+                    <td>Tablet</td>
+                    <td><span class="badge-required">Required</span></td>
+                  </tr>
+                  <tr>
+                    <td>10</td>
+                    <td>Image URL</td>
+                    <td>https://...</td>
+                    <td><span class="badge-optional">Optional</span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <h6 class="text-primary fw-bold mb-3 mt-4">📝 Example Input</h6>
+              <div class="code-block">Dolo 650 Micro Labs Paracetamol Tablet 650mg 35 28 Strip Tablet https://example.com/dolo.jpg Crocin Advance GSK Paracetamol Tablet 500mg 25 20 Box Tablet</div>
+
+              <div class="tip-box">
+                <i class="fa-solid fa-lightbulb me-2 fs-5"></i>
+                <strong>Tip:</strong> Multiple products add करने के लिए उन्हें <strong>empty line</strong> से separate करें।
+              </div>
+
+              <h6 class="text-primary fw-bold mb-3 mt-4">❓ अगर कोई Field Empty रखनी हो?</h6>
+              <p>अगर आप किसी field को empty रखना चाहते हैं (जैसे Image URL), तो:</p>
+              <ul>
+                <li><strong>Image URL</strong> (Line 10) - Simply skip करें, blank छोड़ें</li>
+                <li><strong>Other Required Fields</strong> - खाली नहीं छोड़ सकते, कम से कम "-" या "N/A" लिखें</li>
+              </ul>
+
+              <div class="code-block">Dolo 650 Micro Labs Paracetamol Tablet 650mg 35 28 Strip Tablet</div>
+              <small class="text-muted">^ 9 lines only, Image URL skip किया गया</small>
+
+              <div class="warning-box mt-3">
+                <i class="fa-solid fa-triangle-exclamation me-2 fs-5"></i>
+                <strong>Warning:</strong> अगर 9 lines से कम होंगी तो product skip हो जाएगा!
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== UPDATE PRODUCT ========== -->
+          <div class="help-card" id="update-product">
+            <div class="help-card-header"><i class="fa-solid fa-pen-to-square me-2"></i>Product Update कैसे करें?</div>
+            <div class="help-card-body">
+              <div class="step-item">
+                <span class="step-number">1</span>
+                <div><strong>Update Product</strong> page पर जाएं (navbar से)</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">2</span>
+                <div>Search box में <strong>product name या company name</strong> type करें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">3</span>
+                <div>List में से <strong>product select</strong> करें (click करें)</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">4</span>
+                <div>Form में <strong>details edit</strong> करें (जो भी change करना है)</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">5</span>
+                <div><strong>"Update Product"</strong> button click करें</div>
+              </div>
+
+              <div class="tip-box">
+                <i class="fa-solid fa-lightbulb me-2 fs-5"></i>
+                <strong>Tip:</strong> Popular product बनाने के लिए ⭐ checkbox check करें।
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== DELETE PRODUCT ========== -->
+          <div class="help-card" id="delete-product">
+            <div class="help-card-header"><i class="fa-solid fa-trash me-2"></i>Product Delete कैसे करें?</div>
+            <div class="help-card-body">
+              <div class="step-item">
+                <span class="step-number">1</span>
+                <div><strong>Update Product</strong> page पर जाएं</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">2</span>
+                <div>Search करके <strong>product select</strong> करें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">3</span>
+                <div>Red <strong>"Delete"</strong> button click करें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">4</span>
+                <div>Confirmation popup में <strong>"OK"</strong> click करें</div>
+              </div>
+
+              <div class="warning-box">
+                <i class="fa-solid fa-triangle-exclamation me-2 fs-5"></i>
+                <strong>Warning:</strong> Delete होने के बाद product permanently हट जाएगा! यह action undo नहीं हो सकता।
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== PDF REPORT ========== -->
+          <div class="help-card" id="pdf-report">
+            <div class="help-card-header"><i class="fa-solid fa-file-pdf me-2"></i>PDF Report कैसे Generate करें?</div>
+            <div class="help-card-body">
+              <div class="step-item">
+                <span class="step-number">1</span>
+                <div><strong>Catalogue</strong> page पर जाएं</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">2</span>
+                <div>Page पर <strong>PDF icon/button</strong> देखें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">3</span>
+                <div>Click करने पर <strong>PDF download</strong> हो जाएगी</div>
+              </div>
+
+              <div class="tip-box">
+                <i class="fa-solid fa-lightbulb me-2 fs-5"></i>
+                <strong>PDF में शामिल होगा:</strong> Product Name, Company, Content, MRP, Rate - सभी products की list।
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== LOGIN / LOGOUT ========== -->
+          <div class="help-card" id="login-logout">
+            <div class="help-card-header"><i class="fa-solid fa-right-from-bracket me-2"></i>Login / Logout</div>
+            <div class="help-card-body">
+              <h6 class="text-primary fw-bold mb-3">🔐 Login करना</h6>
+              <div class="step-item">
+                <span class="step-number">1</span>
+                <div>Home page (<strong>index.html</strong>) पर जाएं</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">2</span>
+                <div><strong>Email और Password</strong> enter करें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">3</span>
+                <div><strong>"Sign In"</strong> button click करें</div>
+              </div>
+
+              <h6 class="text-primary fw-bold mb-3 mt-4">🚪 Logout करना</h6>
+              <div class="step-item">
+                <span class="step-number">1</span>
+                <div>Navbar में <strong class="text-danger">Logout</strong> button click करें</div>
+              </div>
+              <div class="step-item">
+                <span class="step-number">2</span>
+                <div>आप automatically <strong>Login page</strong> पर redirect हो जाएंगे</div>
+              </div>
+
+              <div class="tip-box">
+                <i class="fa-solid fa-lightbulb me-2 fs-5"></i>
+                <strong>Note:</strong> Login session browser बंद करने के बाद भी रहती है। Logout manually करना होगा।
+              </div>
+            </div>
+          </div>
+
+          <!-- ========== FAQ ========== -->
+          <div class="help-card" id="faq">
+            <div class="help-card-header"><i class="fa-solid fa-circle-question me-2"></i>Frequently Asked Questions (FAQs)</div>
+            <div class="help-card-body">
+              <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Q: Product add करते समय error आ रही है?</button>
+                  </h2>
+                  <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                      <strong>A:</strong> Check करें कि:
+                      <ul>
+                        <li>कम से कम 9 lines हैं (Image URL optional)</li>
+                        <li>MRP और Rate numbers में हैं (text नहीं)</li>
+                        <li>आप logged in हैं</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">Q: Product update नहीं हो रहा?</button>
+                  </h2>
+                  <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body"><strong>A:</strong> पहले search करके product select करें, फिर form fill करके Update button दबाएं। अगर तब भी error आए तो page refresh करें।</div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Q: Multiple products एक साथ कैसे add करें?</button>
+                  </h2>
+                  <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body"><strong>A:</strong> Products को <strong>empty line</strong> से separate करें। Example ऊपर Add Product section में देखें।</div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">Q: Image URL कहाँ से लाएं?</button>
+                  </h2>
+                  <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body"><strong>A:</strong> किसी भी image hosting service (जैसे Imgur, Google Drive public link) से image URL copy करें। URL "https://" से शुरू होना चाहिए।</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="./help.js"></script>
+  </body>
+</html>

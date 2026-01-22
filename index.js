@@ -1,4 +1,14 @@
-document.addEventListener("DOMContentLoaded", function () {
+/**
+ * [FILE ROLE]
+ * - handle save contact and dialer
+ *
+ * [FLOW]
+ *  saveContactBtn → navigator.clipboard.writeText → window.location.href
+ *
+ * [DEPENDENCIES]
+ * - none
+ */
+  document.addEventListener("DOMContentLoaded", function () {
   const saveContactBtn = document.getElementById("save-contact-btn");
 
   saveContactBtn.addEventListener("click", async () => {

@@ -7,10 +7,15 @@
  * [FLOW]
  * Text Input → parseText(helper.js) → preview → addProduct()
  */
-import { parseBulkProducts } from "./helper.js";
-import { addProduct } from "./product.js";
+import { parseBulkProducts, isEmpty, validateProductForm } from "./helper.js";
+import { addProduct } from "./services.firebase.js";
+import { initAdminPage } from "./adminNavbar.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  // --- INIT ADMIN PAGE: Auth check, navbar, logout ---
+  const user = await initAdminPage();
+  if (!user) return;
+
   // --- DOM Elements ---
   const form = document.getElementById("addProductForm");
   const inputField = document.getElementById("productData");
@@ -156,8 +161,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const textData = inputField.value.trim();
 
-    // Validation
-    if (!textData) {
+    // Validation: Check empty input
+    if (isEmpty(textData)) {
       showAlert("Please enter valid product details text.", "error");
       return;
     }
@@ -166,20 +171,38 @@ document.addEventListener("DOMContentLoaded", () => {
     loader.style.display = "flex";
 
     try {
-      // Simulate network delay (Optional, remove if not needed)
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-
       // 1. Parse Data
       const products = parseBulkProducts(textData);
       console.log("Parsed Data:", products);
 
-      // 2. Send to API (Using Loop)
-      // Note: Using Promise.all is better for performance, but keeping your logic:
-      const apiPromises = products.map((product) => addProduct(product));
-      await Promise.all(apiPromises); // Wait for all products to be added
+      // 2. Validate: Check if any products were parsed
+      if (products.length === 0) {
+        showAlert("No valid products found. Each product needs at least 9 lines.", "error");
+        loader.style.display = "none";
+        return;
+      }
 
-      // 3. Success
-      showAlert("Products added successfully!", "success");
+      // 3. Validate each product
+      const invalidProducts = [];
+      products.forEach((product, index) => {
+        const validation = validateProductForm(product);
+        if (!validation.isValid) {
+          invalidProducts.push(`Product ${index + 1}: ${validation.firstError}`);
+        }
+      });
+
+      if (invalidProducts.length > 0) {
+        showAlert(invalidProducts[0], "error");
+        loader.style.display = "none";
+        return;
+      }
+
+      // 4. Send to API
+      const apiPromises = products.map((product) => addProduct(product));
+      await Promise.all(apiPromises);
+
+      // 5. Success
+      showAlert(`${products.length} products added successfully!`, "success");
 
       // Clear Form and Preview
       inputField.value = "";
