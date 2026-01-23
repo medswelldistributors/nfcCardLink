@@ -14,6 +14,8 @@ import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById
 /* ======================
    RENDER PRODUCTS
 ====================== */
+const selectedProducts = new Map();
+
 function renderProducts(products) {
   const container = document.getElementById("product-list");
   if (!container) {
