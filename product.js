@@ -47,7 +47,7 @@ function renderProducts(products) {
             <div class="card product-card h-100${popularClass}">
               <div class="product-image-container" data-bs-toggle="modal" data-bs-target="#productModal">
                 ${popularBadge}
-                <img src="${product.imageUrl}" class="card-img-top product-image" alt="${product.name}" loading="lazy" />
+                <img src="${product.imageUrl || ""}" class="card-img-top product-image" alt="${product.name}" loading="lazy" onerror="this.classList.add('error'); this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect fill=%22%23f8f9fa%22 width=%22100%22 height=%22100%22/><text x=%2250%22 y=%2255%22 text-anchor=%22middle%22 fill=%22%23adb5bd%22 font-size=%2210%22>No Image</text></svg>'" />
                 <input class="form-check-input product-checkbox" type="checkbox" />
               </div>
               <div class="card-body">
