@@ -51,6 +51,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 3000);
   };
 
+  // --- 1.5. HELPER: Submit Button Loading State ---
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const originalBtnHTML = submitBtn.innerHTML;
+
+  const setButtonLoading = (isLoading) => {
+    if (isLoading) {
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Adding...';
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHTML;
+    }
+  };
+
   // --- 2. HELPER: Update Live Preview (Product Logic) ---
   const updatePreview = () => {
     const text = inputField.value;
@@ -167,8 +181,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       return;
     }
 
-    // Show Loader
+    // Show Loader + Disable Button
     loader.style.display = "flex";
+    setButtonLoading(true);
 
     try {
       // 1. Parse Data
@@ -178,7 +193,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       // 2. Validate: Check if any products were parsed
       if (products.length === 0) {
         showAlert("No valid products found. Each product needs at least 9 lines.", "error");
-        loader.style.display = "none";
         return;
       }
 
@@ -193,7 +207,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       if (invalidProducts.length > 0) {
         showAlert(invalidProducts[0], "error");
-        loader.style.display = "none";
         return;
       }
 
@@ -211,8 +224,9 @@ document.addEventListener("DOMContentLoaded", async () => {
       console.error(error);
       showAlert("Failed to add products. Check console for details.", "error");
     } finally {
-      // Hide Loader
+      // Hide Loader + Re-enable Button
       loader.style.display = "none";
+      setButtonLoading(false);
     }
   });
 });

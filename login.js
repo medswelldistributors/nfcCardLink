@@ -84,26 +84,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setLoading(true);
 
-    // --- SIMULATED API CALL ---
     try {
-      // Simulate network delay (Wait for 1.5 seconds)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // Firebase Authentication
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
 
-      // LOGIC FOR DEMO (Remove this when connecting to backend)
-      signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          window.location.href = "/addProduct.html"; // Redirect to Admin Page
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          throw new Error("Invalid email or password.");
-        });
+      // Success - redirect to Admin Page
+      window.location.href = "/addProduct.html";
     } catch (error) {
       console.error(error);
-      showError(error.message || "Login failed. Please try again.");
-    } finally {
+
+      // Handle specific Firebase auth errors
+      let errorMessage = "Login failed. Please try again.";
+      if (error.code === "auth/invalid-credential" || error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        errorMessage = "Invalid email or password.";
+      } else if (error.code === "auth/too-many-requests") {
+        errorMessage = "Too many failed attempts. Please try again later.";
+      } else if (error.code === "auth/network-request-failed") {
+        errorMessage = "Network error. Please check your connection.";
+      }
+
+      showError(errorMessage);
       setLoading(false);
     }
   });

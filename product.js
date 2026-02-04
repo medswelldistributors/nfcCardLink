@@ -238,10 +238,35 @@ function initModals() {
    INIT
 ====================== */
 document.addEventListener("DOMContentLoaded", async () => {
-  const products = await fetchProducts();
-  renderProducts(products);
-  bindEvents();
-  initModals();
+  const loader = document.getElementById("catalog-loader");
+  const productList = document.getElementById("product-list");
+
+  try {
+    const products = await fetchProducts();
+
+    // Hide loader and show products
+    if (loader) loader.style.display = "none";
+    if (productList) productList.style.display = "flex";
+
+    renderProducts(products);
+    bindEvents();
+    initModals();
+  } catch (error) {
+    console.error("Failed to load products:", error);
+
+    // Show error message in loader area
+    if (loader) {
+      loader.innerHTML = `
+        <div class="text-center py-5">
+          <i class="fa-solid fa-triangle-exclamation text-danger fs-1 mb-3"></i>
+          <p class="text-muted">Failed to load products. Please refresh the page.</p>
+          <button class="btn btn-primary btn-sm" onclick="location.reload()">
+            <i class="fa-solid fa-rotate-right me-2"></i>Retry
+          </button>
+        </div>
+      `;
+    }
+  }
 });
 
 /*

@@ -1,0 +1,155 @@
+/* =============================================
+   MedsWell Admin - Shared Spacing & Layout CSS
+   ============================================= */
+
+/* 
+ * Spacing Variables
+ * Use existing Bootstrap grid system, add custom spacing utilities
+ */
+:root {
+  /* Container Spacing */
+  --sp-container-y: 2rem;
+  --sp-container-y-mobile: 1.25rem;
+  
+  /* Card Padding */
+  --sp-card-padding: 2rem;
+  --sp-card-padding-mobile: 1.25rem;
+  
+  /* Form Spacing */
+  --sp-form-gap: 1.25rem;
+  --sp-form-gap-mobile: 1rem;
+  
+  /* Section Spacing */
+  --sp-section-gap: 1.5rem;
+}
+
+/* =============================================
+   Main Container Spacing
+   ============================================= */
+.admin-main {
+  padding-top: var(--sp-container-y);
+  padding-bottom: var(--sp-container-y);
+}
+
+/* =============================================
+   Card Padding Consistency
+   ============================================= */
+.admin-card {
+  padding: var(--sp-card-padding) !important;
+}
+
+/* =============================================
+   Form Field Spacing
+   ============================================= */
+.sp-form-group {
+  margin-bottom: var(--sp-form-gap);
+}
+
+/* Improved row gaps for form layouts */
+.sp-form-row {
+  --bs-gutter-y: var(--sp-form-gap);
+  --bs-gutter-x: 1rem;
+}
+
+/* =============================================
+   Section Dividers & Gaps
+   ============================================= */
+.sp-section {
+  margin-bottom: var(--sp-section-gap);
+}
+
+.sp-section-divider {
+  border-top: 2px solid #e9ecef;
+  margin: var(--sp-section-gap) 0;
+}
+
+/* =============================================
+   Button Groups Spacing
+   ============================================= */
+.sp-btn-group {
+  margin-top: var(--sp-form-gap);
+  gap: 0.75rem;
+}
+
+/* =============================================
+   Mobile Responsiveness
+   ============================================= */
+@media (max-width: 767.98px) {
+  .admin-main {
+    padding-top: var(--sp-container-y-mobile);
+    padding-bottom: var(--sp-container-y-mobile);
+  }
+  
+  .admin-card {
+    padding: var(--sp-card-padding-mobile) !important;
+    border-radius: 10px;
+  }
+  
+  .sp-form-group {
+    margin-bottom: var(--sp-form-gap-mobile);
+  }
+  
+  /* Improve touch targets on mobile */
+  .form-control,
+  .form-select {
+    min-height: 44px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+  
+  /* Stack buttons on mobile */
+  .sp-btn-group {
+    flex-direction: column;
+  }
+  
+  .sp-btn-group .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .admin-card {
+    padding: 1rem !important;
+    margin-left: -0.5rem;
+    margin-right: -0.5rem;
+    border-radius: 0;
+  }
+  
+  /* Full width cards on small mobile */
+  .admin-main .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* =============================================
+   Alert & Toast Spacing
+   ============================================= */
+.sp-alert {
+  margin-bottom: var(--sp-form-gap);
+  padding: 0.875rem 1rem;
+}
+
+/* =============================================
+   List Items Spacing
+   ============================================= */
+.sp-list-item {
+  padding: 0.875rem 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =============================================
+   Preview/Visualizer Areas
+   ============================================= */
+.sp-preview-area {
+  padding: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: var(--sp-form-gap);
+}
+
+/* =============================================
+   Back Links & Footer Links
+   ============================================= */
+.sp-back-link {
+  margin-top: var(--sp-section-gap);
+  padding: 0.5rem 0;
+}

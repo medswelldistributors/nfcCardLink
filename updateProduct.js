@@ -119,6 +119,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     }, 300);
   };
 
+  // --- HELPER: Button Loading States ---
+  const updateBtn = form.querySelector('button[type="submit"]');
+  const updateBtnOriginal = updateBtn.innerHTML;
+
+  const setUpdateBtnLoading = (isLoading) => {
+    if (isLoading) {
+      updateBtn.disabled = true;
+      updateBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Updating...';
+    } else {
+      updateBtn.disabled = false;
+      updateBtn.innerHTML = updateBtnOriginal;
+    }
+  };
+
+  const deleteBtnOriginal = deleteBtn.innerHTML;
+
+  const setDeleteBtnLoading = (isLoading) => {
+    if (isLoading) {
+      deleteBtn.disabled = true;
+      deleteBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Deleting...';
+    } else {
+      deleteBtn.disabled = false;
+      deleteBtn.innerHTML = deleteBtnOriginal;
+    }
+  };
+
   // --- HELPER: Render Products List ---
   const renderProductsList = (products) => {
     if (products.length === 0) {
@@ -263,6 +289,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     loader.style.display = "flex";
+    setUpdateBtnLoading(true);
 
     // Show loading toast
     showToast("Updating product...", "info", 2000);
@@ -328,6 +355,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } finally {
       loader.style.display = "none";
+      setUpdateBtnLoading(false);
     }
   });
 
@@ -345,6 +373,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!confirmed) return;
 
     loader.style.display = "flex";
+    setDeleteBtnLoading(true);
 
     // Show loading toast
     showToast("Deleting product...", "info", 2000);
@@ -382,6 +411,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
     } finally {
       loader.style.display = "none";
+      setDeleteBtnLoading(false);
     }
   });
 });
