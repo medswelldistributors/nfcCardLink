@@ -169,7 +169,59 @@ document.addEventListener("DOMContentLoaded", async () => {
     inputField.focus();
   });
 
-  // D. Submit Logic (Your existing API logic + Visualizer Reset)
+  // --- HELPER: Show Results Modal ---
+  const showResultsModal = (results) => {
+    const modalBody = document.getElementById("resultsModalBody");
+    const modalHeader = document.getElementById("resultsModalHeader");
+
+    const successCount = results.filter((r) => r.status === "success").length;
+    const failCount = results.filter((r) => r.status === "failed").length;
+
+    // Header color based on results
+    if (failCount === 0) {
+      modalHeader.style.background = "linear-gradient(135deg, #198754, #20c997)";
+      modalHeader.style.color = "white";
+    } else if (successCount === 0) {
+      modalHeader.style.background = "linear-gradient(135deg, #dc3545, #e74c3c)";
+      modalHeader.style.color = "white";
+    } else {
+      modalHeader.style.background = "linear-gradient(135deg, #fd7e14, #ffc107)";
+      modalHeader.style.color = "#333";
+    }
+
+    // Build result items HTML
+    let html = `<div class="mb-3 d-flex gap-2 flex-wrap">
+      <span class="badge bg-success rounded-pill px-3 py-2">
+        <i class="fa-solid fa-check me-1"></i>${successCount} Added
+      </span>
+      <span class="badge bg-danger rounded-pill px-3 py-2">
+        <i class="fa-solid fa-xmark me-1"></i>${failCount} Failed
+      </span>
+    </div>`;
+
+    results.forEach((r) => {
+      const isSuccess = r.status === "success";
+      const icon = isSuccess ? "fa-circle-check" : "fa-circle-xmark";
+      const color = isSuccess ? "success" : "danger";
+      const borderColor = isSuccess ? "#198754" : "#dc3545";
+
+      html += `
+        <div class="d-flex align-items-start gap-2 p-2 mb-2" style="border-left: 3px solid ${borderColor}; background: ${isSuccess ? "#f0fdf4" : "#fef2f2"}; border-radius: 6px;">
+          <i class="fa-solid ${icon} text-${color} mt-1"></i>
+          <div style="flex:1; min-width:0;">
+            <strong class="d-block text-truncate" style="font-size:0.9rem;">#${r.index} ${r.name}</strong>
+            ${!isSuccess ? `<small class="text-danger">${r.reason}</small>` : ""}
+          </div>
+        </div>`;
+    });
+
+    modalBody.innerHTML = html;
+
+    const modal = new bootstrap.Modal(document.getElementById("resultsModal"));
+    modal.show();
+  };
+
+  // D. Submit Logic — Per-product tracking with detailed results
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -196,33 +248,63 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      // 3. Validate each product
-      const invalidProducts = [];
-      products.forEach((product, index) => {
+      // 3. Process each product individually — track results
+      const results = [];
+
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const productLabel = product.name || `Product ${i + 1}`;
+
+        // 3a. Validate this product
         const validation = validateProductForm(product);
         if (!validation.isValid) {
-          invalidProducts.push(`Product ${index + 1}: ${validation.firstError}`);
+          results.push({
+            index: i + 1,
+            name: productLabel,
+            status: "failed",
+            reason: validation.errors.join(", "),
+          });
+          continue; // Skip to next product
         }
-      });
 
-      if (invalidProducts.length > 0) {
-        showAlert(invalidProducts[0], "error");
-        return;
+        // 3b. Try adding to Firestore
+        try {
+          await addProduct(product);
+          results.push({
+            index: i + 1,
+            name: productLabel,
+            status: "success",
+          });
+        } catch (apiError) {
+          console.error(`Failed to add "${productLabel}":`, apiError);
+          results.push({
+            index: i + 1,
+            name: productLabel,
+            status: "failed",
+            reason: apiError.message || "Firestore write failed",
+          });
+        }
       }
 
-      // 4. Send to API
-      const apiPromises = products.map((product) => addProduct(product));
-      await Promise.all(apiPromises);
+      // 4. Show detailed results modal
+      const successCount = results.filter((r) => r.status === "success").length;
+      const failCount = results.filter((r) => r.status === "failed").length;
 
-      // 5. Success
-      showAlert(`${products.length} products added successfully!`, "success");
+      showResultsModal(results);
 
-      // Clear Form and Preview
-      inputField.value = "";
-      updatePreview();
+      // Also show a quick alert
+      if (failCount === 0) {
+        showAlert(`All ${successCount} products added successfully!`, "success");
+        inputField.value = "";
+        updatePreview();
+      } else if (successCount === 0) {
+        showAlert(`All ${failCount} products failed. See details above.`, "error");
+      } else {
+        showAlert(`${successCount} added, ${failCount} failed. See details above.`, "error");
+      }
     } catch (error) {
       console.error(error);
-      showAlert("Failed to add products. Check console for details.", "error");
+      showAlert("Unexpected error. Check console for details.", "error");
     } finally {
       // Hide Loader + Re-enable Button
       loader.style.display = "none";

@@ -347,102 +347,23 @@
       </div>
     </main>
 
+    <!-- Results Modal -->
+    <div class="modal fade" id="resultsModal" tabindex="-1" aria-labelledby="resultsModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content" style="border-radius: 12px; border: none">
+          <div class="modal-header" id="resultsModalHeader" style="border-radius: 12px 12px 0 0">
+            <h5 class="modal-title" id="resultsModalLabel"><i class="fa-solid fa-clipboard-list me-2"></i>Add Results</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="resultsModalBody" style="max-height: 400px"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        const inputField = document.getElementById("productData");
-        const previewArea = document.getElementById("preview-area");
-        const lineCounter = document.getElementById("line-counter");
-        const pasteBtn = document.getElementById("pasteBtn");
-        const clearBtn = document.getElementById("clearBtn");
-        const form = document.getElementById("addProductForm");
-        const loader = document.getElementById("loader");
-
-        // --- 1. LIVE VISUALIZATION LOGIC ---
-        const updatePreview = () => {
-          const text = inputField.value;
-          // Split by newline
-          const lines = text.split("\n");
-
-          lineCounter.textContent = `${lines.length} Lines`;
-
-          // Clear previous preview
-          previewArea.innerHTML = "";
-
-          if (text.trim() === "") {
-            previewArea.innerHTML = '<div class="text-center text-muted small py-3">Start typing to see structure...</div>';
-            return;
-          }
-
-          // Generate Visual Blocks
-          lines.forEach((line, index) => {
-            const div = document.createElement("div");
-            div.className = "preview-item";
-
-            const lineNum = `<span class="line-num">#${index + 1}</span>`;
-
-            if (line.trim() === "") {
-              // Empty Line Styling
-              div.classList.add("preview-empty");
-              div.innerHTML = `${lineNum} <span><i class="fa-solid fa-ban me-2"></i>Empty Line (Ignored/Separator)</span>`;
-            } else {
-              // Data Line Styling
-              div.classList.add("preview-data");
-              div.innerHTML = `${lineNum} <span>${line.substring(0, 40)}${line.length > 40 ? "..." : ""}</span>`;
-            }
-            previewArea.appendChild(div);
-          });
-
-          // Scroll preview to bottom to follow typing
-          previewArea.scrollTop = previewArea.scrollHeight;
-        };
-
-        // Event Listeners for Typing/Pasting
-        inputField.addEventListener("input", updatePreview);
-
-        // --- 2. PASTE BUTTON LOGIC ---
-        pasteBtn.addEventListener("click", async () => {
-          try {
-            const text = await navigator.clipboard.readText();
-            if (text) {
-              inputField.value = text;
-              inputField.focus();
-              updatePreview(); // Trigger Visual Update
-            }
-          } catch (err) {
-            alert("Please paste manually (Ctrl+V)");
-          }
-        });
-
-        // --- 3. CLEAR BUTTON ---
-        clearBtn.addEventListener("click", () => {
-          inputField.value = "";
-          updatePreview();
-          inputField.focus();
-        });
-
-        // --- 4. SUBMIT LOGIC ---
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          // Simple Alert Logic
-          if (!inputField.value.trim()) {
-            alert("Please enter data");
-            return;
-          }
-
-          loader.style.display = "flex";
-
-          // Simulate API Call
-          setTimeout(() => {
-            loader.style.display = "none";
-            alert("Products Added Successfully!"); // Replace with custom alert logic if needed
-            inputField.value = "";
-            updatePreview();
-          }, 1000);
-        });
-      });
-    </script>
     <script type="module" src="./addProduct.js"></script>
   </body>
 </html>

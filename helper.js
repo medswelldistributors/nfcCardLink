@@ -55,8 +55,8 @@ export function parseBulkProducts(rawText) {
         content,
         form,
         mg,
-        mrp: Number(mrp),
-        rate: Number(rate),
+        mrp: mrp && mrp.trim() !== "-" ? Number(mrp) : null,
+        rate: rate && rate.trim() !== "-" ? Number(rate) : null,
         unitOfSale,
         unitName,
         imageUrl: imageUrl || null, // ✅ safe default
@@ -241,8 +241,8 @@ export function validateLoginForm(email, password) {
  */
 export function validateProductForm(product) {
   return validateForm(product, {
-    required: ["name", "mrp", "rate", "unitOfSale", "unitName"],
-    numbers: ["mrp", "rate"],
+    required: ["name", "unitOfSale", "unitName"],
+    numbers: [],
     urls: ["imageUrl"],
   });
 }

@@ -332,14 +332,14 @@
                   <tr>
                     <td>6</td>
                     <td>MRP</td>
-                    <td>35</td>
-                    <td><span class="badge-required">Required</span></td>
+                    <td>35 या -</td>
+                    <td><span class="badge-optional">Optional</span></td>
                   </tr>
                   <tr>
                     <td>7</td>
                     <td>Rate</td>
-                    <td>28</td>
-                    <td><span class="badge-required">Required</span></td>
+                    <td>28 या -</td>
+                    <td><span class="badge-optional">Optional</span></td>
                   </tr>
                   <tr>
                     <td>8</td>
@@ -371,14 +371,23 @@
               </div>
 
               <h6 class="text-primary fw-bold mb-3 mt-4">❓ अगर कोई Field Empty रखनी हो?</h6>
-              <p>अगर आप किसी field को empty रखना चाहते हैं (जैसे Image URL), तो:</p>
+              <p>अगर आप किसी field को empty रखना चाहते हैं:</p>
               <ul>
+                <li><strong>MRP / Rate</strong> (Line 6-7) - अगर price available नहीं है तो <strong>"-"</strong> लिखें</li>
                 <li><strong>Image URL</strong> (Line 10) - Simply skip करें, blank छोड़ें</li>
                 <li><strong>Other Required Fields</strong> - खाली नहीं छोड़ सकते, कम से कम "-" या "N/A" लिखें</li>
               </ul>
 
-              <div class="code-block">Dolo 650 Micro Labs Paracetamol Tablet 650mg 35 28 Strip Tablet</div>
-              <small class="text-muted">^ 9 lines only, Image URL skip किया गया</small>
+              <div class="code-block">Ozole-D Abbott Omeprazole and Domperidone Capsules 20 mg + 10 mg - - 15 Capsules Strip https://example.com/ozole.jpg</div>
+              <small class="text-muted">^ MRP और Rate में "-" use किया गया — product बिना price के add होगा</small>
+
+              <h6 class="text-primary fw-bold mb-3 mt-4">📊 Results Modal — क्या Add हुआ, क्या Fail हुआ?</h6>
+              <p>Submit करने के बाद एक <strong>Results Modal</strong> popup होगा जो हर product का status दिखाएगा:</p>
+              <ul>
+                <li><i class="fa-solid fa-circle-check text-success me-1"></i> <strong>Green</strong> = Product successfully add हुआ</li>
+                <li><i class="fa-solid fa-circle-xmark text-danger me-1"></i> <strong>Red</strong> = Product fail हुआ — reason भी दिखेगा (जैसे "name is required")</li>
+              </ul>
+              <p>इससे आपको exactly पता चलेगा कि कौन सा product add हुआ और कौन सा नहीं।</p>
 
               <div class="warning-box mt-3">
                 <i class="fa-solid fa-triangle-exclamation me-2 fs-5"></i>
@@ -520,8 +529,9 @@
                       <strong>A:</strong> Check करें कि:
                       <ul>
                         <li>कम से कम 9 lines हैं (Image URL optional)</li>
-                        <li>MRP और Rate numbers में हैं (text नहीं)</li>
+                        <li>MRP और Rate या तो numbers में हों, या "-" लिखें (optional fields)</li>
                         <li>आप logged in हैं</li>
+                        <li>Submit के बाद Results Modal देखें — वहाँ exact error reason दिखेगा</li>
                       </ul>
                     </div>
                   </div>

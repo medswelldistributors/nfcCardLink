@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             ${p.isPopular ? '<span class="badge-popular ms-2"><i class="fa-solid fa-star me-1"></i>Popular</span>' : ""}
             <small class="d-block text-muted">${p.companyName || "No Company"}</small>
           </div>
-          <span class="product-rate">₹${p.rate}</span>
+          <span class="product-rate">${p.rate ? `₹${p.rate}` : "-"}</span>
         </div>
       `,
       )
@@ -311,8 +311,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         form: formFields.form.value.trim(),
         mg: formFields.mg.value.trim(),
         isPopular: formFields.isPopular.checked,
-        mrp: Number(formFields.mrp.value) || 0,
-        rate: Number(formFields.rate.value) || 0,
+        mrp: formFields.mrp.value.trim() ? Number(formFields.mrp.value) : null,
+        rate: formFields.rate.value.trim() ? Number(formFields.rate.value) : null,
         unitOfSale: formFields.unitOfSale.value.trim(),
         unitName: formFields.unitName.value.trim(),
         imageUrl: formFields.imageUrl.value.trim() || null,

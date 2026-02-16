@@ -35,8 +35,8 @@ function renderProducts(products) {
                 data-product-content="${product.content || ""}" 
                 data-product-form="${product.form || ""}" 
                 data-product-mg="${product.mg || ""}" 
-                data-product-mrp="${product.mrp}" 
-                data-product-rate="${product.rate}" 
+                data-product-mrp="${product.mrp || ""}" 
+                data-product-rate="${product.rate || ""}" 
                 data-company-name="${product.companyName || ""}"
                 data-unit-of-sale="${product.unitOfSale}"
                 data-unit-name="${product.unitName}"
@@ -58,8 +58,8 @@ function renderProducts(products) {
                 </div>
                 <div class="mt-3 d-flex justify-content-between align-items-center">
                   <div>
-                    <span class="card-price-amount">MRP ${product.mrp} ₹</span><br />
-                    <span class="card-price">Rate ${product.rate} ₹</span>
+                    ${product.mrp ? `<span class="card-price-amount">MRP ${product.mrp} ₹</span><br />` : ""}
+                    ${product.rate ? `<span class="card-price">Rate ${product.rate} ₹</span>` : ""}
                   </div>
                   <div class="quantity-selector input-group input-group-sm" style="display: none">
                     <span class="input-group-text quantity-unit-label">${product.unitOfSale}</span>
