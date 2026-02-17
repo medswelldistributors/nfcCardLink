@@ -25,6 +25,24 @@ const CATEGORY_MAP = {
 // Flatten all mapped forms for "other" detection
 const ALL_MAPPED_FORMS = Object.values(CATEGORY_MAP).flat();
 
+// Category display order (matches filter-pill order in HTML)
+const CATEGORY_ORDER = ["tablet", "capsule", "liquid", "cream-gel", "injection", "powder-sachet", "other"];
+
+/**
+ * Returns the sort-priority index for a product based on its form.
+ * Products whose form doesn't match any known category get the "other" index.
+ */
+function getCategoryOrder(form) {
+  const f = (form || "").toLowerCase();
+  for (let i = 0; i < CATEGORY_ORDER.length; i++) {
+    const cat = CATEGORY_ORDER[i];
+    if (cat === "other") continue;
+    if ((CATEGORY_MAP[cat] || []).includes(f)) return i;
+  }
+  // "other" is last
+  return CATEGORY_ORDER.length - 1;
+}
+
 let activeCategory = "all";
 
 /* ======================
@@ -312,6 +330,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Hide loader and show products
     if (loader) loader.style.display = "none";
     if (productList) productList.style.display = "flex";
+
+    // Sort by category order so "All" view groups products by category
+    products.sort((a, b) => getCategoryOrder(a.form) - getCategoryOrder(b.form));
 
     renderProducts(products);
     bindEvents();
