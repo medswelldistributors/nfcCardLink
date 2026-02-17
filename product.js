@@ -12,6 +12,22 @@
 import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById } from "./services.firebase.js";
 
 /* ======================
+   CATEGORY FILTER MAP
+====================== */
+const CATEGORY_MAP = {
+  tablet: ["tablet"],
+  capsule: ["capsule"],
+  liquid: ["syrup", "dry syrup", "suspension", "drops", "solution", "bottol", "nasal spray"],
+  "cream-gel": ["cream", "gel", "tube", "soap"],
+  injection: ["injection", "infusion", "ampoules", "vaccine", "respules"],
+  "powder-sachet": ["powder", "sachet", "pack"],
+};
+// Flatten all mapped forms for "other" detection
+const ALL_MAPPED_FORMS = Object.values(CATEGORY_MAP).flat();
+
+let activeCategory = "all";
+
+/* ======================
    RENDER PRODUCTS
 ====================== */
 const selectedProducts = new Map();
@@ -72,6 +88,46 @@ function renderProducts(products) {
         `;
     container.insertAdjacentHTML("beforeend", html);
   });
+}
+
+/* ======================
+   CATEGORY FILTER
+====================== */
+function filterProducts() {
+  const list = document.getElementById("product-list");
+  const searchInput = document.getElementById("search-input");
+  const emptyState = document.getElementById("empty-state");
+  const term = (searchInput?.value || "").toLowerCase();
+  let visibleCount = 0;
+
+  [...list.children].forEach((col) => {
+    const name = (col.dataset.productName || "").toLowerCase();
+    const content = (col.dataset.productContent || "").toLowerCase();
+    const form = (col.dataset.productForm || "").toLowerCase();
+
+    // Category match
+    let categoryMatch = true;
+    if (activeCategory !== "all") {
+      if (activeCategory === "other") {
+        categoryMatch = !ALL_MAPPED_FORMS.includes(form);
+      } else {
+        const forms = CATEGORY_MAP[activeCategory] || [];
+        categoryMatch = forms.includes(form);
+      }
+    }
+
+    // Search match
+    const searchMatch = !term || name.includes(term) || content.includes(term);
+
+    const visible = categoryMatch && searchMatch;
+    col.style.display = visible ? "" : "none";
+    if (visible) visibleCount++;
+  });
+
+  // Toggle empty state
+  if (emptyState) {
+    emptyState.style.display = visibleCount === 0 ? "block" : "none";
+  }
 }
 
 /* ======================
@@ -139,15 +195,24 @@ function bindEvents() {
     updateFloatingButton();
   });
 
-  // search
+  // search — compose with category filter
   searchInput.addEventListener("input", () => {
-    const term = searchInput.value.toLowerCase();
-    [...list.children].forEach((col) => {
-      const name = col.dataset.productName.toLowerCase();
-      const content = col.dataset.productContent.toLowerCase();
-      col.style.display = name.includes(term) || content.includes(term) ? "" : "none";
-    });
+    filterProducts();
   });
+
+  // category filter pills
+  const filterBar = document.getElementById("filter-bar");
+  if (filterBar) {
+    filterBar.addEventListener("click", (e) => {
+      const pill = e.target.closest(".filter-pill");
+      if (!pill) return;
+      // Update active pill
+      filterBar.querySelector(".filter-pill.active")?.classList.remove("active");
+      pill.classList.add("active");
+      activeCategory = pill.dataset.category;
+      filterProducts();
+    });
+  }
 }
 
 /* ======================

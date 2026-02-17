@@ -381,6 +381,61 @@
       .modal-title {
         font-weight: 600;
       }
+
+      /* --- CATEGORY FILTER BAR --- */
+      .filter-bar {
+        display: flex;
+        gap: 10px;
+        padding: 0.75rem 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+      }
+      .filter-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .filter-pill {
+        flex-shrink: 0;
+        padding: 6px 18px;
+        border-radius: 30px;
+        border: 1px solid var(--brand-border);
+        background: #fff;
+        color: var(--brand-text);
+        font-size: 0.875rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+        user-select: none;
+      }
+      .filter-pill:hover {
+        border-color: rgba(13, 110, 253, 0.4);
+        color: var(--bs-primary);
+        background: #f0f7ff;
+      }
+      .filter-pill.active {
+        background: var(--bs-primary);
+        color: #fff;
+        border-color: var(--bs-primary);
+        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.25);
+      }
+      .filter-section {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+      .empty-state {
+        display: none;
+        text-align: center;
+        padding: 3rem 1rem;
+        color: #6c757d;
+      }
+      .empty-state i {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+        color: #adb5bd;
+      }
+      /* --- END CATEGORY FILTER BAR --- */
     </style>
   </head>
   <body>
@@ -402,6 +457,20 @@
       </div>
     </header>
 
+    <!-- Category Filter Bar -->
+    <div class="filter-section">
+      <div class="filter-bar" id="filter-bar">
+        <button class="filter-pill active" data-category="all">All</button>
+        <button class="filter-pill" data-category="tablet">Tablet</button>
+        <button class="filter-pill" data-category="capsule">Capsule</button>
+        <button class="filter-pill" data-category="liquid">Liquid</button>
+        <button class="filter-pill" data-category="cream-gel">Cream & Gel</button>
+        <button class="filter-pill" data-category="injection">Injection</button>
+        <button class="filter-pill" data-category="powder-sachet">Powder & Sachet</button>
+        <button class="filter-pill" data-category="other">Other</button>
+      </div>
+    </div>
+
     <main class="container">
       <!-- Loader -->
       <div id="catalog-loader" class="text-center py-5">
@@ -411,6 +480,12 @@
         <p class="text-muted mt-3">Loading products...</p>
       </div>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="product-list" style="display: none"></div>
+      <!-- Empty State (shown when filter/search yields 0 results) -->
+      <div class="empty-state" id="empty-state">
+        <i class="fa-solid fa-box-open d-block"></i>
+        <p class="fw-semibold mb-1">No products found</p>
+        <p class="small">Try a different category or search term.</p>
+      </div>
     </main>
 
     <!-- footer -->
