@@ -14,6 +14,31 @@
 import { fetchProducts } from "./services.firebase.js";
 
 /* =============================================================================
+   CATEGORY SORT (mirrors product.js — keeps PDF order identical to UI)
+   ============================================================================= */
+
+const CATEGORY_MAP = {
+  tablet: ["tablet"],
+  capsule: ["capsule"],
+  liquid: ["syrup", "dry syrup", "suspension", "drops", "solution", "bottol", "nasal spray"],
+  "cream-gel": ["cream", "gel", "tube", "soap"],
+  injection: ["injection", "infusion", "ampoules", "vaccine", "respules"],
+  "powder-sachet": ["powder", "sachet", "pack"],
+};
+
+const CATEGORY_ORDER = ["tablet", "capsule", "liquid", "cream-gel", "injection", "powder-sachet", "other"];
+
+function getCategoryOrder(form) {
+  const f = (form || "").toLowerCase();
+  for (let i = 0; i < CATEGORY_ORDER.length; i++) {
+    const cat = CATEGORY_ORDER[i];
+    if (cat === "other") continue;
+    if ((CATEGORY_MAP[cat] || []).includes(f)) return i;
+  }
+  return CATEGORY_ORDER.length - 1; // "other" goes last
+}
+
+/* =============================================================================
    CONFIGURATION
    ============================================================================= */
 
@@ -62,10 +87,13 @@ const PDF_CONFIG = {
 async function fetchAllProducts() {
   try {
     const products = await fetchProducts();
-    return products.map((product) => ({
+    const mapped = products.map((product) => ({
       ...product,
       isPopular: product.isPopular === true,
     }));
+    // Sort by category order — matches the "All Products" view in the UI
+    mapped.sort((a, b) => getCategoryOrder(a.form) - getCategoryOrder(b.form));
+    return mapped;
   } catch (error) {
     console.error("[PDF] Error fetching products:", error);
     throw new Error("Failed to fetch products from database");
