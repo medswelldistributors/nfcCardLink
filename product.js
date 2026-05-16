@@ -9,7 +9,13 @@
  * User Action → updateCart → generateOrderMessage
  */
 
-import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById } from "./services.firebase.js";
+import {
+  fetchProducts,
+  addProduct,
+  updateProduct,
+  deleteProduct,
+  getProductById,
+} from "./services.firebase.js";
 
 /* ======================
    CATEGORY FILTER MAP
@@ -17,7 +23,15 @@ import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById
 const CATEGORY_MAP = {
   tablet: ["tablet"],
   capsule: ["capsule"],
-  liquid: ["syrup", "dry syrup", "suspension", "drops", "solution", "bottol", "nasal spray"],
+  liquid: [
+    "syrup",
+    "dry syrup",
+    "suspension",
+    "drops",
+    "solution",
+    "bottol",
+    "nasal spray",
+  ],
   "cream-gel": ["cream", "gel", "tube", "soap"],
   injection: ["injection", "infusion", "ampoules", "vaccine", "respules"],
   "powder-sachet": ["powder", "sachet", "pack"],
@@ -26,7 +40,15 @@ const CATEGORY_MAP = {
 const ALL_MAPPED_FORMS = Object.values(CATEGORY_MAP).flat();
 
 // Category display order (matches filter-pill order in HTML)
-const CATEGORY_ORDER = ["tablet", "capsule", "liquid", "cream-gel", "injection", "powder-sachet", "other"];
+const CATEGORY_ORDER = [
+  "tablet",
+  "capsule",
+  "liquid",
+  "cream-gel",
+  "injection",
+  "powder-sachet",
+  "other",
+];
 
 /**
  * Returns the sort-priority index for a product based on its form.
@@ -61,7 +83,9 @@ function renderProducts(products) {
   products.forEach((product) => {
     const isPopular = product.isPopular === true;
     const popularClass = isPopular ? " popular-card" : "";
-    const popularBadge = isPopular ? '<span class="popular-badge"><i class="fa-solid fa-star"></i> Popular</span>' : "";
+    const popularBadge = isPopular
+      ? '<span class="popular-badge"><i class="fa-solid fa-star"></i> Popular</span>'
+      : "";
 
     const html = `
           <div class="col" 
@@ -96,7 +120,15 @@ function renderProducts(products) {
                     ${product.rate ? `<span class="card-price">Rate ${product.rate} ₹</span>` : ""}
                   </div>
                   <div class="quantity-selector input-group input-group-sm" style="display: none">
-                    <span class="input-group-text quantity-unit-label">${product.unitOfSale}</span>
+                    <select class="input-group-text quantity-unit-label quantity-unit-select">
+                      ${product.unitOfSale
+                        .split("|")
+                        .map(
+                          (unit) =>
+                            `<option value="${unit.trim()}">${unit.trim()}</option>`,
+                        )
+                        .join("")}
+                    </select>
                     <input type="number" class="form-control text-center quantity-input" value="1" min="1" />
                   </div>
                 </div>
@@ -152,12 +184,13 @@ function filterProducts() {
    HELPERS
 ====================== */
 function calculateTotalUnits(card, qty) {
-  const { unitOfSale, unitsPerStrip, stripsPerBox } = card.dataset;
+  const { unitsPerStrip, stripsPerBox } = card.dataset;
+  const selectedUnit = card.querySelector(".quantity-unit-select")?.value;
 
-  if (unitOfSale === "Box") {
+  if (selectedUnit === "Box") {
     return qty * parseInt(stripsPerBox || 1) * parseInt(unitsPerStrip || 1);
   }
-  if (unitOfSale === "Strip") {
+  if (selectedUnit === "Strip") {
     return qty * parseInt(unitsPerStrip || 1);
   }
   return qty;
@@ -191,7 +224,8 @@ function bindEvents() {
         qtyBox.style.display = "flex";
         selectedProducts.set(name, {
           quantity: 1,
-          unit: card.dataset.unitOfSale,
+          unit: card.querySelector(".quantity-unit-select").value,
+          // unit: card.dataset.unitOfSale,
           unitName: card.dataset.unitName,
           totalUnits: calculateTotalUnits(card, 1),
         });
@@ -210,6 +244,16 @@ function bindEvents() {
       }
     }
 
+    if (e.target.classList.contains("quantity-unit-select")) {
+      const item = selectedProducts.get(name);
+
+      if (item) {
+        item.unit = e.target.value;
+
+        item.totalUnits = calculateTotalUnits(card, item.quantity);
+      }
+    }
+
     updateFloatingButton();
   });
 
@@ -225,7 +269,9 @@ function bindEvents() {
       const pill = e.target.closest(".filter-pill");
       if (!pill) return;
       // Update active pill
-      filterBar.querySelector(".filter-pill.active")?.classList.remove("active");
+      filterBar
+        .querySelector(".filter-pill.active")
+        ?.classList.remove("active");
       pill.classList.add("active");
       activeCategory = pill.dataset.category;
       filterProducts();
@@ -246,25 +292,41 @@ function initModals() {
     const card = triggerElement.closest(".col");
     if (!card) return;
 
-    const { productName, productContent, productForm, productMg, productMrp, productRate, companyName } = card.dataset;
+    const {
+      productName,
+      productContent,
+      productForm,
+      productMg,
+      productMrp,
+      productRate,
+      companyName,
+    } = card.dataset;
 
     const imageUrl = card.querySelector(".product-image").src;
 
     const modalImage = productModal.querySelector("#modal-product-image");
     const modalName = productModal.querySelector("#modal-product-name");
-    const modalDetailsContainer = productModal.querySelector("#modal-product-details");
+    const modalDetailsContainer = productModal.querySelector(
+      "#modal-product-details",
+    );
 
     modalImage.src = imageUrl;
     modalName.textContent = productName;
 
     let detailsHtml = '<ul class="list-group list-group-flush">';
-    if (productContent) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Content:</strong> <span>${productContent}</span></li>`;
-    if (productForm) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Form:</strong> <span>${productForm}</span></li>`;
-    if (companyName) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Company:</strong> <span>${companyName}</span></li>`;
-    if (productMg) detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Strength/Vol:</strong> <span>${productMg}</span></li>`;
+    if (productContent)
+      detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Content:</strong> <span>${productContent}</span></li>`;
+    if (productForm)
+      detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Form:</strong> <span>${productForm}</span></li>`;
+    if (companyName)
+      detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Company:</strong> <span>${companyName}</span></li>`;
+    if (productMg)
+      detailsHtml += `<li class="list-group-item d-flex justify-content-between"><strong>Strength/Vol:</strong> <span>${productMg}</span></li>`;
     detailsHtml += '</ul><hr class="my-3"/>';
-    if (productMrp) detailsHtml += `<div class="d-flex justify-content-between align-items-center mb-2"><span class="text-muted fs-5">MRP:</span><span class="fs-5 text-decoration-line-through">&#8377; ${productMrp}</span></div>`;
-    if (productRate) detailsHtml += `<div class="d-flex justify-content-between align-items-center"><span class="text-muted fs-5">Your Rate:</span><span class="h3 fw-bold text-primary mb-0">&#8377; ${productRate}</span></div>`;
+    if (productMrp)
+      detailsHtml += `<div class="d-flex justify-content-between align-items-center mb-2"><span class="text-muted fs-5">MRP:</span><span class="fs-5 text-decoration-line-through">&#8377; ${productMrp}</span></div>`;
+    if (productRate)
+      detailsHtml += `<div class="d-flex justify-content-between align-items-center"><span class="text-muted fs-5">Your Rate:</span><span class="h3 fw-bold text-primary mb-0">&#8377; ${productRate}</span></div>`;
 
     modalDetailsContainer.innerHTML = detailsHtml;
   });
@@ -274,10 +336,12 @@ function initModals() {
     const submitOrderBtn = orderModal.querySelector("#submit-order-btn");
 
     if (selectedProducts.size === 0) {
-      modalBody.innerHTML = '<p class="text-center text-muted">No products selected.</p>';
+      modalBody.innerHTML =
+        '<p class="text-center text-muted">No products selected.</p>';
       submitOrderBtn.disabled = true;
     } else {
-      let listHTML = '<h6>Selected Products:</h6><ul class="list-group list-group-flush">';
+      let listHTML =
+        '<h6>Selected Products:</h6><ul class="list-group list-group-flush">';
       for (const [productName, details] of selectedProducts.entries()) {
         let totalText = "";
         if (details.unit.toLowerCase() !== details.unitName.toLowerCase()) {
@@ -303,7 +367,11 @@ function initModals() {
       let totalText = "";
 
       // old logic preserved (unit vs unitName comparison)
-      if (details.unit && details.unitName && details.unit.toLowerCase() !== details.unitName.toLowerCase()) {
+      if (
+        details.unit &&
+        details.unitName &&
+        details.unit.toLowerCase() !== details.unitName.toLowerCase()
+      ) {
         totalText = ` (${details.totalUnits} ${details.unitName}(s))`;
       }
 
@@ -332,7 +400,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (productList) productList.style.display = "flex";
 
     // Sort by category order so "All" view groups products by category
-    products.sort((a, b) => getCategoryOrder(a.form) - getCategoryOrder(b.form));
+    products.sort(
+      (a, b) => getCategoryOrder(a.form) - getCategoryOrder(b.form),
+    );
 
     renderProducts(products);
     bindEvents();
