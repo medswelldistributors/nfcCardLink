@@ -321,9 +321,9 @@ function drawHeader(doc, logoBase64, qrBase64, pageWidth) {
   doc.setFontSize(7.5);
   doc.setFont("helvetica", "italic");
   doc.setTextColor(255, 193, 7);
-  doc.text(`* Note: Rates are subject to a market variation of \u00B15%`, pageWidth / 2, y + 27, { align: "center" });
+  doc.text(`* Prices may vary by up to ±5% depending on the order quantity.`, pageWidth / 2, y + 27, { align: "center" });
 
-  // QR Code (right side)
+  // QR Code (right side
   if (qrBase64) {
     try {
       doc.addImage(qrBase64, "PNG", pageWidth - 23, y + 4, 20, 20);
