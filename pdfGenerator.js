@@ -179,6 +179,7 @@ export async function generateProductPDF() {
     }
 
     // Draw header
+    // let startY = drawHeader(doc, logoBase64, qrBase64, pageWidth);
     let startY = drawHeader(doc, logoBase64, qrBase64, pageWidth);
 
     // Prepare table data
@@ -282,7 +283,7 @@ export async function generateProductPDF() {
    ============================================================================= */
 
 function drawHeader(doc, logoBase64, qrBase64, pageWidth) {
-  const headerHeight = 25;
+  const headerHeight = 32; // slightly taller to fit all 4 lines
   const y = 0;
 
   // Black background
@@ -292,27 +293,40 @@ function drawHeader(doc, logoBase64, qrBase64, pageWidth) {
   // Logo (left side) - card.jpg
   if (logoBase64) {
     try {
-      doc.addImage(logoBase64, "JPEG", 3, y + 2, 35, 20);
+      doc.addImage(logoBase64, "JPEG", 3, y + 4, 35, 22);
     } catch (e) {
       console.warn("[PDF] Could not add logo:", e);
     }
   }
 
-  // Company name and URL (center)
+  // Line 1: Company name (Center)
   doc.setTextColor(...PDF_CONFIG.colors.headerText);
   doc.setFontSize(PDF_CONFIG.fonts.header);
   doc.setFont("helvetica", "bold");
-  doc.text(PDF_CONFIG.companyName, pageWidth / 2, y + 10, { align: "center" });
+  doc.text(PDF_CONFIG.companyName, pageWidth / 2, y + 8, { align: "center" });
 
+  // Line 2: Website Order URL (Center Link)
   doc.setFontSize(PDF_CONFIG.fonts.subheader);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.colors.urlText);
-  doc.text(`Place Order From ${PDF_CONFIG.orderUrl}`, pageWidth / 2, y + 17, { align: "center" });
+  doc.text(`Place Order From: ${PDF_CONFIG.orderUrl}`, pageWidth / 2, y + 14, { align: "center" });
 
-  // QR Code (right side) - Medswell_Site_QR.png
+  // Line 3: Company Mobile Number (Center Below URL)
+  doc.setFontSize(PDF_CONFIG.fonts.subheader);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(255, 255, 255);
+  doc.text(`Contact / WhatsApp: +91 99046 85222`, pageWidth / 2, y + 20, { align: "center" });
+
+  // Line 4: Rate Disclaimer Note
+  doc.setFontSize(7.5);
+  doc.setFont("helvetica", "italic");
+  doc.setTextColor(255, 193, 7);
+  doc.text(`* Note: Rates are subject to a market variation of \u00B15%`, pageWidth / 2, y + 27, { align: "center" });
+
+  // QR Code (right side)
   if (qrBase64) {
     try {
-      doc.addImage(qrBase64, "PNG", pageWidth - 22, y + 2, 20, 20);
+      doc.addImage(qrBase64, "PNG", pageWidth - 23, y + 4, 20, 20);
     } catch (e) {
       console.warn("[PDF] Could not add QR code:", e);
     }
@@ -321,7 +335,7 @@ function drawHeader(doc, logoBase64, qrBase64, pageWidth) {
   // Reset text color
   doc.setTextColor(...PDF_CONFIG.colors.text);
 
-  return y + headerHeight + 5;
+  return y + headerHeight + 6;
 }
 
 function addPageNumber(doc, pageNum, pageHeight, pageWidth) {
