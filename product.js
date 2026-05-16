@@ -302,7 +302,7 @@ function initModals() {
           totalText = `(${details.totalUnits} ${details.unitName}s total)`;
         }
         listHTML += `<li class="list-group-item d-flex justify-content-between">
-                            <span>${productName} <small class="text-muted d-block">${totalText}</small></span> 
+                            <span>${productName} </span> 
                             <strong>${details.quantity} ${details.unit}(s)</strong>
                           </li>`;
       }
