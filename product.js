@@ -15,12 +15,12 @@ import { fetchProducts, addProduct, updateProduct, deleteProduct, getProductById
    CATEGORY FILTER MAP
 ====================== */
 const CATEGORY_MAP = {
-  tablet: ["tablet"],
-  capsule: ["capsule"],
-  liquid: ["syrup", "dry syrup", "suspension", "drops", "solution", "bottol", "nasal spray"],
-  "cream-gel": ["cream", "gel", "tube", "soap"],
-  injection: ["injection", "infusion", "ampoules", "vaccine", "respules"],
-  "powder-sachet": ["powder", "sachet", "pack"],
+  tablet: ["tablet", "tablets","tab"],
+  capsule: ["capsule", "capsules","caps"],
+  liquid: ["syrup", "dry syrup", "suspension", "suspensions", "drops", "solution", "bottol", "nasal spray", "bottols", "syrups", "solutions", "drop", "spray"],
+  "cream-gel": ["cream", "gel", "tube", "soap", "tubes", "tub"],
+  injection: ["injection", "infusion", "ampoules", "vaccine", "respules", "injections", "infusions", "vaccines"],
+  "powder-sachet": ["powder", "sachet", "pack", "powders", "schets", "packs"],
 };
 // Flatten all mapped forms for "other" detection
 const ALL_MAPPED_FORMS = Object.values(CATEGORY_MAP).flat();
