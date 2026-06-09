@@ -57,7 +57,7 @@ export function parseBulkProducts(rawText) {
         mg,
         mrp: mrp && mrp.trim() !== "-" ? Number(mrp) : null,
         rate: rate && rate.trim() !== "-" ? Number(rate) : null,
-        unitOfSale,
+        unitOfSale: "PCS|BOX",
         unitName,
         imageUrl: imageUrl || null, // ✅ safe default
       };
